@@ -57,9 +57,8 @@ export function WhyChooseUs() {
             <h3 className="font-geist mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl">
               Let's help build your MVP
             </h3>
-            <p className="font-geist text-foreground/60 mt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              congue, nisl eget molestie varius, enim ex faucibus purus.
+            <p className="font-geist text-foreground/60 mt-3 leading-relaxed">
+              Transform your ideas into reality with powerful, customizable components designed for rapid development and seamless integration.
             </p>
           </div>
           <div

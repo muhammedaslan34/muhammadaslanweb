@@ -31,7 +31,7 @@ const BentoGridItem = ({
     <motion.div
       variants={variants}
       className={cn(
-        'group border-accent/10 bg-background hover:border-accent/30 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 shadow-md transition-all duration-500',
+        'group border-accent/10 bg-white dark:bg-[#0F111E] hover:border-accent/30 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 shadow-md transition-all duration-500',
         className,
       )}
     >
@@ -61,42 +61,42 @@ const BentoGridItem = ({
 
 const services = [
   {
-    title: 'Web Development',
+    title: 'Developer-Friendly',
     description:
-      'Custom websites built with modern technologies like React, Next.js, and WordPress for optimal performance.',
+      'Tailored for developers to create and iterate fast, with minimal overhead and maximum flexibility.',
     icon: <Code className="size-6" />,
     size: 'large' as const,
   },
   {
-    title: 'UI/UX Design',
+    title: 'CLI Support',
     description:
-      'Beautiful, user-centered designs that convert visitors into customers and enhance user experience.',
-    icon: <Palette className="size-6" />,
+      'Command-line interface support for seamless development and workflow integration.',
+    icon: <Layers className="size-6" />,
     size: 'small' as const,
   },
   {
-    title: 'Responsive Design',
-    description: 'Create layouts that adapt to any screen size with ease and maintain consistency across devices.',
-    icon: <Smartphone className="size-6" />,
+    title: 'Easily Customizable',
+    description: 'Every block is built to be editable. From layout to logic, style to structure—make it your own.',
+    icon: <Palette className="size-6" />,
     size: 'medium' as const,
   },
   {
-    title: 'Performance Optimization',
-    description: "Fast, SEO-optimized websites that rank well and load quickly for better user engagement.",
+    title: 'v0 Support',
+    description: "Launch fast with confidence. Perfect for MVPs, prototypes, and weekend projects.",
     icon: <Zap className="size-6" />,
     size: 'medium' as const,
   },
   {
-    title: 'E-commerce Solutions',
-    description: 'Complete online stores with payment integration, inventory management, and admin dashboards.',
-    icon: <Globe className="size-6" />,
+    title: 'Full Documentation',
+    description: 'Comprehensive documentation to understand every feature and maximize your development experience.',
+    icon: <FileText className="size-6" />,
     size: 'small' as const,
   },
   {
-    title: 'Maintenance & Support',
+    title: 'Contribute Yours',
     description:
-      'Ongoing website maintenance, updates, and technical support to keep your site running smoothly.',
-    icon: <FileText className="size-6" />,
+      'Add your own blocks to the library and become part of the MVPBlocks community.',
+    icon: <Globe className="size-6" />,
     size: 'large' as const,
   },
 ];

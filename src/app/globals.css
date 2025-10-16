@@ -77,6 +77,7 @@
   --glass-border: rgba(255, 255, 255, 0.2);
   --main-bg: #ffffff;
   --section-bg: #f8fafc;
+  --card-bg: #ffffff;
 }
 
 .dark {
@@ -115,6 +116,7 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   --main-bg: #0F111E;
   --section-bg: #181826;
+  --card-bg: #0F111E;
 }
 
 @layer base {

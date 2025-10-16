@@ -8,7 +8,10 @@ interface FeatureCardProps {
 
 export function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <li className="space-y-3 rounded-xl border border-accent/10 p-6 hover:border-accent/30 transition-all duration-300 shadow-sm hover:shadow-md bg-white dark:bg-[#0F111E]">
+    <li 
+      className="space-y-3 rounded-xl border p-6 transition-all duration-300 shadow-sm hover:shadow-md border-border/40 hover:border-accent/30"
+      style={{ backgroundColor: 'var(--card-bg)' }}
+    >
       <div className="text-accent w-fit rounded-full border border-accent/20 bg-accent/10 p-4">
         {icon}
       </div>

@@ -31,9 +31,10 @@ const BentoGridItem = ({
     <motion.div
       variants={variants}
       className={cn(
-        'group border-accent/10 bg-white dark:bg-[#0F111E] hover:border-accent/30 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 shadow-md transition-all duration-500',
+        'group border-accent/10 hover:border-accent/30 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 shadow-md transition-all duration-500',
         className,
       )}
+      style={{ backgroundColor: 'var(--card-bg)' }}
     >
       <div className="absolute top-0 -right-1/2 z-0 size-full cursor-pointer bg-[linear-gradient(to_right,#3d16165e_1px,transparent_1px),linear-gradient(to_bottom,#3d16165e_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] bg-[size:24px_24px]"></div>
 

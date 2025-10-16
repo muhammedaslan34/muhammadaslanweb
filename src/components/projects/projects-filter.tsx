@@ -3,36 +3,10 @@
 import { Search, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { getProjectCategories, getProjectTechnologies } from "@/data/projects"
 
-const categories = [
-  "All Projects",
-  "Web Applications",
-  "WordPress Sites", 
-  "E-commerce",
-  "Landing Pages",
-  "Mobile Apps"
-]
-
-const technologies = [
-  "React",
-  "Next.js",
-  "WordPress",
-  "TypeScript",
-  "Tailwind CSS",
-  "Node.js",
-  "PHP",
-  "MySQL",
-  "JavaScript",
-  "Stripe",
-  "PostgreSQL",
-  "D3.js",
-  "MongoDB",
-  "Framer Motion",
-  "Three.js",
-  "GSAP",
-  "MDX",
-  "Prisma"
-]
+const categories = ["All Projects", ...getProjectCategories()]
+const technologies = getProjectTechnologies()
 
 interface ProjectsFilterProps {
   activeCategory: string

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 export function ServicesHero() {
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden">
+    <section className="relative py-24 md:py-32 overflow-hidden bg-main">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent" />
       <div className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-float" />
@@ -28,14 +28,14 @@ export function ServicesHero() {
             I deliver high-performance websites that drive results and exceed expectations.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" asChild className="hover-lift">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <Button size="lg" asChild className="hover-lift w-full sm:w-auto">
               <Link href="/contact">
                 Start Your Project
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild className="glass-card hover-lift">
+            <Button variant="outline" size="lg" asChild className="glass-card hover-lift w-full sm:w-auto">
               <Link href="/pricing">View Pricing</Link>
             </Button>
           </div>

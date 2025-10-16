@@ -40,7 +40,7 @@ const BentoGridItem = ({
           <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-500">
             {icon}
           </div>
-          <h3 className="mb-2 text-xl font-semibold tracking-tight text-white">{title}</h3>
+          <h3 className="mb-2 text-xl font-semibold tracking-tight">{title}</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         </div>
         <div className="text-primary mt-4 flex items-center text-sm font-medium">
@@ -74,9 +74,9 @@ export function BentoGrid({ items, className }: BentoGridProps) {
   };
 
   return (
-    <div className={cn("mx-auto max-w-6xl px-4 py-12", className)}>
+    <div className={cn("w-full", className)}>
       <motion.div
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-6"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -89,12 +89,15 @@ export function BentoGrid({ items, className }: BentoGridProps) {
             icon={item.icon}
             size={item.size}
             className={cn(
+              // Mobile: all full width (col-span-1)
+              // Tablet (sm): all half width (col-span-1 out of 2)
+              // Desktop (lg): use 12-column grid
               item.size === 'large'
-                ? 'col-span-4'
+                ? 'lg:col-span-6'
                 : item.size === 'medium'
-                ? 'col-span-3'
-                : 'col-span-2',
-              'h-full',
+                ? 'lg:col-span-4'
+                : 'lg:col-span-3',
+              'h-full min-h-[200px]',
             )}
           />
         ))}

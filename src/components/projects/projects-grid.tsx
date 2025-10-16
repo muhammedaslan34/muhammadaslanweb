@@ -6,104 +6,12 @@ import Link from "next/link"
 import { ExternalLink, Calendar, Eye, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { projects, getProjectCategories, getProjectTechnologies } from "@/data/projects"
+import type { Project } from "@/data/projects"
 
 const PreviewModal = dynamic(() => import("@/components/preview/preview-modal").then(mod => ({ default: mod.PreviewModal })), {
   ssr: false
 })
-
-const projects = [
-  {
-    id: 1,
-    slug: "dtmasters",
-    title: "DTMasters",
-    description: "Professional driving school website with course management, instructor profiles, and online booking system.",
-    image: "/images/projects/dtmasters.jpg",
-    category: "WordPress Sites",
-    tags: ["WordPress", "PHP", "Custom Theme", "Booking System"],
-    liveUrl: "https://dtmasters.net",
-    githubUrl: "https://github.com",
-    date: "2024-02-01",
-    featured: true
-  },
-  {
-    id: 2,
-    slug: "ecommerce-platform",
-    title: "E-commerce Platform",
-    description: "Modern e-commerce solution with advanced filtering, payment integration, and admin dashboard.",
-    image: "/images/project-ecommerce.jpg",
-    category: "E-commerce",
-    tags: ["Next.js", "TypeScript", "Stripe", "PostgreSQL"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2024-01-15",
-    featured: true
-  },
-  {
-    id: 3,
-    slug: "corporate-website",
-    title: "Corporate Website",
-    description: "Professional corporate website with custom WordPress theme and advanced SEO optimization.",
-    image: "/images/project-corporate.jpg",
-    category: "WordPress Sites",
-    tags: ["WordPress", "PHP", "Custom Theme", "SEO"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2024-01-10",
-    featured: true
-  },
-  {
-    id: 4,
-    slug: "saas-dashboard",
-    title: "SaaS Dashboard",
-    description: "Analytics dashboard with real-time data visualization and user management system.",
-    image: "/images/project-saas.jpg",
-    category: "Web Applications",
-    tags: ["React", "D3.js", "Node.js", "MongoDB"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2024-01-05",
-    featured: false
-  },
-  {
-    id: 5,
-    slug: "restaurant-landing",
-    title: "Restaurant Landing Page",
-    description: "Beautiful landing page for a restaurant with online reservation system and menu showcase.",
-    image: "/images/project-restaurant.jpg",
-    category: "Landing Pages",
-    tags: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2023-12-20",
-    featured: false
-  },
-  {
-    id: 6,
-    slug: "portfolio-website",
-    title: "Portfolio Website",
-    description: "Creative portfolio website for a designer with smooth animations and interactive elements.",
-    image: "/images/project-portfolio.jpg",
-    category: "Web Applications",
-    tags: ["React", "Three.js", "GSAP", "Netlify"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2023-12-15",
-    featured: true
-  },
-  {
-    id: 7,
-    slug: "blog-platform",
-    title: "Blog Platform",
-    description: "Custom blog platform with markdown support, comment system, and admin panel.",
-    image: "/images/project-blog.jpg",
-    category: "Web Applications",
-    tags: ["Next.js", "MDX", "Prisma", "Vercel"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    date: "2023-12-01",
-    featured: false
-  }
-]
 
 interface ProjectsGridProps {
   activeCategory: string
@@ -112,10 +20,10 @@ interface ProjectsGridProps {
 }
 
 export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }: ProjectsGridProps) {
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
-  const handlePreview = (project: typeof projects[0]) => {
+  const handlePreview = (project: Project) => {
     setSelectedProject(project)
     setIsPreviewOpen(true)
   }
@@ -132,14 +40,15 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
       const categoryMatch = activeCategory === "All Projects" || project.category === activeCategory
 
       // Search filter
-      const searchMatch = searchTerm === "" || 
+      const searchMatch = searchTerm === "" ||
         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+        project.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        project.technologies.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
 
       // Technology filter
       const technologyMatch = activeTechnologies.length === 0 ||
-        activeTechnologies.some(tech => project.tags.includes(tech))
+        activeTechnologies.some(tech => project.technologies.includes(tech))
 
       return categoryMatch && searchMatch && technologyMatch
     })
@@ -167,9 +76,9 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
             }`}>
               {/* Project Image */}
               <div className="aspect-video bg-gradient-to-br from-accent/20 to-primary/20 relative overflow-hidden">
-                {project.image && project.image.includes('dtmasters') ? (
-                  <img 
-                    src={project.image} 
+                {project.imageUrl?.includes('dtmasters') ? (
+                  <img
+                    src={project.imageUrl}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
@@ -190,7 +99,7 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
                   <span className="text-xs text-accent font-medium">{project.category}</span>
                   <div className="flex items-center text-xs text-muted-foreground">
                     <Calendar className="h-3 w-3 mr-1" />
-                    {new Date(project.date).toLocaleDateString()}
+                    {new Date(project.createdAt).toLocaleDateString()}
                   </div>
                 </div>
                 <CardTitle className="text-xl group-hover:text-accent transition-colors">
@@ -200,38 +109,40 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
 
               <CardContent className="space-y-4">
                 <CardDescription className="body-sm">
-                  {project.description}
+                  {project.excerpt}
                 </CardDescription>
 
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, tagIndex) => (
+                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
                     <span
-                      key={tagIndex}
+                      key={techIndex}
                       className="inline-flex items-center rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent"
                     >
-                      {tag}
+                      {tech}
                     </span>
                   ))}
                 </div>
 
                 <div className="flex space-x-2 pt-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     onClick={() => handlePreview(project)}
                     className="glass-card hover-lift"
                   >
                     <Eye className="mr-2 h-4 w-4" />
                     Preview
                   </Button>
+                  {project.liveUrl && (
+                    <Button size="sm" variant="outline" asChild className="glass-card hover-lift">
+                      <Link href={project.liveUrl!}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Live Demo
+                      </Link>
+                    </Button>
+                  )}
                   <Button size="sm" variant="outline" asChild className="glass-card hover-lift">
-                    <Link href={project.liveUrl as any}>
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Live Demo
-                    </Link>
-                  </Button>
-                  <Button size="sm" variant="outline" asChild className="glass-card hover-lift">
-                    <Link href={`/projects/${project.slug}` as any}>
+                    <Link href={`/projects/${project.slug}`}>
                       <ArrowRight className="mr-2 h-4 w-4" />
                       Read More
                     </Link>
@@ -270,7 +181,11 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
           <PreviewModal
             isOpen={isPreviewOpen}
             onClose={handleClosePreview}
-            project={selectedProject}
+            project={{
+              id: selectedProject.id,
+              title: selectedProject.title,
+              liveUrl: selectedProject.liveUrl || 'https://example.com'
+            }}
           />
         )}
       </div>

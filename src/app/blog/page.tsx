@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { BlogHero } from '@/components/blog/blog-hero'
-import { BlogFilter } from '@/components/blog/blog-filter'
 import { BlogGrid } from '@/components/blog/blog-grid'
 import { BlogNewsletter } from '@/components/blog/blog-newsletter'
 
@@ -14,7 +13,6 @@ export default function BlogPage() {
   return (
     <div className="flex flex-col bg-main min-h-screen">
       <BlogHero />
-      <BlogFilter />
       <BlogGrid />
       <BlogNewsletter />
     </div>

@@ -5,26 +5,10 @@ import { Search, Tag } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-const categories = [
-  "All Posts",
-  "Web Development",
-  "WordPress",
-  "React & Next.js",
-  "Performance",
-  "SEO",
-  "Tutorials"
-]
+import { getPostCategories, getPostTags } from '@/data/blog'
 
-const popularTags = [
-  "JavaScript",
-  "TypeScript", 
-  "CSS",
-  "WordPress",
-  "React",
-  "Next.js",
-  "Performance",
-  "SEO"
-]
+const categories = ["All Posts", ...getPostCategories()]
+const popularTags = getPostTags()
 
 export function BlogFilter() {
   const [activeCategory, setActiveCategory] = useState("All Posts")

@@ -12,7 +12,7 @@ export function FeatureCard({ icon, title, description }: FeatureCardProps) {
       <div className="text-blue-500 w-fit transform-gpu rounded-full border border-border/40 bg-blue-500/10 p-4 backdrop-blur-sm">
         {icon}
       </div>
-      <h4 className="font-geist text-lg font-bold tracking-tighter text-white">
+      <h4 className="font-geist text-lg font-bold tracking-tighter">
         {title}
       </h4>
       <p className="text-muted-foreground">{description}</p>

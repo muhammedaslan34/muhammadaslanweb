@@ -65,7 +65,7 @@
 
 ### M2 – Content Models & Admin (NOT STARTED ❌)
 - ❌ Prisma schema setup
-- ❌ Database configuration (SQLite dev / Postgres prod)
+- ❌ Database configuration (mongodb)
 - ❌ Admin authentication (NextAuth)
 - ❌ Admin routes (`/admin/*`)
 - ❌ Projects CRUD interface

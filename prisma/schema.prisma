@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String?
+  password  String
+  avatar    String?
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Enum for user roles
+enum UserRole {
+  USER
+  ADMIN
+}
+
+// Project model
+model Project {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String   @unique
+  description   String
+  excerpt       String
+  category      String
+  technologies  String[]
+  featured      Boolean  @default(false)
+  imageUrl      String?
+  liveUrl       String?
+  githubUrl     String?
+  client        String?
+  duration      String?
+  services      String[]
+  achievements  String[]
+  challenges    String[]
+  solutions     String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("projects")
+}
+
+// Blog Post model
+model BlogPost {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String   @unique
+  excerpt       String
+  content       String
+  category      String
+  tags          String[]
+  featured      Boolean  @default(false)
+  author        String
+  authorAvatar  String?
+  authorBio     String?
+  publishedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  readingTime   String
+  coverImage    String?
+  seoTitle      String?
+  seoDescription String?
+
+  @@map("blogPosts")
+}
+
+// Contact Form Submission model
+model ContactSubmission {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  budget    String?
+  timeline  String?
+  message   String
+  status    SubmissionStatus @default(NEW)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contactSubmissions")
+}
+
+// Enum for submission status
+enum SubmissionStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}

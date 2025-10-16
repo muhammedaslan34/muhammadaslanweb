@@ -1,50 +1,52 @@
-import { cn } from "@/lib/utils"
+import React, { useEffect, useRef } from 'react';
 
 interface BorderBeamProps {
-  className?: string
-  size?: number
-  duration?: number
-  borderWidth?: number
-  colorFrom?: string
-  colorTo?: string
-  delay?: number
-  reverse?: boolean
+  duration?: number;
+  size?: number;
+  className?: string;
+  reverse?: boolean;
 }
 
 export function BorderBeam({
-  className,
+  duration = 3,
   size = 200,
-  duration = 15,
-  borderWidth = 1.5,
-  colorFrom = "#ffaa40",
-  colorTo = "#9c40ff",
-  delay = 0,
+  className = "",
   reverse = false,
 }: BorderBeamProps) {
+  const borderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!borderRef.current) return;
+
+    const border = borderRef.current;
+    const animation = border.animate(
+      [
+        { transform: 'translateX(-100%)' },
+        { transform: 'translateX(100%)' },
+      ],
+      {
+        duration: duration * 1000,
+        iterations: Infinity,
+        direction: reverse ? 'reverse' : 'normal',
+        easing: 'linear',
+      }
+    );
+
+    return () => animation.cancel();
+  }, [duration, reverse]);
+
   return (
     <div
-      className={cn(
-        "pointer-events-none absolute inset-0 rounded-[inherit] [border:calc(var(--border-width)*1px)_solid_transparent]",
-        className
-      )}
-      style={
-        {
-          "--border-width": borderWidth,
-          "--size": size,
-          "--duration": duration,
-          "--color-from": colorFrom,
-          "--color-to": colorTo,
-          "--delay": `-${delay}s`,
-        } as React.CSSProperties
-      }
-    >
-      <div
-        className={cn(
-          "absolute inset-0 rounded-[inherit] [border:calc(var(--border-width)*1px)_solid_transparent] [mask:linear-gradient(transparent,transparent),linear-gradient(white,white)] [mask-clip:padding-box,border-box] [mask-composite:intersect]",
-          "before:absolute before:aspect-square before:w-[calc(var(--size)*1px)] before:animate-border-beam before:[animation-delay:var(--delay)] before:[animation-direction:reverse] before:[animation-duration:calc(var(--duration)*1s)] before:[background:linear-gradient(to_right,var(--color-from),var(--color-to),transparent)] before:[offset-anchor:calc(var(--size)*0.5*-1px)_calc(var(--size)*0.5*-1px)]",
-          reverse && "before:[animation-direction:normal]"
-        )}
-      />
-    </div>
-  )
+      ref={borderRef}
+      className={`absolute inset-0 overflow-hidden rounded-2xl ${className}`}
+      style={{
+        background: `linear-gradient(90deg, transparent, currentColor, transparent)`,
+        width: `${size}px`,
+        height: '2px',
+        top: '0',
+        left: '0',
+        transform: 'translateX(-100%)',
+      }}
+    />
+  );
 }

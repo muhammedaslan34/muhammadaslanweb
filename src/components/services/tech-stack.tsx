@@ -1,16 +1,16 @@
 const technologies = [
-  { name: "React", category: "Frontend" },
-  { name: "Next.js", category: "Framework" },
-  { name: "TypeScript", category: "Language" },
-  { name: "Tailwind CSS", category: "Styling" },
-  { name: "WordPress", category: "CMS" },
-  { name: "Node.js", category: "Backend" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "MongoDB", category: "Database" },
-  { name: "Vercel", category: "Hosting" },
-  { name: "AWS", category: "Cloud" },
-  { name: "Figma", category: "Design" },
-  { name: "Git", category: "Version Control" }
+  "React",
+  "Next.js",
+  "TypeScript",
+  "Tailwind CSS",
+  "WordPress",
+  "Node.js",
+  "PostgreSQL",
+  "MongoDB",
+  "Vercel",
+  "AWS",
+  "Figma",
+  "Git"
 ]
 
 export function TechStack() {
@@ -32,10 +32,9 @@ export function TechStack() {
                 className="p-4 text-center hover-lift group rounded-xl border border-border/40 shadow-sm"
                 style={{ backgroundColor: 'var(--card-bg)' }}
               >
-                <div className="text-sm font-semibold mb-1 group-hover:text-accent transition-colors">
-                  {tech.name}
+                <div className="text-sm font-semibold group-hover:text-accent transition-colors">
+                  {tech}
                 </div>
-                <div className="text-xs text-muted-foreground">{tech.category}</div>
               </div>
             ))}
           </div>

@@ -6,7 +6,7 @@ import Link from "next/link"
 import { ExternalLink, Calendar, Eye, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { projects, getProjectCategories, getProjectTechnologies } from "@/data/projects"
+import { projects } from "@/data/projects"
 import type { Project } from "@/data/projects"
 
 const PreviewModal = dynamic(() => import("@/components/preview/preview-modal").then(mod => ({ default: mod.PreviewModal })), {
@@ -16,10 +16,9 @@ const PreviewModal = dynamic(() => import("@/components/preview/preview-modal").
 interface ProjectsGridProps {
   activeCategory: string
   searchTerm: string
-  activeTechnologies: string[]
 }
 
-export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }: ProjectsGridProps) {
+export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
 
@@ -46,13 +45,9 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
         project.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.technologies.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
 
-      // Technology filter
-      const technologyMatch = activeTechnologies.length === 0 ||
-        activeTechnologies.some(tech => project.technologies.includes(tech))
-
-      return categoryMatch && searchMatch && technologyMatch
+      return categoryMatch && searchMatch
     })
-  }, [activeCategory, searchTerm, activeTechnologies])
+  }, [activeCategory, searchTerm])
 
   return (
     <section className="py-24">
@@ -63,7 +58,6 @@ export function ProjectsGrid({ activeCategory, searchTerm, activeTechnologies }:
             Showing {filteredProjects.length} of {projects.length} projects
             {activeCategory !== "All Projects" && ` in ${activeCategory}`}
             {searchTerm && ` matching "${searchTerm}"`}
-            {activeTechnologies.length > 0 && ` using ${activeTechnologies.join(", ")}`}
           </p>
         </div>
 

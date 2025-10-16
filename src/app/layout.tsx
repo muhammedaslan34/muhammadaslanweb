@@ -4,6 +4,7 @@ import './globals.css'
 import AnimatedHeader from '@/components/animated-header'
 import { SiteFooter } from '@/components/site-footer'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -54,6 +55,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <SiteFooter />
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

@@ -1,45 +1,31 @@
 "use client"
 
-import { Search, Filter, X } from "lucide-react"
+import { Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { getProjectCategories, getProjectTechnologies } from "@/data/projects"
+import { getProjectCategories } from "@/data/projects"
 
 const categories = ["All Projects", ...getProjectCategories()]
-const technologies = getProjectTechnologies()
 
 interface ProjectsFilterProps {
   activeCategory: string
   setActiveCategory: (category: string) => void
   searchTerm: string
   setSearchTerm: (term: string) => void
-  activeTechnologies: string[]
-  setActiveTechnologies: (technologies: string[]) => void
 }
 
 export function ProjectsFilter({
   activeCategory,
   setActiveCategory,
   searchTerm,
-  setSearchTerm,
-  activeTechnologies,
-  setActiveTechnologies
+  setSearchTerm
 }: ProjectsFilterProps) {
-  const toggleTechnology = (tech: string) => {
-    if (activeTechnologies.includes(tech)) {
-      setActiveTechnologies(activeTechnologies.filter(t => t !== tech))
-    } else {
-      setActiveTechnologies([...activeTechnologies, tech])
-    }
-  }
-
   const clearAllFilters = () => {
     setActiveCategory("All Projects")
     setSearchTerm("")
-    setActiveTechnologies([])
   }
 
-  const hasActiveFilters = activeCategory !== "All Projects" || searchTerm !== "" || activeTechnologies.length > 0
+  const hasActiveFilters = activeCategory !== "All Projects" || searchTerm !== ""
 
   return (
     <section className="py-12 border-b bg-muted/30">
@@ -82,32 +68,6 @@ export function ProjectsFilter({
                   className={activeCategory === category ? "hover-lift" : "glass-card hover-lift"}
                 >
                   {category}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Technology Filter */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
-              <h3 className="text-sm font-medium text-muted-foreground">Technologies</h3>
-              {activeTechnologies.length > 0 && (
-                <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded-full">
-                  {activeTechnologies.length} selected
-                </span>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {technologies.map((tech) => (
-                <Button
-                  key={tech}
-                  variant={activeTechnologies.includes(tech) ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => toggleTechnology(tech)}
-                  className={activeTechnologies.includes(tech) ? "hover-lift text-xs" : "glass-card hover-lift text-xs"}
-                >
-                  {tech}
                 </Button>
               ))}
             </div>

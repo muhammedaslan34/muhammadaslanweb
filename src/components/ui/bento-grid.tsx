@@ -31,19 +31,19 @@ const BentoGridItem = ({
     <motion.div
       variants={variants}
       className={cn(
-        'group border-border/40 bg-section/50 hover:border-primary/50 hover:bg-section/70 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 backdrop-blur-3xl transition-all duration-500 hover:shadow-lg',
+        'group border-border/40 bg-section/50 hover:border-accent/50 hover:bg-section/70 relative flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl border px-6 pt-6 pb-10 backdrop-blur-3xl transition-all duration-500 hover:shadow-lg',
         className,
       )}
     >
       <div className="relative z-10 flex h-full flex-col justify-between">
         <div>
-          <div className="bg-primary/10 text-primary group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-500">
+          <div className="bg-accent/10 text-accent group-hover:bg-accent/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-all duration-500">
             {icon}
           </div>
           <h3 className="mb-2 text-xl font-semibold tracking-tight">{title}</h3>
           <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         </div>
-        <div className="text-primary mt-4 flex items-center text-sm font-medium">
+        <div className="text-accent mt-4 flex items-center text-sm font-medium">
           <span className="mr-1">Learn more</span>
           <ArrowRight className="size-4 transition-all duration-500 group-hover:translate-x-2" />
         </div>

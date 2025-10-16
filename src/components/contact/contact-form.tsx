@@ -35,19 +35,55 @@ export function ContactForm() {
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formStatus, setFormStatus] = useState<{
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setFormStatus({ type: null, message: '' })
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    console.log("Form submitted:", formData)
-    setIsSubmitting(false)
-    
-    // Reset form or show success message
-    alert("Thank you! I'll get back to you within 24 hours.")
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setFormStatus({
+          type: 'success',
+          message: 'Thank you for your inquiry! I\'ll get back to you within 24 hours.'
+        })
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          budget: "",
+          timeline: "",
+          message: ""
+        })
+      } else {
+        setFormStatus({
+          type: 'error',
+          message: data.error || 'Failed to send message. Please try again.'
+        })
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setFormStatus({
+        type: 'error',
+        message: 'An unexpected error occurred. Please try again later.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -151,9 +187,20 @@ export function ContactForm() {
             />
           </div>
 
-          <Button 
-            type="submit" 
-            className="w-full hover-lift" 
+          {/* Form Status Messages */}
+          {formStatus.type && (
+            <div className={`p-4 rounded-md ${
+              formStatus.type === 'success'
+                ? 'bg-green-50 text-green-800 border border-green-200'
+                : 'bg-red-50 text-red-800 border border-red-200'
+            }`}>
+              {formStatus.message}
+            </div>
+          )}
+          
+          <Button
+            type="submit"
+            className="w-full hover-lift"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

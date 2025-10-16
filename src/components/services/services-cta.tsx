@@ -33,15 +33,24 @@ export function ServicesCTA() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 pt-8">
-            <div className="text-center glass-card p-6 hover-lift">
+            <div 
+              className="text-center p-6 hover-lift rounded-xl border border-border/40 shadow-sm"
+              style={{ backgroundColor: 'var(--card-bg)' }}
+            >
               <div className="text-3xl font-bold text-accent mb-2">50+</div>
               <div className="text-sm text-muted-foreground">Projects Completed</div>
             </div>
-            <div className="text-center glass-card p-6 hover-lift">
+            <div 
+              className="text-center p-6 hover-lift rounded-xl border border-border/40 shadow-sm"
+              style={{ backgroundColor: 'var(--card-bg)' }}
+            >
               <div className="text-3xl font-bold text-accent mb-2">5+</div>
               <div className="text-sm text-muted-foreground">Years Experience</div>
             </div>
-            <div className="text-center glass-card p-6 hover-lift">
+            <div 
+              className="text-center p-6 hover-lift rounded-xl border border-border/40 shadow-sm"
+              style={{ backgroundColor: 'var(--card-bg)' }}
+            >
               <div className="text-3xl font-bold text-accent mb-2">100%</div>
               <div className="text-sm text-muted-foreground">Client Satisfaction</div>
             </div>

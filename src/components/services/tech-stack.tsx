@@ -29,7 +29,8 @@ export function TechStack() {
             {technologies.map((tech, index) => (
               <div
                 key={index}
-                className="glass-card p-4 text-center hover-lift group"
+                className="p-4 text-center hover-lift group rounded-xl border border-border/40 shadow-sm"
+                style={{ backgroundColor: 'var(--card-bg)' }}
               >
                 <div className="text-sm font-semibold mb-1 group-hover:text-accent transition-colors">
                   {tech.name}

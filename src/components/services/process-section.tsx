@@ -51,7 +51,10 @@ export function ProcessSection() {
                   <div className="hidden lg:block absolute top-12 -right-2 w-8 h-0.5 bg-gradient-to-r from-accent/50 to-accent/20 z-0" />
                 )}
                 
-                <div className="glass-card p-6 text-center hover-lift relative z-10">
+                <div 
+                  className="p-6 text-center hover-lift relative z-10 rounded-xl border border-border/40 shadow-sm"
+                  style={{ backgroundColor: 'var(--card-bg)' }}
+                >
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent/10 mb-4 group-hover:bg-accent/20 transition-colors">
                     <step.icon className="h-6 w-6 text-accent" />
                   </div>

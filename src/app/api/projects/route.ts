@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10")
     const search = searchParams.get("search") || ""
     const category = searchParams.get("category") || ""
+    const featured = searchParams.get("featured") === "true"
 
     const skip = (page - 1) * limit
 
@@ -27,6 +28,7 @@ export async function GET(request: NextRequest) {
         ],
       }),
       ...(category && { category }),
+      ...(featured && { featured: true }),
     }
 
     const [projects, total] = await Promise.all([

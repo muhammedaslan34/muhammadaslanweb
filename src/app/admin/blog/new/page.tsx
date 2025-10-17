@@ -149,8 +149,8 @@ export default function NewBlogPost() {
         </div>
       </header>
 
-      <main className="container py-8 px-4 max-w-4xl">
-        <Card className="glass-card">
+      <main className="container py-8 px-4 max-w-4xl mt-8">
+        <Card className="glass-card border-primary">
           <CardHeader>
             <CardTitle>Blog Post Details</CardTitle>
             <CardDescription>

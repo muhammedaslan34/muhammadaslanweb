@@ -7,8 +7,8 @@
       "Bash(node scripts/hash-password.js:*)",
       "Bash(npx prisma studio)",
       "Bash(node scripts/create-admin-direct.js:*)",
-      "Bash(node scripts/check-data.js:*)",
-      "Bash(node scripts/seed-direct.js:*)"
+      "Bash(node scripts/check-admin.js:*)",
+      "Bash(node scripts/test-login.js:*)"
     ],
     "deny": [],
     "ask": []

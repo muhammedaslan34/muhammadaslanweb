@@ -81,149 +81,140 @@ export function TestimonialCard({
 
 const testimonials = [
   {
-    name: 'Jordan Hayes',
-    role: 'CTO at Quantum Innovations',
-    img: 'https://randomuser.me/api/portraits/men/22.jpg',
+    name: 'Sarah Thompson',
+    role: 'CEO at TechStart Inc.',
+    img: 'https://randomuser.me/api/portraits/women/32.jpg',
     description: (
       <p>
-        NexaUI has completely transformed our development workflow.
+        Working with Muhammed was an exceptional experience.
         <Highlight>
-          The component system saved us weeks of custom coding and design work.
+          He delivered our custom web application ahead of schedule and exceeded all expectations.
         </Highlight>{' '}
-        Our team can now focus on business logic instead of UI details.
+        His attention to detail and problem-solving skills are remarkable.
       </p>
     ),
   },
   {
-    name: 'Maya Rodriguez',
-    role: 'Lead Developer at Skyline Digital',
-    img: 'https://randomuser.me/api/portraits/women/33.jpg',
+    name: 'Michael Rodriguez',
+    role: 'Product Manager at InnovateTech',
+    img: 'https://randomuser.me/api/portraits/men/45.jpg',
     description: (
       <p>
-        I was skeptical at first, but NexaUI proved me wrong.
+        Muhammed transformed our outdated platform into a modern, responsive application.
         <Highlight>
-          The accessibility features and responsive design are top-notch.
+          The performance improvements alone reduced our bounce rate by 40%.
         </Highlight>{' '}
-        It&apos;s rare to find a framework that prioritizes both aesthetics and
-        functionality.
+        His expertise in full-stack development is evident in every aspect of the project.
       </p>
     ),
   },
   {
-    name: 'Ethan Park',
-    role: 'Startup Founder at Elevate Labs',
-    img: 'https://randomuser.me/api/portraits/men/32.jpg',
+    name: 'Emily Chen',
+    role: 'Founder at StartupHub',
+    img: 'https://randomuser.me/api/portraits/women/28.jpg',
     description: (
       <p>
-        As a non-technical founder, NexaUI has been a game-changer for our MVP.
-        <Highlight>We launched three months ahead of schedule.</Highlight> The
-        modular components allowed us to iterate quickly based on user feedback.
+        As a non-technical founder, I needed someone who could translate my vision into reality.
+        <Highlight>Muhammed made the entire process seamless and educational.</Highlight>
+        He built our MVP in record time and continues to provide excellent support.
       </p>
     ),
   },
   {
-    name: 'Zoe Bennett',
-    role: 'UX Architect at Fusion Systems',
-    img: 'https://randomuser.me/api/portraits/women/44.jpg',
+    name: 'David Park',
+    role: 'Marketing Director at DigitalFirst',
+    img: 'https://randomuser.me/api/portraits/men/38.jpg',
     description: (
       <p>
-        NexaUI&apos;s attention to detail is impressive.
+        Our new website has been a game-changer for our business.
         <Highlight>
-          The micro-interactions and animations create a polished experience.
+          The UI/UX design is intuitive and our conversion rates have doubled.
         </Highlight>{' '}
-        It&apos;s become our go-to solution for client projects with tight
-        deadlines.
+        Muhammed really understands how to create user experiences that drive results.
       </p>
     ),
   },
   {
-    name: 'Victor Nguyen',
-    role: 'Product Lead at FinEdge',
-    img: 'https://randomuser.me/api/portraits/men/55.jpg',
+    name: 'Jessica Williams',
+    role: 'Operations Manager at CloudScale',
+    img: 'https://randomuser.me/api/portraits/women/41.jpg',
     description: (
       <p>
-        Our financial dashboard needed a complete overhaul, and NexaUI
-        delivered.
+        Muhammed built our internal management system that streamlined our entire workflow.
         <Highlight>
-          The data visualization components are both beautiful and functional.
+          What used to take hours now takes minutes, thanks to his efficient solutions.
         </Highlight>{' '}
-        User engagement has increased by 47% since the redesign.
+        His ability to understand complex business requirements is impressive.
       </p>
     ),
   },
   {
-    name: 'Amara Johnson',
-    role: 'Frontend Specialist at Nimbus Tech',
-    img: 'https://randomuser.me/api/portraits/women/67.jpg',
+    name: 'Alex Kumar',
+    role: 'Tech Lead at DataFlow Systems',
+    img: 'https://randomuser.me/api/portraits/men/52.jpg',
     description: (
       <p>
-        The documentation for NexaUI is exceptional.
+        We hired Muhammed to optimize our database and backend performance.
         <Highlight>
-          I was able to implement complex UI patterns in just a few hours.
+          Query speeds improved by 300% and system stability increased significantly.
         </Highlight>{' '}
-        The TypeScript support is also a major productivity booster.
+        His deep knowledge of optimization techniques is truly valuable.
       </p>
     ),
   },
   {
-    name: 'Leo Tanaka',
-    role: 'Creative Technologist at Prism Agency',
-    img: 'https://randomuser.me/api/portraits/men/78.jpg',
+    name: 'Rachel Foster',
+    role: 'Creative Director at BrandCraft',
+    img: 'https://randomuser.me/api/portraits/women/35.jpg',
     description: (
       <p>
-        NexaUI has the perfect balance of flexibility and structure.
+        Muhammed brought our creative vision to life with technical excellence.
         <Highlight>
-          We can maintain brand consistency while still creating unique
-          experiences.
+          The interactive features and animations he implemented are simply stunning.
         </Highlight>{' '}
-        Our clients are consistently impressed with the results.
+        He perfectly balances creativity with technical functionality.
       </p>
     ),
   },
   {
-    name: 'Sophia Martinez',
-    role: 'E-commerce Director at StyleHub',
-    img: 'https://randomuser.me/api/portraits/women/89.jpg',
+    name: 'Thomas Anderson',
+    role: 'CEO at FinTech Solutions',
+    img: 'https://randomuser.me/api/portraits/men/47.jpg',
     description: (
       <p>
-        Our conversion rates have increased by 28% since implementing NexaUI.
+        Security and reliability were our top priorities for our financial platform.
         <Highlight>
-          The checkout flow components are optimized for both desktop and
-          mobile.
+          Muhammed delivered a robust solution that exceeds industry standards.
         </Highlight>{' '}
-        The dark mode support was also a huge hit with our customers.
+        His commitment to best practices and code quality is outstanding.
       </p>
     ),
   },
   {
-    name: 'Aiden Wilson',
-    role: 'Healthcare Solutions Architect',
-    img: 'https://randomuser.me/api/portraits/men/92.jpg',
+    name: 'Lisa Martinez',
+    role: 'Product Owner at EduTech Pro',
+    img: 'https://randomuser.me/api/portraits/women/39.jpg',
     description: (
       <p>
-        NexaUI&apos;s accessibility features were crucial for our healthcare
-        platform.
+        Muhammed developed our learning management system with incredible attention to user experience.
         <Highlight>
-          We passed compliance requirements with minimal additional work.
+          Student engagement has increased by 60% since the new platform launched.
         </Highlight>{' '}
-        The form components are especially well-designed for complex data entry.
+        He's responsive, professional, and delivers exceptional work every time.
       </p>
     ),
   },
   {
-    name: 'Olivia Chen',
-    role: 'EdTech Product Manager at LearnSphere',
-    img: 'https://randomuser.me/api/portraits/women/29.jpg',
+    name: 'James Wilson',
+    role: 'CTO at HealthTech Innovations',
+    img: 'https://randomuser.me/api/portraits/men/43.jpg',
     description: (
       <p>
-        Our educational platform needed to work for students of all ages and
-        abilities.
+        We needed a developer who could handle complex integrations and HIPAA compliance.
         <Highlight>
-          NexaUI&apos;s inclusive design principles made this possible without
-          compromise.
+          Muhammed delivered a secure, compliant solution that passed all audits with flying colors.
         </Highlight>{' '}
-        The interactive components have significantly improved student
-        engagement.
+        His expertise in healthcare technology development is unmatched.
       </p>
     ),
   },
@@ -241,15 +232,15 @@ export function Testimonials() {
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-foreground mb-4 text-center text-4xl leading-[1.2] font-bold tracking-tighter md:text-5xl">
-          What Our Users Are Saying
+          Client Success Stories
         </h2>
         <h3 className="text-muted-foreground mx-auto mb-8 max-w-lg text-center text-lg font-medium tracking-tight text-balance">
           Don&apos;t just take our word for it. Here&apos;s what{' '}
           <span className="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">
-            real developers
+            real clients
           </span>{' '}
-          are saying about{' '}
-          <span className="font-semibold text-blue-500">NexaUI</span>
+          are saying about our{' '}
+          <span className="font-semibold text-blue-500">development services</span>
         </h3>
       </motion.div>
       <div className="relative mt-6 max-h-screen overflow-hidden">

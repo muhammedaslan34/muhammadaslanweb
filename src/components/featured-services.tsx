@@ -62,42 +62,42 @@ const BentoGridItem = ({
 
 const services = [
   {
-    title: 'Developer-Friendly',
+    title: 'Custom Web Development',
     description:
-      'Tailored for developers to create and iterate fast, with minimal overhead and maximum flexibility.',
+      'Full-stack web applications built with modern technologies like Next.js, React, TypeScript, and Node.js. From concept to deployment, we create scalable solutions tailored to your business needs.',
     icon: <Code className="size-6" />,
     size: 'large' as const,
   },
   {
-    title: 'CLI Support',
+    title: 'Mobile-First Design',
     description:
-      'Command-line interface support for seamless development and workflow integration.',
-    icon: <Layers className="size-6" />,
+      'Responsive web designs that work flawlessly across all devices. We prioritize mobile user experience to ensure your application looks and performs great on smartphones, tablets, and desktops.',
+    icon: <Smartphone className="size-6" />,
     size: 'small' as const,
   },
   {
-    title: 'Easily Customizable',
-    description: 'Every block is built to be editable. From layout to logic, style to structure—make it your own.',
+    title: 'UI/UX Excellence',
+    description: 'Beautiful, intuitive interfaces that delight users and drive engagement. We combine aesthetic appeal with usability to create experiences that keep your users coming back.',
     icon: <Palette className="size-6" />,
     size: 'medium' as const,
   },
   {
-    title: 'v0 Support',
-    description: "Launch fast with confidence. Perfect for MVPs, prototypes, and weekend projects.",
+    title: 'Performance Optimization',
+    description: "Lightning-fast applications optimized for speed and efficiency. We implement best practices for code splitting, lazy loading, and caching to ensure optimal performance.",
     icon: <Zap className="size-6" />,
     size: 'medium' as const,
   },
   {
-    title: 'Full Documentation',
-    description: 'Comprehensive documentation to understand every feature and maximize your development experience.',
-    icon: <FileText className="size-6" />,
+    title: 'API Integration',
+    description: 'Seamless integration with third-party services and payment gateways. We handle everything from RESTful APIs to real-time WebSocket connections.',
+    icon: <Globe className="size-6" />,
     size: 'small' as const,
   },
   {
-    title: 'Contribute Yours',
+    title: 'Maintenance & Support',
     description:
-      'Add your own blocks to the library and become part of the MVPBlocks community.',
-    icon: <Globe className="size-6" />,
+      'Ongoing support and maintenance to keep your application running smoothly. We provide regular updates, security patches, and performance monitoring to ensure long-term success.',
+    icon: <FileText className="size-6" />,
     size: 'large' as const,
   },
 ];

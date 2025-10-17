@@ -1,20 +1,106 @@
+"use client"
+
 import Link from "next/link"
 import { Calendar, Clock, ArrowRight, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { blogPosts, getFeaturedPosts } from "@/data/blog"
+import { useState, useEffect } from "react"
+
+interface BlogPost {
+  id: string
+  title: string
+  excerpt: string
+  content: string
+  slug: string
+  category: string
+  tags: string[]
+  featured: boolean
+  author: string
+  authorAvatar?: string
+  authorBio?: string
+  publishedAt: string
+  updatedAt: string
+  readingTime: string
+  coverImage?: string
+  seoTitle?: string
+  seoDescription?: string
+}
 
 export function BlogGrid() {
-  const featuredPosts = getFeaturedPosts().slice(0, 2)
+  const [posts, setPosts] = useState<BlogPost[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/blog/public?limit=20')
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts')
+        }
+        const data = await response.json()
+        setPosts(data.posts || [])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch posts')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPosts()
+  }, [])
+
+  if (loading) {
+    return (
+      <section className="py-24">
+        <div className="container">
+          <div className="text-center">
+            <p className="text-muted-foreground">Loading blog posts...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) {
+    return (
+      <section className="py-24">
+        <div className="container">
+          <div className="text-center">
+            <p className="text-red-500">Error: {error}</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  const featuredPosts = posts.filter(post => post.featured).slice(0, 2)
+  const recentPosts = posts.slice(0, 9)
+
+  if (posts.length === 0) {
+    return (
+      <section className="py-24">
+        <div className="container">
+          <div className="text-center py-12">
+            <h2 className="heading-md mb-4">No Blog Posts Yet</h2>
+            <p className="text-muted-foreground mb-8">
+              Blog posts will appear here once they are created in the admin panel.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
   
   return (
     <section className="py-24">
       <div className="container">
         {/* Featured Posts */}
-        <div className="mb-16">
-          <h2 className="heading-md mb-8">Featured Articles</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {featuredPosts.map((post, index) => (
+        {featuredPosts.length > 0 && (
+          <div className="mb-16">
+            <h2 className="heading-md mb-8">Featured Articles</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {featuredPosts.map((post, index) => (
               <Card key={post.id} className="glass-card hover-lift group overflow-hidden">
                 <div className="aspect-video bg-gradient-to-br from-accent/20 to-primary/20 relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-primary/10 flex items-center justify-center">
@@ -69,12 +155,14 @@ export function BlogGrid() {
             ))}
           </div>
         </div>
+        )}
 
         {/* All Posts */}
-        <div>
-          <h2 className="heading-md mb-8">Recent Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
+        {recentPosts.length > 0 && (
+          <div>
+            <h2 className="heading-md mb-8">Recent Articles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recentPosts.map((post, index) => (
               <Card key={post.id} className="glass-card hover-lift group">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
@@ -112,12 +200,15 @@ export function BlogGrid() {
             ))}
           </div>
         </div>
+        )}
 
-        <div className="text-center mt-12">
-          <Button variant="outline" className="glass-card hover-lift">
-            Load More Articles
-          </Button>
-        </div>
+        {posts.length > 9 && (
+          <div className="text-center mt-12">
+            <Button variant="outline" className="glass-card hover-lift">
+              Load More Articles
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   )

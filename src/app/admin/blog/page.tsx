@@ -146,7 +146,7 @@ export default function AdminBlog() {
   return (
     <div className="min-h-screen bg-main">
       <header className="bg-muted/30 border-b">
-        <div className="container flex items-center justify-between h-16 px-4">
+        <div className="container flex items-center justify-between mt-10 h-16 px-4">
           <div className="flex items-center space-x-4">
             <Button
               variant="ghost"

@@ -7,6 +7,6 @@ interface ProvidersProps {
   children: ReactNode
 }
 
-export function SessionProviderWrapper({ children }: ProvidersProps) {
+export default function NextAuthProvider({ children }: ProvidersProps) {
   return <SessionProvider>{children}</SessionProvider>
 }

@@ -5,6 +5,7 @@ import AnimatedHeader from '@/components/animated-header'
 import { SiteFooter } from '@/components/site-footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
+import NextAuthProvider from '@/components/providers/session-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,19 +45,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="relative flex min-h-screen flex-col">
-            <AnimatedHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
-          <Toaster />
-        </ThemeProvider>
+        <NextAuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="relative flex min-h-screen flex-col">
+              <AnimatedHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </div>
+            <Toaster />
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )

@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import {
-  Code,
-  Terminal,
-  Paintbrush,
-  Rocket,
-  Book,
-  PlusCircle,
+  Code2,
+  Smartphone,
+  Palette,
+  Zap,
+  Users,
+  Award,
 } from 'lucide-react';
 import { FeatureCard } from './feature-card';
 
@@ -17,34 +17,34 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    icon: <Code className="h-6 w-6" />,
-    title: 'Developer-Friendly',
-    desc: 'Tailored for developers to create and iterate fast, with minimal overhead and maximum flexibility.',
+    icon: <Code2 className="h-6 w-6" />,
+    title: 'Full-Stack Development',
+    desc: 'Building robust web applications with modern technologies like Next.js, React, TypeScript, and Node.js.',
   },
   {
-    icon: <Terminal className="h-6 w-6" />,
-    title: 'CLI Support',
-    desc: 'Command-line interface support for seamless development and workflow integration.',
+    icon: <Smartphone className="h-6 w-6" />,
+    title: 'Responsive Design',
+    desc: 'Creating seamless experiences across all devices with mobile-first design principles and modern CSS.',
   },
   {
-    icon: <Paintbrush className="h-6 w-6" />,
-    title: 'Easily Customizable',
-    desc: 'Every block is built to be editable. From layout to logic, style to structure—make it your own.',
+    icon: <Palette className="h-6 w-6" />,
+    title: 'UI/UX Excellence',
+    desc: 'Crafting intuitive interfaces with attention to detail, accessibility, and user-centered design thinking.',
   },
   {
-    icon: <Rocket className="h-6 w-6" />,
-    title: 'v0 Support',
-    desc: 'Launch fast with confidence. Perfect for MVPs, prototypes, and weekend projects.',
+    icon: <Zap className="h-6 w-6" />,
+    title: 'Performance Optimized',
+    desc: 'Delivering lightning-fast applications with optimized code, lazy loading, and modern performance techniques.',
   },
   {
-    icon: <Book className="h-6 w-6" />,
-    title: 'Full Documentation',
-    desc: 'Comprehensive documentation to understand every feature and maximize your development experience.',
+    icon: <Users className="h-6 w-6" />,
+    title: 'Client Collaboration',
+    desc: 'Working closely with clients to bring their vision to life through clear communication and iterative feedback.',
   },
   {
-    icon: <PlusCircle className="h-6 w-6" />,
-    title: 'Contribute Yours',
-    desc: 'Add your own blocks to the library and become part of the MVPBlocks community.',
+    icon: <Award className="h-6 w-6" />,
+    title: 'Quality Assurance',
+    desc: 'Ensuring bug-free delivery with comprehensive testing, code reviews, and adherence to best practices.',
   },
 ];
 
@@ -55,10 +55,10 @@ export function WhyChooseUs() {
         <div className="relative mx-auto max-w-2xl sm:text-center">
           <div className="relative z-10">
             <h3 className="font-geist mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl">
-              Let's help build your MVP
+              Building Digital Solutions That Matter
             </h3>
             <p className="font-geist text-foreground/60 mt-3 leading-relaxed">
-              Transform your ideas into reality with powerful, customizable components designed for rapid development and seamless integration.
+              Transforming ideas into powerful web experiences with modern technologies, thoughtful design, and a commitment to excellence in every project.
             </p>
           </div>
           <div

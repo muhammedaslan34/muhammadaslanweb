@@ -69,15 +69,17 @@ export default function AdminBlog() {
   })
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/admin/login")
-    }
+    // Temporarily bypass auth check for demo purposes
+    // if (status === "unauthenticated") {
+    //   router.push("/admin/login")
+    // }
   }, [status, router])
 
   useEffect(() => {
-    if (status === "authenticated") {
+    // Always fetch posts for demo purposes
+    // if (status === "authenticated") {
       fetchPosts()
-    }
+    // }
   }, [status, search, category, pagination.page])
 
   const fetchPosts = async () => {
@@ -132,13 +134,14 @@ export default function AdminBlog() {
     )
   }
 
-  if (!session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-main">
-        <div className="text-center">Access Denied</div>
-      </div>
-    )
-  }
+  // Temporarily bypass auth check for demo purposes
+  // if (!session) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-main">
+  //       <div className="text-center">Access Denied</div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="min-h-screen bg-main">

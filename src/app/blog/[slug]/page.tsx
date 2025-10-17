@@ -4,19 +4,65 @@ import { Calendar, Clock, User, ArrowLeft, Share2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import type { Metadata } from 'next'
-import { blogPosts, getPostBySlug } from '@/data/blog'
+
+interface BlogPost {
+  id: string
+  title: string
+  excerpt: string
+  content: string
+  slug: string
+  category: string
+  tags: string[]
+  featured: boolean
+  author: string
+  authorAvatar?: string
+  authorBio?: string
+  publishedAt: string
+  updatedAt: string
+  readingTime: string
+  coverImage?: string
+  seoTitle?: string
+  seoDescription?: string
+}
+
+async function getPost(slug: string): Promise<BlogPost | null> {
+  try {
+    const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/blog/slug/${slug}`, {
+      cache: 'no-store', // Ensure fresh data
+    })
+    
+    if (!response.ok) {
+      return null
+    }
+    
+    return await response.json()
+  } catch (error) {
+    console.error('Failed to fetch post:', error)
+    return null
+  }
+}
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }))
+  try {
+    const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/blog/public?limit=100`)
+    if (!response.ok) {
+      return []
+    }
+    const data = await response.json()
+    return data.posts.map((post: BlogPost) => ({
+      slug: post.slug,
+    }))
+  } catch (error) {
+    console.error('Failed to generate static params:', error)
+    return []
+  }
 }
 
 // Generate metadata for each blog post
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const post = await getPost(slug)
   
   if (!post) {
     return {
@@ -41,7 +87,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const post = await getPost(slug)
 
   if (!post) {
     notFound()

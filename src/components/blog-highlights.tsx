@@ -1,33 +1,78 @@
+'use client'
+
 import Link from "next/link"
 import { Calendar, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-
-const posts = [
-  {
-    title: "Building Modern WordPress Themes with Block Editor",
-    excerpt: "Learn how to create custom WordPress themes that leverage the full power of the Gutenberg block editor.",
-    date: "2024-01-15",
-    readingTime: "5 min read",
-    slug: "modern-wordpress-themes-block-editor",
-  },
-  {
-    title: "Next.js 14 App Router: Complete Guide",
-    excerpt: "Everything you need to know about the new App Router in Next.js 14 and how to migrate your existing projects.",
-    date: "2024-01-10",
-    readingTime: "8 min read",
-    slug: "nextjs-14-app-router-guide",
-  },
-  {
-    title: "Optimizing WordPress Performance in 2024",
-    excerpt: "Proven strategies to make your WordPress site lightning fast with modern optimization techniques.",
-    date: "2024-01-05",
-    readingTime: "6 min read",
-    slug: "wordpress-performance-optimization-2024",
-  },
-]
+import { useState, useEffect } from "react"
+import { toast } from "sonner"
 
 export function BlogHighlights() {
+  const [posts, setPosts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchBlogPosts()
+  }, [])
+
+  const fetchBlogPosts = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/blog?limit=3')
+      if (!response.ok) throw new Error('Failed to fetch blog posts')
+
+      const data = await response.json()
+
+      // Transform blog data to match the component format
+      const transformedPosts = data.posts.map((post: any) => ({
+        title: post.title,
+        excerpt: post.excerpt,
+        date: post.publishedAt,
+        readingTime: `${Math.ceil(post.content.length / 1000)} min read`, // Rough estimate
+        slug: post.slug,
+      }))
+
+      setPosts(transformedPosts)
+    } catch (error) {
+      console.error('Error fetching blog posts:', error)
+      toast.error('Failed to load blog posts')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-24 bg-muted/50">
+        <div className="container">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="heading-lg">Latest from the Blog</h2>
+            <p className="body-lg text-muted-foreground max-w-2xl mx-auto">
+              Loading latest blog posts...
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <Card key={i} className="animate-pulse">
+                <CardHeader>
+                  <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-muted rounded w-1/2"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-muted rounded"></div>
+                    <div className="h-3 bg-muted rounded w-5/6"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="py-16 md:py-24 bg-muted/50">
       <div className="container">

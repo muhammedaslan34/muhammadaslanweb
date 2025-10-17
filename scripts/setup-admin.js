@@ -7,6 +7,7 @@
  * Run this script after setting up your MongoDB connection in .env.local
  */
 
+require('dotenv').config();
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 

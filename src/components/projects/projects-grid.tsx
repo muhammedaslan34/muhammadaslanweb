@@ -129,10 +129,10 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
                   </Button>
                   {project.liveUrl && (
                     <Button size="sm" variant="outline" asChild className="glass-card hover-lift">
-                      <Link href={project.liveUrl!}>
+                      <a href={project.liveUrl!} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="mr-2 h-4 w-4" />
                         Live Demo
-                      </Link>
+                      </a>
                     </Button>
                   )}
                   <Button size="sm" variant="outline" asChild className="glass-card hover-lift">

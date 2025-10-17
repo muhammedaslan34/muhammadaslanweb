@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 async function main() {
   console.log('Start seeding...')
+  console.log('MONGODB_URI:', process.env.MONGODB_URI)
 
   // Create admin user
   const hashedPassword = await bcrypt.hash('admin123', 12)

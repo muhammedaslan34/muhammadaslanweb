@@ -72,10 +72,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className="flex space-x-4">
             {project.liveUrl && (
               <Button asChild className="hover-lift">
-                <Link href={project.liveUrl!}>
+                <a href={project.liveUrl!} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="mr-2 h-4 w-4" />
                   View Live Site
-                </Link>
+                </a>
               </Button>
             )}
           </div>
@@ -218,18 +218,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <CardContent className="space-y-3">
                 {project.liveUrl && (
                   <Button asChild className="w-full hover-lift">
-                    <Link href={project.liveUrl!}>
+                    <a href={project.liveUrl!} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       Visit Live Site
-                    </Link>
+                    </a>
                   </Button>
                 )}
                 {project.githubUrl && (
                   <Button variant="outline" asChild className="w-full hover-lift">
-                    <Link href={project.githubUrl!}>
+                    <a href={project.githubUrl!} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       View on GitHub
-                    </Link>
+                    </a>
                   </Button>
                 )}
               </CardContent>

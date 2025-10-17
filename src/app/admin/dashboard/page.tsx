@@ -156,26 +156,9 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-main">
-      <header className="bg-muted/30 border-b">
-        <div className="container flex items-center justify-between h-16 px-4">
-          <h1 className="text-xl font-semibold">Admin Dashboard</h1>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-muted-foreground">
-              {session.user?.email}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => router.push("/api/auth/signout")}
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+     
 
-      <main className="container py-8 px-4">
+      <main className="container my-10 py-8 px-4">
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-2">Welcome, {session.user?.name}</h2>
           <p className="text-muted-foreground">

@@ -16,19 +16,19 @@ export async function GET(
 
     const { id } = await params
 
-    const project = await prisma.project.findUnique({
+    const post = await prisma.blogPost.findUnique({
       where: { id },
     })
 
-    if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 })
+    if (!post) {
+      return NextResponse.json({ error: "Blog post not found" }, { status: 404 })
     }
 
-    return NextResponse.json(project)
+    return NextResponse.json(post)
   } catch (error) {
-    console.error("Failed to fetch project:", error)
+    console.error("Failed to fetch blog post:", error)
     return NextResponse.json(
-      { error: "Failed to fetch project" },
+      { error: "Failed to fetch blog post" },
       { status: 500 }
     )
   }
@@ -48,45 +48,44 @@ export async function PUT(
     const { id } = await params
     const body = await request.json()
 
-    const project = await prisma.project.update({
+    const post = await prisma.blogPost.update({
       where: { id },
       data: {
         title: body.title,
         slug: body.slug,
-        description: body.description,
         excerpt: body.excerpt,
+        content: body.content,
         category: body.category,
-        technologies: body.technologies || [],
+        tags: body.tags || [],
         featured: body.featured || false,
-        imageUrl: body.imageUrl,
-        liveUrl: body.liveUrl,
-        githubUrl: body.githubUrl,
-        client: body.client,
-        duration: body.duration,
-        services: body.services || [],
-        achievements: body.achievements || [],
-        challenges: body.challenges || [],
-        solutions: body.solutions || [],
+        author: body.author,
+        authorAvatar: body.authorAvatar,
+        authorBio: body.authorBio,
+        readingTime: body.readingTime,
+        coverImage: body.coverImage,
+        seoTitle: body.seoTitle,
+        seoDescription: body.seoDescription,
+        publishedAt: body.publishedAt,
       },
     })
 
-    return NextResponse.json(project)
+    return NextResponse.json(post)
   } catch (error: any) {
-    console.error("Failed to update project:", error)
-    
+    console.error("Failed to update blog post:", error)
+
     if (error.code === "P2002") {
       return NextResponse.json(
-        { error: "A project with this slug already exists" },
+        { error: "A blog post with this slug already exists" },
         { status: 409 }
       )
     }
-    
+
     if (error.code === "P2025") {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 })
+      return NextResponse.json({ error: "Blog post not found" }, { status: 404 })
     }
-    
+
     return NextResponse.json(
-      { error: "Failed to update project" },
+      { error: "Failed to update blog post" },
       { status: 500 }
     )
   }
@@ -105,20 +104,20 @@ export async function DELETE(
 
     const { id } = await params
 
-    await prisma.project.delete({
+    await prisma.blogPost.delete({
       where: { id },
     })
 
     return NextResponse.json({ success: true })
   } catch (error: any) {
-    console.error("Failed to delete project:", error)
-    
+    console.error("Failed to delete blog post:", error)
+
     if (error.code === "P2025") {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 })
+      return NextResponse.json({ error: "Blog post not found" }, { status: 404 })
     }
-    
+
     return NextResponse.json(
-      { error: "Failed to delete project" },
+      { error: "Failed to delete blog post" },
       { status: 500 }
     )
   }

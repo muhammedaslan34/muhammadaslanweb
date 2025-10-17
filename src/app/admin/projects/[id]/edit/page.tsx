@@ -33,12 +33,13 @@ interface Project {
   solutions: string[]
 }
 
-export default function EditProject({ params }: { params: { id: string } }) {
+export default function EditProject({ params }: { params: Promise<{ id: string }> }) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(true)
   const [project, setProject] = useState<Project | null>(null)
+  const [projectId, setProjectId] = useState<string>("")
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -64,14 +65,18 @@ export default function EditProject({ params }: { params: { id: string } }) {
   const [solutionInput, setSolutionInput] = useState("")
 
   useEffect(() => {
-    if (status === "authenticated") {
+    params.then(({ id }) => setProjectId(id))
+  }, [params])
+
+  useEffect(() => {
+    if (status === "authenticated" && projectId) {
       fetchProject()
     }
-  }, [status, params.id])
+  }, [status, projectId])
 
   const fetchProject = async () => {
     try {
-      const response = await fetch(`/api/projects/${params.id}`)
+      const response = await fetch(`/api/projects/${projectId}`)
       if (!response.ok) {
         throw new Error("Failed to fetch project")
       }
@@ -144,7 +149,7 @@ export default function EditProject({ params }: { params: { id: string } }) {
 
     setLoading(true)
     try {
-      const response = await fetch(`/api/projects/${params.id}`, {
+      const response = await fetch(`/api/projects/${projectId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

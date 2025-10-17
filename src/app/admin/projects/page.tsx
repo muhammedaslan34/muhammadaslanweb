@@ -3,33 +3,31 @@
 export const dynamic = "force-dynamic"
 
 import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table"
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { 
-  Plus, 
-  Search, 
-  MoreHorizontal, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  MoreHorizontal,
+  Edit,
+  Trash2,
   ExternalLink,
   ChevronLeft,
   ChevronRight
@@ -54,8 +52,6 @@ interface PaginationData {
 }
 
 export default function AdminProjects() {
-  const { data: session, status } = useSession()
-  const router = useRouter()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState("")
@@ -68,16 +64,8 @@ export default function AdminProjects() {
   })
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/admin/login")
-    }
-  }, [status, router])
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      fetchProjects()
-    }
-  }, [status, search, category, pagination.page])
+    fetchProjects()
+  }, [search, category, pagination.page])
 
   const fetchProjects = async () => {
     try {
@@ -123,35 +111,23 @@ export default function AdminProjects() {
     setPagination(prev => ({ ...prev, page: newPage }))
   }
 
-  if (status === "loading" || loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-main">
+      <div className="flex items-center justify-center h-64">
         <div className="text-center">Loading...</div>
       </div>
     )
   }
 
-  if (!session) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-main">
-        <div className="text-center">Access Denied</div>
-      </div>
-    )
-  }
-
   return (
-    <div className="min-h-screen bg-main">
-      <header className="bg-muted/30 border-b">
-        <div className="container flex items-center justify-between mt-10 h-16 px-4">
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => router.back()}
-            >
-              ← Back
-            </Button>
-            <h1 className="text-xl font-semibold">Projects Management</h1>
+    <Card className="glass-card">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle>Projects</CardTitle>
+            <CardDescription>
+              Manage your portfolio projects
+            </CardDescription>
           </div>
           <Button asChild>
             <Link href={"/admin/projects/new" as any}>
@@ -160,17 +136,8 @@ export default function AdminProjects() {
             </Link>
           </Button>
         </div>
-      </header>
-
-      <main className="container py-8 px-4">
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>Projects</CardTitle>
-            <CardDescription>
-              Manage your portfolio projects
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+      </CardHeader>
+      <CardContent>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -300,9 +267,7 @@ export default function AdminProjects() {
                 </div>
               </div>
             )}
-          </CardContent>
-        </Card>
-      </main>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

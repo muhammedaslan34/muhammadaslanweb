@@ -27,11 +27,6 @@ export default function AnimatedHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  // Hide header when user is logged in
-  if (session) {
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -39,6 +34,11 @@ export default function AnimatedHeader() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Hide header when user is logged in
+  if (session) {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },

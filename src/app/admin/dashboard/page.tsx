@@ -57,7 +57,7 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <main className="container py-8 px-4">
+      <main className="container py-8 px-4 mt-8">
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-2">Welcome, {session.user?.name}</h2>
           <p className="text-muted-foreground">

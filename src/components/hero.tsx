@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronRight, ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AnimatedBtn } from '@/components/ui/animated-btn';
 import { cn } from '@/lib/utils';
 
 export function Hero() {

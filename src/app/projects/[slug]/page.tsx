@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft, ExternalLink, Calendar, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getProjectBySlug } from '@/data/projects'
+import prisma from '@/lib/prisma'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -12,10 +12,22 @@ interface ProjectPageProps {
   }>
 }
 
+async function getProjectBySlug(slug: string) {
+  try {
+    const project = await prisma.project.findUnique({
+      where: { slug }
+    })
+    return project
+  } catch (error) {
+    console.error('Error fetching project:', error)
+    return null
+  }
+}
+
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params
-  const project = getProjectBySlug(slug)
-  
+  const project = await getProjectBySlug(slug)
+
   if (!project) {
     return {
       title: 'Project Not Found - Muhammad Aslan',
@@ -32,7 +44,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params
-  const project = getProjectBySlug(slug)
+  const project = await getProjectBySlug(slug)
 
   if (!project) {
     notFound()

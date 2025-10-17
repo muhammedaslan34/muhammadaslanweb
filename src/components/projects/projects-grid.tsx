@@ -1,17 +1,32 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import { ExternalLink, Calendar, Eye, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { projects } from "@/data/projects"
-import type { Project } from "@/data/projects"
+import { toast } from "sonner"
 
 const PreviewModal = dynamic(() => import("@/components/preview/preview-modal").then(mod => ({ default: mod.PreviewModal })), {
   ssr: false
 })
+
+interface Project {
+  id: string
+  title: string
+  slug: string
+  description: string
+  excerpt: string
+  category: string
+  technologies: string[]
+  featured: boolean
+  imageUrl?: string
+  liveUrl?: string
+  githubUrl?: string
+  createdAt: string
+  updatedAt: string
+}
 
 interface ProjectsGridProps {
   activeCategory: string
@@ -21,6 +36,31 @@ interface ProjectsGridProps {
 export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch projects from API
+  useEffect(() => {
+    fetchProjects()
+  }, [])
+
+  const fetchProjects = async () => {
+    try {
+      // Add cache-busting parameter
+      const timestamp = Date.now()
+      const response = await fetch(`/api/projects?limit=100&t=${timestamp}`)
+      if (!response.ok) throw new Error('Failed to fetch projects')
+
+      const data = await response.json()
+      console.log('Fetched projects:', data.projects?.length || 0, 'projects')
+      setProjects(data.projects || [])
+    } catch (error) {
+      console.error('Error fetching projects:', error)
+      toast.error('Failed to load projects')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handlePreview = (project: Project) => {
     setSelectedProject(project)
@@ -34,6 +74,8 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
 
   // Filter projects based on active filters
   const filteredProjects = useMemo(() => {
+    if (loading) return []
+
     return projects.filter(project => {
       // Category filter
       const categoryMatch = activeCategory === "All Projects" || project.category === activeCategory
@@ -47,7 +89,7 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
 
       return categoryMatch && searchMatch
     })
-  }, [activeCategory, searchTerm])
+  }, [projects, activeCategory, searchTerm, loading])
 
   return (
     <section className="py-24">
@@ -55,7 +97,7 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
         {/* Results Summary */}
         <div className="mb-8">
           <p className="body-sm text-muted-foreground">
-            Showing {filteredProjects.length} of {projects.length} projects
+            {loading ? 'Loading projects...' : `Showing ${filteredProjects.length} projects`}
             {activeCategory !== "All Projects" && ` in ${activeCategory}`}
             {searchTerm && ` matching "${searchTerm}"`}
           </p>

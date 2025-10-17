@@ -73,18 +73,30 @@ export async function PUT(
     return NextResponse.json(project)
   } catch (error: any) {
     console.error("Failed to update project:", error)
-    
+
+    if (error.code === "P2031") {
+      // MongoDB replica set error
+      return NextResponse.json(
+        {
+          error: "MongoDB replica set configuration required",
+          message: "Please configure your MongoDB server as a replica set for Prisma transactions.",
+          solution: "Contact your database administrator to run: rs.initiate()"
+        },
+        { status: 503 }
+      )
+    }
+
     if (error.code === "P2002") {
       return NextResponse.json(
         { error: "A project with this slug already exists" },
         { status: 409 }
       )
     }
-    
+
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
-    
+
     return NextResponse.json(
       { error: "Failed to update project" },
       { status: 500 }
@@ -112,11 +124,23 @@ export async function DELETE(
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error("Failed to delete project:", error)
-    
+
+    if (error.code === "P2031") {
+      // MongoDB replica set error
+      return NextResponse.json(
+        {
+          error: "MongoDB replica set configuration required",
+          message: "Please configure your MongoDB server as a replica set for Prisma transactions.",
+          solution: "Contact your database administrator to run: rs.initiate()"
+        },
+        { status: 503 }
+      )
+    }
+
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
-    
+
     return NextResponse.json(
       { error: "Failed to delete project" },
       { status: 500 }

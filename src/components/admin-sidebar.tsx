@@ -47,31 +47,11 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         title: "Projects",
         url: "/admin/projects",
         icon: Briefcase,
-        items: [
-          {
-            title: "All Projects",
-            url: "/admin/projects",
-          },
-          {
-            title: "New Project",
-            url: "/admin/projects/new",
-          },
-        ],
       },
       {
         title: "Blog",
         url: "/admin/blog",
         icon: FileText,
-        items: [
-          {
-            title: "All Posts",
-            url: "/admin/blog",
-          },
-          {
-            title: "New Post",
-            url: "/admin/blog/new",
-          },
-        ],
       },
       {
         title: "Messages",

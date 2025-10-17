@@ -30,10 +30,30 @@ interface ProjectStats {
   recent: Project[]
 }
 
+interface BlogPost {
+  id: string
+  title: string
+  slug: string
+  category: string
+  featured: boolean
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  author: string
+}
+
+interface BlogStats {
+  total: number
+  featured: number
+  categories: { [key: string]: number }
+  recent: BlogPost[]
+}
+
 export default function AdminDashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [projectStats, setProjectStats] = useState<ProjectStats | null>(null)
+  const [blogStats, setBlogStats] = useState<BlogStats | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -45,6 +65,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (status === "authenticated") {
       fetchProjectStats()
+      fetchBlogStats()
     }
   }, [status])
 
@@ -78,6 +99,37 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Failed to fetch project stats:", error)
       toast.error("Failed to load project statistics")
+    }
+  }
+
+  const fetchBlogStats = async () => {
+    try {
+      // Fetch all blog posts for accurate stats
+      const [allResponse, recentResponse] = await Promise.all([
+        fetch('/api/blog?limit=100'),
+        fetch('/api/blog?limit=5')
+      ])
+
+      if (!allResponse.ok || !recentResponse.ok) throw new Error("Failed to fetch blog posts")
+
+      const allData = await allResponse.json()
+      const recentData = await recentResponse.json()
+
+      // Calculate stats from all blog posts
+      const stats: BlogStats = {
+        total: allData.pagination.total,
+        featured: allData.posts.filter((p: BlogPost) => p.featured).length,
+        categories: allData.posts.reduce((acc: { [key: string]: number }, post: BlogPost) => {
+          acc[post.category] = (acc[post.category] || 0) + 1
+          return acc
+        }, {}),
+        recent: recentData.posts
+      }
+
+      setBlogStats(stats)
+    } catch (error) {
+      console.error("Failed to fetch blog stats:", error)
+      toast.error("Failed to load blog statistics")
     } finally {
       setLoading(false)
     }
@@ -131,7 +183,7 @@ export default function AdminDashboard() {
           </p>
         </div>
 
-        {/* Project Statistics */}
+        {/* Statistics Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -148,26 +200,26 @@ export default function AdminDashboard() {
 
           <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Featured</CardTitle>
-              <Star className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Blog Posts</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{projectStats?.featured || 0}</div>
+              <div className="text-2xl font-bold">{blogStats?.total || 0}</div>
               <p className="text-xs text-muted-foreground">
-                Featured projects
+                Published articles
               </p>
             </CardContent>
           </Card>
 
           <Card className="glass-card hover-lift">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Categories</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Featured Items</CardTitle>
+              <Star className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{Object.keys(projectStats?.categories || {}).length}</div>
+              <div className="text-2xl font-bold">{(projectStats?.featured || 0) + (blogStats?.featured || 0)}</div>
               <p className="text-xs text-muted-foreground">
-                Project categories
+                Projects & blog posts
               </p>
             </CardContent>
           </Card>
@@ -263,7 +315,107 @@ export default function AdminDashboard() {
             </Card>
           </div>
 
-          {/* Quick Actions & Categories */}
+          <div className="lg:col-span-1">
+            <Card className="glass-card">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle>Recent Blog Posts</CardTitle>
+                    <CardDescription>
+                      Your latest articles
+                    </CardDescription>
+                  </div>
+                  <Button asChild variant="outline" size="sm">
+                    <Link href={"/admin/blog" as any}>
+                      View All
+                    </Link>
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {blogStats?.recent.length === 0 ? (
+                  <div className="text-center py-8">
+                    <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">No blog posts yet</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Get started by writing your first article
+                    </p>
+                    <Button asChild>
+                      <Link href={"/admin/blog/new" as any}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Post
+                      </Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {blogStats?.recent.map((post) => (
+                      <div key={post.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-semibold">{post.title}</h3>
+                            {post.featured && (
+                              <Badge variant="default" className="text-xs">
+                                <Star className="h-3 w-3 mr-1" />
+                                Featured
+                              </Badge>
+                            )}
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {post.category} • {post.author}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Published {new Date(post.publishedAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button asChild variant="ghost" size="sm">
+                            <Link href={`/blog/${post.slug}`}>
+                              <Eye className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                          <Button asChild variant="ghost" size="sm">
+                            <Link href={`/admin/blog/${post.id}/edit` as any}>
+                              <Edit className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Blog Stats & Categories */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Card className="glass-card">
+              <CardHeader>
+                <CardTitle>Blog Categories</CardTitle>
+                <CardDescription>
+                  Distribution of blog posts by category
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {blogStats && Object.keys(blogStats.categories).length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {Object.entries(blogStats.categories).map(([category, count]) => (
+                      <div key={category} className="flex items-center justify-between p-3 border rounded-lg">
+                        <span className="text-sm font-medium">{category}</span>
+                        <Badge variant="secondary">{count}</Badge>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">No blog categories yet</p>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
           <div className="space-y-6">
             <Card className="glass-card">
               <CardHeader>

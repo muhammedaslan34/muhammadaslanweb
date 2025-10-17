@@ -7,20 +7,23 @@ async function main() {
   console.log('Start seeding...')
   console.log('MONGODB_URI:', process.env.MONGODB_URI)
 
-  // Create admin user
+  // Create admin user using upsert (works without replica set)
   const hashedPassword = await bcrypt.hash('admin123', 12)
-  const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@muhammadaslan.com' },
-    update: {},
-    create: {
-      email: 'admin@muhammadaslan.com',
-      name: 'Muhammad Aslan',
-      password: hashedPassword,
-      role: 'ADMIN',
-    },
-  })
-
-  console.log('Created admin user:', adminUser)
+  try {
+    const adminUser = await prisma.user.upsert({
+      where: { email: 'admin@muhammadaslan.com' },
+      update: {},
+      create: {
+        email: 'admin@muhammadaslan.com',
+        name: 'Muhammad Aslan',
+        password: hashedPassword,
+        role: 'ADMIN',
+      }
+    })
+    console.log('Created/Found admin user:', adminUser.email)
+  } catch (error: any) {
+    console.log('Error with admin user:', error.message)
+  }
 
   // Create projects
   const projects = [
@@ -221,15 +224,21 @@ async function main() {
     }
   ]
 
+  // Create projects using upsert
+  let projectCount = 0
   for (const projectData of projects) {
-    await prisma.project.upsert({
-      where: { slug: projectData.slug },
-      update: projectData,
-      create: projectData,
-    })
+    try {
+      await prisma.project.upsert({
+        where: { slug: projectData.slug },
+        update: projectData,
+        create: projectData
+      })
+      projectCount++
+    } catch (error: any) {
+      console.log(`Error with project ${projectData.slug}:`, error.message)
+    }
   }
-
-  console.log('Created projects')
+  console.log(`Created/Updated ${projectCount} project(s)`)
 
   // Create blog posts
   const blogPosts = [
@@ -510,15 +519,21 @@ Remember that performance optimization should be part of your development workfl
     }
   ]
 
+  // Create blog posts using upsert
+  let postCount = 0
   for (const post of blogPosts) {
-    await prisma.blogPost.upsert({
-      where: { slug: post.slug },
-      update: post,
-      create: post,
-    })
+    try {
+      await prisma.blogPost.upsert({
+        where: { slug: post.slug },
+        update: post,
+        create: post
+      })
+      postCount++
+    } catch (error: any) {
+      console.log(`Error with blog post ${post.slug}:`, error.message)
+    }
   }
-
-  console.log('Created blog posts')
+  console.log(`Created/Updated ${postCount} blog post(s)`)
   console.log('Seeding finished.')
 }
 

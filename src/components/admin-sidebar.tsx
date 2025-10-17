@@ -110,7 +110,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="/admin/dashboard">
+              <Link href="/admin/dashboard">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <LayoutDashboard className="size-4" />
                 </div>
@@ -118,7 +118,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
                   <span className="truncate font-semibold">Portfolio Admin</span>
                   <span className="truncate text-xs">Management Panel</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

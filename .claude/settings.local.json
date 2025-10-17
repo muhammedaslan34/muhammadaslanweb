@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
-      "Bash(npm run db:seed:*)"
+      "Bash(npm run db:seed:*)",
+      "Bash(node scripts/hash-password.js:*)",
+      "Bash(npx prisma studio)",
+      "Bash(node scripts/create-admin-direct.js:*)"
     ],
     "deny": [],
     "ask": []

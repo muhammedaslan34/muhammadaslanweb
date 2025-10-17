@@ -1,6 +1,5 @@
 import { Hero } from '@/components/hero'
 import { WhyChooseUs } from '@/components/why-choose-us'
-import { FeaturedServices } from '@/components/featured-services'
 import { FeaturedProjects } from '@/components/featured-projects'
 import { Testimonials } from '@/components/testimonials'
 import { BlogHighlights } from '@/components/blog-highlights'
@@ -11,7 +10,6 @@ export default function HomePage() {
     <div className="flex flex-col">
       <Hero />
       <WhyChooseUs />
-      <FeaturedServices />
       <FeaturedProjects />
       <Testimonials />
       <BlogHighlights />

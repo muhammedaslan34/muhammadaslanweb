@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 
 interface NavItem {
   name: string;
@@ -23,6 +24,7 @@ const navItems: NavItem[] = [
 
 export default function AnimatedHeader() {
   const { data: session } = useSession();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -35,8 +37,8 @@ export default function AnimatedHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hide header when user is logged in
-  if (session) {
+  // Hide header only on admin pages
+  if (pathname?.startsWith('/admin')) {
     return null;
   }
 

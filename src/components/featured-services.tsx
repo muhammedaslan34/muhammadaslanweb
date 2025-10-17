@@ -65,9 +65,6 @@ const services = [
     title: 'Custom Web Development',
     description:
       'Full-stack web applications built with modern technologies like Next.js, React, TypeScript, and Node.js. From concept to deployment, we create scalable solutions tailored to your business needs.',
-<<<<<<< HEAD
-    icon: <img src="/images/services/web-development.svg" alt="Web Development" className="size-6" />,
-=======
     icon: <Code className="size-6" />,
 >>>>>>> muhammadaslanweb/main
     size: 'large' as const,
@@ -76,19 +73,12 @@ const services = [
     title: 'Mobile-First Design',
     description:
       'Responsive web designs that work flawlessly across all devices. We prioritize mobile user experience to ensure your application looks and performs great on smartphones, tablets, and desktops.',
-<<<<<<< HEAD
-    icon: <img src="/images/services/mobile-design.svg" alt="Mobile Design" className="size-6" />,
-=======
     icon: <Smartphone className="size-6" />,
->>>>>>> muhammadaslanweb/main
     size: 'small' as const,
   },
   {
     title: 'UI/UX Excellence',
     description: 'Beautiful, intuitive interfaces that delight users and drive engagement. We combine aesthetic appeal with usability to create experiences that keep your users coming back.',
-<<<<<<< HEAD
-    icon: <img src="/images/services/ui-ux.svg" alt="UI/UX Design" className="size-6" />,
-=======
     icon: <Palette className="size-6" />,
 >>>>>>> muhammadaslanweb/main
     size: 'medium' as const,
@@ -96,9 +86,6 @@ const services = [
   {
     title: 'Performance Optimization',
     description: "Lightning-fast applications optimized for speed and efficiency. We implement best practices for code splitting, lazy loading, and caching to ensure optimal performance.",
-<<<<<<< HEAD
-    icon: <img src="/images/services/performance.svg" alt="Performance" className="size-6" />,
-=======
     icon: <Zap className="size-6" />,
 >>>>>>> muhammadaslanweb/main
     size: 'medium' as const,
@@ -106,22 +93,14 @@ const services = [
   {
     title: 'API Integration',
     description: 'Seamless integration with third-party services and payment gateways. We handle everything from RESTful APIs to real-time WebSocket connections.',
-<<<<<<< HEAD
-    icon: <img src="/images/services/api-integration.svg" alt="API Integration" className="size-6" />,
-=======
     icon: <Globe className="size-6" />,
->>>>>>> muhammadaslanweb/main
     size: 'small' as const,
   },
   {
     title: 'Maintenance & Support',
     description:
       'Ongoing support and maintenance to keep your application running smoothly. We provide regular updates, security patches, and performance monitoring to ensure long-term success.',
-<<<<<<< HEAD
-    icon: <img src="/images/services/maintenance.svg" alt="Maintenance & Support" className="size-6" />,
-=======
     icon: <FileText className="size-6" />,
->>>>>>> muhammadaslanweb/main
     size: 'large' as const,
   },
 ];

@@ -83,7 +83,11 @@ const testimonials = [
   {
     name: 'Sarah Thompson',
     role: 'CEO at TechStart Inc.',
+<<<<<<< HEAD
     img: '/images/testimonials/sarah-thompson.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/women/32.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Working with Muhammed was an exceptional experience.
@@ -97,7 +101,11 @@ const testimonials = [
   {
     name: 'Michael Rodriguez',
     role: 'Product Manager at InnovateTech',
+<<<<<<< HEAD
     img: '/images/testimonials/michael-rodriguez.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/men/45.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Muhammed transformed our outdated platform into a modern, responsive application.
@@ -111,7 +119,11 @@ const testimonials = [
   {
     name: 'Emily Chen',
     role: 'Founder at StartupHub',
+<<<<<<< HEAD
     img: '/images/testimonials/emily-chen.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/women/28.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         As a non-technical founder, I needed someone who could translate my vision into reality.
@@ -123,7 +135,11 @@ const testimonials = [
   {
     name: 'David Park',
     role: 'Marketing Director at DigitalFirst',
+<<<<<<< HEAD
     img: '/images/testimonials/david-park.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/men/38.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Our new website has been a game-changer for our business.
@@ -137,7 +153,11 @@ const testimonials = [
   {
     name: 'Jessica Williams',
     role: 'Operations Manager at CloudScale',
+<<<<<<< HEAD
     img: '/images/testimonials/jessica-williams.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/women/41.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Muhammed built our internal management system that streamlined our entire workflow.
@@ -151,7 +171,11 @@ const testimonials = [
   {
     name: 'Alex Kumar',
     role: 'Tech Lead at DataFlow Systems',
+<<<<<<< HEAD
     img: '/images/testimonials/alex-kumar.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/men/52.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         We hired Muhammed to optimize our database and backend performance.
@@ -165,7 +189,11 @@ const testimonials = [
   {
     name: 'Rachel Foster',
     role: 'Creative Director at BrandCraft',
+<<<<<<< HEAD
     img: '/images/testimonials/rachel-foster.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/women/35.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Muhammed brought our creative vision to life with technical excellence.
@@ -179,7 +207,11 @@ const testimonials = [
   {
     name: 'Thomas Anderson',
     role: 'CEO at FinTech Solutions',
+<<<<<<< HEAD
     img: '/images/testimonials/thomas-anderson.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/men/47.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Security and reliability were our top priorities for our financial platform.
@@ -193,7 +225,11 @@ const testimonials = [
   {
     name: 'Lisa Martinez',
     role: 'Product Owner at EduTech Pro',
+<<<<<<< HEAD
     img: '/images/testimonials/lisa-martinez.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/women/39.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         Muhammed developed our learning management system with incredible attention to user experience.
@@ -207,7 +243,11 @@ const testimonials = [
   {
     name: 'James Wilson',
     role: 'CTO at HealthTech Innovations',
+<<<<<<< HEAD
     img: '/images/testimonials/james-wilson.svg',
+=======
+    img: 'https://randomuser.me/api/portraits/men/43.jpg',
+>>>>>>> muhammadaslanweb/main
     description: (
       <p>
         We needed a developer who could handle complex integrations and HIPAA compliance.

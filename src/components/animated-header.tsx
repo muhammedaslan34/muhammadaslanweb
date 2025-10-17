@@ -5,6 +5,7 @@ import { Menu, X, ArrowRight, Zap, Search } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { useSession } from 'next-auth/react';
 
 interface NavItem {
   name: string;
@@ -21,9 +22,15 @@ const navItems: NavItem[] = [
 ];
 
 export default function AnimatedHeader() {
+  const { data: session } = useSession();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  // Hide header when user is logged in
+  if (session) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {

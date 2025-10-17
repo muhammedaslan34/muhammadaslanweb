@@ -6,10 +6,9 @@ import { prisma } from "@/lib/prisma"
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
-    if (!session || session.user?.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
+
+    // Allow public access for GET requests - only require auth for write operations
+    // This makes the projects visible on the public website while keeping write operations secure
 
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get("page") || "1")
@@ -68,26 +67,44 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     
-    const project = await prisma.project.create({
-      data: {
-        title: body.title,
-        slug: body.slug,
-        description: body.description,
-        excerpt: body.excerpt,
-        category: body.category,
-        technologies: body.technologies || [],
-        featured: body.featured || false,
-        imageUrl: body.imageUrl,
-        liveUrl: body.liveUrl,
-        githubUrl: body.githubUrl,
-        client: body.client,
-        duration: body.duration,
-        services: body.services || [],
-        achievements: body.achievements || [],
-        challenges: body.challenges || [],
-        solutions: body.solutions || [],
-      },
-    })
+    // Handle MongoDB replica set issue by catching and providing workaround
+    let project;
+    try {
+      project = await prisma.project.create({
+        data: {
+          title: body.title,
+          slug: body.slug,
+          description: body.description,
+          excerpt: body.excerpt,
+          category: body.category,
+          technologies: body.technologies || [],
+          featured: body.featured || false,
+          imageUrl: body.imageUrl,
+          liveUrl: body.liveUrl,
+          githubUrl: body.githubUrl,
+          client: body.client,
+          duration: body.duration,
+          services: body.services || [],
+          achievements: body.achievements || [],
+          challenges: body.challenges || [],
+          solutions: body.solutions || [],
+        },
+      })
+    } catch (createError: any) {
+      if (createError.code === 'P2031') {
+        // MongoDB replica set error - provide helpful error message
+        return NextResponse.json(
+          {
+            error: "MongoDB replica set configuration required",
+            message: "Please configure your MongoDB server as a replica set for Prisma transactions.",
+            solution: "Contact your database administrator to run: rs.initiate()",
+            temporaryWorkaround: "Alternatively, the admin team can manually add projects to the database"
+          },
+          { status: 503 }
+        )
+      }
+      throw createError;
+    }
 
     return NextResponse.json(project, { status: 201 })
   } catch (error: any) {

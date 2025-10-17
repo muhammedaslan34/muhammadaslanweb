@@ -1,11 +1,10 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { getProjectCategories } from "@/data/projects"
-
-const categories = ["All Projects", ...getProjectCategories()]
+import { toast } from "sonner"
 
 interface ProjectsFilterProps {
   activeCategory: string
@@ -20,6 +19,33 @@ export function ProjectsFilter({
   searchTerm,
   setSearchTerm
 }: ProjectsFilterProps) {
+  const [categories, setCategories] = useState<string[]>(["All Projects"])
+
+  // Fetch categories from database
+  useEffect(() => {
+    fetchCategories()
+  }, [])
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/projects?limit=100')
+      if (!response.ok) throw new Error('Failed to fetch projects')
+
+      const data = await response.json()
+      const projectCategories = data.projects.reduce((acc: string[], project: any) => {
+        if (!acc.includes(project.category)) {
+          acc.push(project.category)
+        }
+        return acc
+      }, [])
+
+      setCategories(["All Projects", ...projectCategories])
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+      toast.error('Failed to load categories')
+    }
+  }
+
   const clearAllFilters = () => {
     setActiveCategory("All Projects")
     setSearchTerm("")

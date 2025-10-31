@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Calendar, Eye } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { connectToDatabase } from '@/lib/mongoose'
 import { ProjectModel } from '@/models/Project'
+import { ProjectHero } from '@/components/project/ProjectHero'
+import { ProjectInfoBar } from '@/components/project/ProjectInfoBar'
+import { ProjectOverview } from '@/components/project/ProjectOverview'
+import { ImageGallery } from '@/components/project/ImageGallery'
+import { FeatureSection } from '@/components/project/FeatureSection'
+import { ResultsSection } from '@/components/project/ResultsSection'
+import { RelatedProjects } from '@/components/project/RelatedProjects'
+import { ProjectCTA } from '@/components/project/ProjectCTA'
+import { ExtendedProject, Project } from '@/types/project'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -18,10 +26,50 @@ async function getProjectBySlug(slug: string) {
     await connectToDatabase()
     const doc = await ProjectModel.findOne({ slug }).lean()
     if (!doc) return null
-    return { ...doc, id: String((doc as any)._id), _id: undefined } as any
+
+    // Transform to ExtendedProject format
+    const project = {
+      ...doc,
+      id: String((doc as any)._id),
+      _id: undefined,
+      createdAt: String((doc as any).createdAt),
+      updatedAt: String((doc as any).updatedAt),
+      date: String((doc as any).createdAt),
+      category: Array.isArray((doc as any).category) ? (doc as any).category : [(doc as any).category],
+      status: 'completed' as const,
+      links: {
+        github: (doc as any).githubUrl,
+        live: (doc as any).liveUrl,
+      }
+    } as ExtendedProject
+
+    return project
   } catch (error) {
     console.error('Error fetching project:', error)
     return null
+  }
+}
+
+async function getRelatedProjects(currentSlug: string, category: string, limit = 3) {
+  try {
+    await connectToDatabase()
+    const docs = await ProjectModel.find({
+      slug: { $ne: currentSlug },
+      category: category
+    })
+      .limit(limit)
+      .lean()
+
+    return docs.map(doc => ({
+      ...doc,
+      id: String((doc as any)._id),
+      _id: undefined,
+      createdAt: String((doc as any).createdAt),
+      updatedAt: String((doc as any).updatedAt)
+    })) as Project[]
+  } catch (error) {
+    console.error('Error fetching related projects:', error)
+    return []
   }
 }
 
@@ -38,8 +86,13 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   return {
     title: `${project.title} - Muhammad Aslan Portfolio`,
-    description: project.excerpt,
+    description: project.excerpt || project.description,
     keywords: [...project.technologies, 'web development', 'portfolio', 'case study'],
+    openGraph: {
+      title: project.title,
+      description: project.excerpt || project.description,
+      images: project.imageUrl ? [project.imageUrl] : [],
+    }
   }
 }
 
@@ -51,205 +104,89 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound()
   }
 
+  // Get related projects
+  const relatedProjects = await getRelatedProjects(
+    slug,
+    Array.isArray(project.category) ? project.category[0] : project.category,
+    3
+  )
+
+  const projectStatus = project.status || 'completed'
+
+  // Convert challenges/solutions to proper format
+  const challenge = project.challenges && project.challenges.length > 0
+    ? project.challenges.join(' ')
+    : project.challenge
+
+  const solution = project.solutions && project.solutions.length > 0
+    ? project.solutions.join(' ')
+    : project.solution
+
   return (
     <div className="min-h-screen bg-main">
-      <div className="container py-12 pt-24">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="hover-lift">
-            <Link href="/projects" className="flex items-center space-x-2">
-              <ArrowLeft size={16} />
-              <span>Back to Projects</span>
-            </Link>
-          </Button>
-        </div>
-
-        {/* Project Header */}
-        <div className="mb-12">
-          <div className="flex items-center space-x-4 mb-4">
-            <span className="text-sm text-accent font-medium">{project.category}</span>
-            <div className="flex items-center text-sm text-muted-foreground">
-              <Calendar className="h-4 w-4 mr-1" />
-              {new Date(project.createdAt).toLocaleDateString()}
-            </div>
-            {project.featured && (
-              <span className="px-2 py-1 bg-accent text-white text-xs rounded-full">
-                Featured
-              </span>
-            )}
-          </div>
-          
-          <h1 className="heading-lg mb-4">{project.title}</h1>
-          <p className="body-lg text-muted-foreground mb-6">{project.excerpt}</p>
-          
-          <div className="flex space-x-4">
-            {project.liveUrl && (
-              <Button asChild className="hover-lift">
-                <a href={project.liveUrl!} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  View Live Site
-                </a>
-              </Button>
-            )}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
-            {/* Project Overview */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle>Project Overview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="prose prose-gray max-w-none">
-                  <p className="body-md mb-4">{project.description}</p>
-                  {project.client && (
-                    <p className="body-md mb-4"><strong>Client:</strong> {project.client}</p>
-                  )}
-                  {project.duration && (
-                    <p className="body-md mb-4"><strong>Duration:</strong> {project.duration}</p>
-                  )}
-                  {project.services && (
-                    <div className="mb-4">
-                      <strong>Services:</strong>
-                      <ul className="list-disc list-inside mt-2">
-                        {project.services.map((service: string, index: number) => (
-                          <li key={index} className="body-md">{service}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Technologies Used */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle>Technologies Used</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {project.technologies.map((tech: string, index: number) => (
-                    <div key={index} className="flex items-start space-x-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 rounded-full bg-accent mt-2 flex-shrink-0"></div>
-                      <div>
-                        <h4 className="font-medium text-foreground">{tech}</h4>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Challenges & Solutions */}
-            {project.challenges && project.challenges.length > 0 && (
-              <Card className="glass-card">
-                <CardHeader>
-                  <CardTitle>Challenges & Solutions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {project.challenges.map((challenge: string, index: number) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-destructive mt-2 flex-shrink-0"></div>
-                        <p className="body-sm text-muted-foreground">{challenge}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Solutions */}
-            {project.solutions && project.solutions.length > 0 && (
-              <Card className="glass-card">
-                <CardHeader>
-                  <CardTitle>Our Solutions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {project.solutions.map((solution: string, index: number) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                        <p className="body-sm text-muted-foreground">{solution}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-8">
-            {/* Project Tags */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle>Technologies</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech: string, index: number) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center rounded-full bg-accent/10 px-3 py-1 text-sm font-medium text-accent"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Achievements */}
-            {project.achievements && project.achievements.length > 0 && (
-              <Card className="glass-card">
-                <CardHeader>
-                  <CardTitle>Achievements</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {project.achievements.map((achievement: string, index: number) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                        <p className="body-sm text-muted-foreground">{achievement}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Project Actions */}
-            <Card className="glass-card">
-              <CardHeader>
-                <CardTitle>Project Links</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {project.liveUrl && (
-                  <Button asChild className="w-full hover-lift">
-                    <a href={project.liveUrl!} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Visit Live Site
-                    </a>
-                  </Button>
-                )}
-                {project.githubUrl && (
-                  <Button variant="outline" asChild className="w-full hover-lift">
-                    <a href={project.githubUrl!} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      View on GitHub
-                    </a>
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+      {/* Back to Projects Navigation */}
+      <div className="container pt-24 pb-4">
+        <Button variant="ghost" asChild className="hover-lift">
+          <Link href="/projects" className="flex items-center gap-2">
+            <ArrowLeft size={16} />
+            <span>Back to Projects</span>
+          </Link>
+        </Button>
       </div>
+
+      {/* Hero Section */}
+      <ProjectHero
+        title={project.title}
+        subtitle={project.excerpt}
+        categories={Array.isArray(project.category) ? project.category : [project.category]}
+        imageUrl={project.imageUrl}
+        heroImage={project.hero?.image}
+        heroAlt={project.hero?.alt}
+        liveUrl={project.liveUrl}
+        githubUrl={project.githubUrl}
+      />
+
+      {/* Project Info Bar */}
+      <ProjectInfoBar
+        client={project.client}
+        date={project.createdAt}
+        status={projectStatus}
+        duration={project.duration}
+        technologies={project.technologies}
+      />
+
+      {/* Project Overview */}
+      <ProjectOverview
+        description={project.description}
+        challenge={challenge}
+        solution={solution}
+        objectives={project.services}
+      />
+
+      {/* Image Gallery */}
+      {project.gallery && project.gallery.length > 0 && (
+        <ImageGallery images={project.gallery} />
+      )}
+
+      {/* Features Section */}
+      {project.features && project.features.length > 0 && (
+        <FeatureSection features={project.features} />
+      )}
+
+      {/* Results Section */}
+      <ResultsSection
+        metrics={project.metrics}
+        testimonials={project.testimonials}
+        achievements={project.achievements}
+      />
+
+      {/* Related Projects */}
+      {relatedProjects.length > 0 && (
+        <RelatedProjects projects={relatedProjects} />
+      )}
+
+      {/* Call to Action */}
+      <ProjectCTA variant="contact" />
     </div>
   )
 }

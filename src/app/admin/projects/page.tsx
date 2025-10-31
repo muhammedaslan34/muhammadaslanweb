@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,7 +31,8 @@ import {
   Trash2,
   ExternalLink,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Image as ImageIcon
 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -40,6 +42,7 @@ interface Project {
   slug: string
   category: string
   featured: boolean
+  imageUrl?: string
   createdAt: string
   updatedAt: string
 }
@@ -160,6 +163,7 @@ export default function AdminProjects() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="w-[80px]">Image</TableHead>
                     <TableHead>Title</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Featured</TableHead>
@@ -177,6 +181,23 @@ export default function AdminProjects() {
                   ) : (
                     projects.map((project) => (
                       <TableRow key={project.id}>
+                        <TableCell>
+                          <div className="relative w-16 h-16 rounded-md overflow-hidden bg-muted">
+                            {project.imageUrl ? (
+                              <Image
+                                src={project.imageUrl}
+                                alt={project.title}
+                                fill
+                                className="object-cover"
+                                unoptimized
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                                <ImageIcon className="h-6 w-6" />
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
                         <TableCell className="font-medium">
                           <div>
                             <div>{project.title}</div>

@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
+import { ImageUpload } from "@/components/admin/image-upload"
 import { ArrowLeft, Save, X } from "lucide-react"
 import { toast } from "sonner"
 
@@ -228,19 +229,24 @@ export default function NewProject() {
                     value={techInput}
                     onChange={(e) => setTechInput(e.target.value)}
                     placeholder="Add technology"
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault()
-                        addTag(techInput, 'technologies')
-                        setTechInput("")
+                        if (techInput.trim()) {
+                          addTag(techInput, 'technologies')
+                          setTechInput("")
+                        }
                       }
                     }}
                   />
                   <Button
                     type="button"
+                    variant="secondary"
                     onClick={() => {
-                      addTag(techInput, 'technologies')
-                      setTechInput("")
+                      if (techInput.trim()) {
+                        addTag(techInput, 'technologies')
+                        setTechInput("")
+                      }
                     }}
                   >
                     Add
@@ -259,16 +265,14 @@ export default function NewProject() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="imageUrl">Image URL</Label>
-                  <Input
-                    id="imageUrl"
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
-                    placeholder="/images/projects/project.jpg"
-                  />
-                </div>
+              <ImageUpload
+                value={formData.imageUrl}
+                onChange={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))}
+                label="Project Image"
+                uploadType="projects"
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="liveUrl">Live URL</Label>
                   <Input
@@ -318,19 +322,24 @@ export default function NewProject() {
                     value={serviceInput}
                     onChange={(e) => setServiceInput(e.target.value)}
                     placeholder="Add service"
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault()
-                        addTag(serviceInput, 'services')
-                        setServiceInput("")
+                        if (serviceInput.trim()) {
+                          addTag(serviceInput, 'services')
+                          setServiceInput("")
+                        }
                       }
                     }}
                   />
                   <Button
                     type="button"
+                    variant="secondary"
                     onClick={() => {
-                      addTag(serviceInput, 'services')
-                      setServiceInput("")
+                      if (serviceInput.trim()) {
+                        addTag(serviceInput, 'services')
+                        setServiceInput("")
+                      }
                     }}
                   >
                     Add
@@ -356,19 +365,24 @@ export default function NewProject() {
                     value={achievementInput}
                     onChange={(e) => setAchievementInput(e.target.value)}
                     placeholder="Add achievement"
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault()
-                        addTag(achievementInput, 'achievements')
-                        setAchievementInput("")
+                        if (achievementInput.trim()) {
+                          addTag(achievementInput, 'achievements')
+                          setAchievementInput("")
+                        }
                       }
                     }}
                   />
                   <Button
                     type="button"
+                    variant="secondary"
                     onClick={() => {
-                      addTag(achievementInput, 'achievements')
-                      setAchievementInput("")
+                      if (achievementInput.trim()) {
+                        addTag(achievementInput, 'achievements')
+                        setAchievementInput("")
+                      }
                     }}
                   >
                     Add
@@ -394,19 +408,24 @@ export default function NewProject() {
                     value={challengeInput}
                     onChange={(e) => setChallengeInput(e.target.value)}
                     placeholder="Add challenge"
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault()
-                        addTag(challengeInput, 'challenges')
-                        setChallengeInput("")
+                        if (challengeInput.trim()) {
+                          addTag(challengeInput, 'challenges')
+                          setChallengeInput("")
+                        }
                       }
                     }}
                   />
                   <Button
                     type="button"
+                    variant="secondary"
                     onClick={() => {
-                      addTag(challengeInput, 'challenges')
-                      setChallengeInput("")
+                      if (challengeInput.trim()) {
+                        addTag(challengeInput, 'challenges')
+                        setChallengeInput("")
+                      }
                     }}
                   >
                     Add
@@ -432,19 +451,24 @@ export default function NewProject() {
                     value={solutionInput}
                     onChange={(e) => setSolutionInput(e.target.value)}
                     placeholder="Add solution"
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         e.preventDefault()
-                        addTag(solutionInput, 'solutions')
-                        setSolutionInput("")
+                        if (solutionInput.trim()) {
+                          addTag(solutionInput, 'solutions')
+                          setSolutionInput("")
+                        }
                       }
                     }}
                   />
                   <Button
                     type="button"
+                    variant="secondary"
                     onClick={() => {
-                      addTag(solutionInput, 'solutions')
-                      setSolutionInput("")
+                      if (solutionInput.trim()) {
+                        addTag(solutionInput, 'solutions')
+                        setSolutionInput("")
+                      }
                     }}
                   >
                     Add

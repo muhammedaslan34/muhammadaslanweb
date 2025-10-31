@@ -1,4 +1,6 @@
+'use client';
 import type { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import {
   Code2,
   Smartphone,
@@ -53,14 +55,20 @@ export function WhyChooseUs() {
     <section className="relative py-14">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="relative mx-auto max-w-2xl sm:text-center">
-          <div className="relative z-10">
+          <motion.div 
+            className="relative z-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h3 className="font-geist mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl">
               Building Digital Solutions That Matter
             </h3>
             <p className="font-geist text-foreground/60 mt-3 leading-relaxed">
               Transforming ideas into powerful web experiences with modern technologies, thoughtful design, and a commitment to excellence in every project.
             </p>
-          </div>
+          </motion.div>
           <div
             className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"
             style={{
@@ -78,6 +86,7 @@ export function WhyChooseUs() {
                 icon={item.icon}
                 title={item.title}
                 description={item.desc}
+                index={idx}
               />
             ))}
           </ul>

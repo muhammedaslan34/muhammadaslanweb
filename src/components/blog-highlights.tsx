@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { Calendar, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -76,16 +77,30 @@ export function BlogHighlights() {
   return (
     <section className="py-16 md:py-24 bg-muted/50">
       <div className="container">
-        <div className="text-center space-y-4 mb-12">
+        <motion.div 
+          className="text-center space-y-4 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="heading-lg">Latest from the Blog</h2>
           <p className="body-lg text-muted-foreground max-w-2xl mx-auto">
             Insights, tutorials, and thoughts on web development and WordPress
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+            >
+              <Card className="hover:shadow-lg transition-shadow h-full">
               <CardHeader>
                 <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-2">
                   <div className="flex items-center space-x-1">
@@ -114,15 +129,22 @@ export function BlogHighlights() {
                   Read more →
                 </Link>
               </CardContent>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           <Button asChild>
             <Link href="/blog">View All Posts</Link>
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

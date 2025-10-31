@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { connectToDatabase } from "@/lib/mongoose"
+import { BlogPostModel } from "@/models/BlogPost"
 
 export async function GET(
   request: NextRequest,
@@ -8,20 +9,13 @@ export async function GET(
   try {
     const { slug } = await params
 
-    try {
-      const post = await prisma.blogPost.findUnique({
-        where: { slug },
-      })
-
-      if (!post) {
-        return NextResponse.json({ error: "Post not found" }, { status: 404 })
-      }
-
-      return NextResponse.json(post)
-    } catch (dbError) {
-      console.error("Database connection failed, no posts available:", dbError)
+    await connectToDatabase()
+    const doc = await BlogPostModel.findOne({ slug }).lean()
+    if (!doc) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
     }
+    const post = { ...doc, id: String((doc as any)._id), _id: undefined }
+    return NextResponse.json(post)
   } catch (error) {
     console.error("Failed to fetch blog post:", error)
     return NextResponse.json(

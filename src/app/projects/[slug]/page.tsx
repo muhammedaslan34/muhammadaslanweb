@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { ArrowLeft, ExternalLink, Calendar, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { prisma } from '@/lib/prisma'
+import { connectToDatabase } from '@/lib/mongoose'
+import { ProjectModel } from '@/models/Project'
 
 interface ProjectPageProps {
   params: Promise<{
@@ -14,10 +15,10 @@ interface ProjectPageProps {
 
 async function getProjectBySlug(slug: string) {
   try {
-    const project = await prisma.project.findUnique({
-      where: { slug }
-    })
-    return project
+    await connectToDatabase()
+    const doc = await ProjectModel.findOne({ slug }).lean()
+    if (!doc) return null
+    return { ...doc, id: String((doc as any)._id), _id: undefined } as any
   } catch (error) {
     console.error('Error fetching project:', error)
     return null
@@ -52,7 +53,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="min-h-screen bg-main">
-      <div className="container py-12">
+      <div className="container py-12 pt-24">
         {/* Back Button */}
         <div className="mb-8">
           <Button variant="ghost" asChild className="hover-lift">

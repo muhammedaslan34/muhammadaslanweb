@@ -22,8 +22,16 @@ const Gallery4 = dynamic(() => import("@/components/blocks/gallery4").then(mod =
   )
 })
 
+type GalleryItem = {
+  id: string
+  title: string
+  description: string
+  href: string
+  image: string
+}
+
 export function FeaturedProjects() {
-  const [featuredProjects, setFeaturedProjects] = useState<any[]>([])
+  const [featuredProjects, setFeaturedProjects] = useState<GalleryItem[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -39,12 +47,12 @@ export function FeaturedProjects() {
       const data = await response.json()
 
       // Transform project data to match Gallery4 format
-      const transformedProjects = data.projects.map((project: any) => ({
+      const transformedProjects: GalleryItem[] = data.projects.map((project: any) => ({
         id: project.id,
         title: project.title,
         description: project.description,
         href: `/projects/${project.slug}`,
-        image: project.image || "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NDI3NzN8MHwxfGFsbHwxMjN8fHx8fHwyfHwxNzIzODA2OTM5fA&ixlib=rb-4.0.3&q=80&w=1080",
+        image: project.imageUrl || "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
       }))
 
       setFeaturedProjects(transformedProjects)

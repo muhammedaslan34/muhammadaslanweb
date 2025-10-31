@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { connectToDatabase } from "@/lib/mongoose"
+import { BlogPostModel } from "@/models/BlogPost"
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,50 +21,37 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where = {
-      ...(search && {
-        OR: [
-          { title: { contains: search, mode: "insensitive" as const } },
-          { excerpt: { contains: search, mode: "insensitive" as const } },
-          { content: { contains: search, mode: "insensitive" as const } },
-        ],
-      }),
-      ...(category && { category }),
+    const where: any = {}
+    if (search) {
+      where.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { excerpt: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ]
     }
+    if (category) where.category = category
 
-    try {
-      const [posts, total] = await Promise.all([
-        prisma.blogPost.findMany({
-          where,
-          orderBy: { updatedAt: "desc" },
-          skip,
-          take: limit,
-        }),
-        prisma.blogPost.count({ where }),
-      ])
+    await connectToDatabase()
+    const [docs, total] = await Promise.all([
+      BlogPostModel.find(where)
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      BlogPostModel.countDocuments(where),
+    ])
 
-      return NextResponse.json({
-        posts,
-        pagination: {
-          page,
-          limit,
-          total,
-          pages: Math.ceil(total / limit),
-        },
-      })
-    } catch (dbError) {
-      console.error("Database connection failed, no posts available:", dbError)
-      
-      return NextResponse.json({
-        posts: [],
-        pagination: {
-          page,
-          limit,
-          total: 0,
-          pages: 0,
-        },
-      })
-    }
+    const posts = docs.map((d: any) => ({ ...d, id: String(d._id), _id: undefined }))
+
+    return NextResponse.json({
+      posts,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+      },
+    })
   } catch (error) {
     console.error("Failed to fetch blog posts:", error)
     return NextResponse.json(
@@ -83,8 +71,9 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
 
-    const post = await prisma.blogPost.create({
-      data: {
+    await connectToDatabase()
+    try {
+      const created = await BlogPostModel.create({
         title: body.title,
         slug: body.slug,
         excerpt: body.excerpt,
@@ -100,20 +89,19 @@ export async function POST(request: NextRequest) {
         seoTitle: body.seoTitle,
         seoDescription: body.seoDescription,
         publishedAt: body.publishedAt || new Date(),
-      },
-    })
-
-    return NextResponse.json(post, { status: 201 })
+      })
+      return NextResponse.json(created.toJSON(), { status: 201 })
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        return NextResponse.json(
+          { error: "A blog post with this slug already exists" },
+          { status: 409 }
+        )
+      }
+      throw err
+    }
   } catch (error: any) {
     console.error("Failed to create blog post:", error)
-
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { error: "A blog post with this slug already exists" },
-        { status: 409 }
-      )
-    }
-
     return NextResponse.json(
       { error: "Failed to create blog post" },
       { status: 500 }

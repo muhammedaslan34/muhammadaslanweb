@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { connectToDatabase } from "@/lib/mongoose"
+import { ProjectModel } from "@/models/Project"
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-
-    // Allow public access for GET requests - only require auth for write operations
-    // This makes the projects visible on the public website while keeping write operations secure
+    await connectToDatabase()
 
     const { searchParams } = new URL(request.url)
     const page = parseInt(searchParams.get("page") || "1")
@@ -19,27 +17,27 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where = {
-      ...(search && {
-        OR: [
-          { title: { contains: search, mode: "insensitive" as const } },
-          { description: { contains: search, mode: "insensitive" as const } },
-          { excerpt: { contains: search, mode: "insensitive" as const } },
-        ],
-      }),
-      ...(category && { category }),
-      ...(featured && { featured: true }),
+    const where: any = {}
+    if (search) {
+      where.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { excerpt: { $regex: search, $options: "i" } },
+      ]
     }
+    if (category) where.category = category
+    if (featured) where.featured = true
 
-    const [projects, total] = await Promise.all([
-      prisma.project.findMany({
-        where,
-        orderBy: { updatedAt: "desc" },
-        skip,
-        take: limit,
-      }),
-      prisma.project.count({ where }),
+    const [docs, total] = await Promise.all([
+      ProjectModel.find(where)
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      ProjectModel.countDocuments(where),
     ])
+
+    const projects = docs.map((d: any) => ({ ...d, id: String(d._id), _id: undefined }))
 
     return NextResponse.json({
       projects,
@@ -62,66 +60,64 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
+    await connectToDatabase()
+
     if (!session || session.user?.role !== "ADMIN") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const body = await request.json()
-    
-    // Handle MongoDB replica set issue by catching and providing workaround
-    let project;
     try {
-      project = await prisma.project.create({
-        data: {
-          title: body.title,
-          slug: body.slug,
-          description: body.description,
-          excerpt: body.excerpt,
-          category: body.category,
-          technologies: body.technologies || [],
-          featured: body.featured || false,
-          imageUrl: body.imageUrl,
-          liveUrl: body.liveUrl,
-          githubUrl: body.githubUrl,
-          client: body.client,
-          duration: body.duration,
-          services: body.services || [],
-          achievements: body.achievements || [],
-          challenges: body.challenges || [],
-          solutions: body.solutions || [],
-        },
-      })
-    } catch (createError: any) {
-      if (createError.code === 'P2031') {
-        // MongoDB replica set error - provide helpful error message
+      // Uniqueness pre-check for clearer error message
+      const existing = await ProjectModel.findOne({ slug: body.slug }).select({ _id: 1 }).lean()
+      if (existing) {
         return NextResponse.json(
-          {
-            error: "MongoDB replica set configuration required",
-            message: "Please configure your MongoDB server as a replica set for Prisma transactions.",
-            solution: "Contact your database administrator to run: rs.initiate()",
-            temporaryWorkaround: "Alternatively, the admin team can manually add projects to the database"
-          },
-          { status: 503 }
+          { error: "A project with this slug already exists" },
+          { status: 409 }
         )
       }
-      throw createError;
-    }
 
-    return NextResponse.json(project, { status: 201 })
+      const created = await ProjectModel.create({
+        title: body.title,
+        slug: body.slug,
+        description: body.description,
+        excerpt: body.excerpt,
+        category: body.category,
+        technologies: body.technologies || [],
+        featured: body.featured || false,
+        imageUrl: body.imageUrl,
+        liveUrl: body.liveUrl,
+        githubUrl: body.githubUrl,
+        client: body.client,
+        duration: body.duration,
+        services: body.services || [],
+        achievements: body.achievements || [],
+        challenges: body.challenges || [],
+        solutions: body.solutions || [],
+      })
+      const json = created.toJSON()
+      return NextResponse.json(json, { status: 201 })
+    } catch (err: any) {
+      if (err?.code === 11000) {
+        return NextResponse.json(
+          { error: "A project with this slug already exists" },
+          { status: 409 }
+        )
+      }
+      if (err?.name === 'ValidationError') {
+        const messages = Object.values(err.errors || {}).map((e: any) => e.message)
+        return NextResponse.json(
+          { error: messages.join(', ') || 'Validation failed' },
+          { status: 400 }
+        )
+      }
+      throw err
+    }
   } catch (error: any) {
     console.error("Failed to create project:", error)
-    
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { error: "A project with this slug already exists" },
-        { status: 409 }
-      )
-    }
-    
-    return NextResponse.json(
-      { error: "Failed to create project" },
-      { status: 500 }
-    )
+
+    const devMessage = typeof error?.message === 'string' ? error.message : 'Failed to create project'
+    const message = process.env.NODE_ENV !== 'production' ? devMessage : 'Failed to create project'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

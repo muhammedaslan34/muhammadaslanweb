@@ -1,8 +1,8 @@
 import { NextAuthOptions } from "next-auth"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
-import { prisma } from "./prisma"
+import { connectToDatabase } from "./mongoose"
+import { UserModel } from "@/models/User"
 
 // Extend the built-in session and JWT types
 declare module "next-auth" {
@@ -32,7 +32,6 @@ declare module "next-auth/jwt" {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -45,30 +44,24 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
-          }
-        })
+        await connectToDatabase()
+        const user = await UserModel.findOne({ email: credentials.email }).lean()
 
         if (!user) {
           return null
         }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        )
+        const isPasswordValid = await bcrypt.compare(credentials.password, (user as any).password)
 
         if (!isPasswordValid) {
           return null
         }
 
         return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          id: String((user as any)._id || (user as any).id),
+          email: (user as any).email,
+          name: (user as any).name,
+          role: (user as any).role,
         }
       }
     })

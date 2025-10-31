@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
+import { connectToDatabase } from "@/lib/mongoose"
+import { ProjectModel } from "@/models/Project"
 
 export async function GET(
   request: NextRequest,
@@ -14,11 +15,9 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    await connectToDatabase()
     const { id } = await params
-
-    const project = await prisma.project.findUnique({
-      where: { id },
-    })
+    const project = await ProjectModel.findById(id).lean()
 
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
@@ -48,9 +47,9 @@ export async function PUT(
     const { id } = await params
     const body = await request.json()
 
-    const project = await prisma.project.update({
-      where: { id },
-      data: {
+    const updated = await ProjectModel.findByIdAndUpdate(
+      id,
+      {
         title: body.title,
         slug: body.slug,
         description: body.description,
@@ -68,34 +67,16 @@ export async function PUT(
         challenges: body.challenges || [],
         solutions: body.solutions || [],
       },
-    })
+      { new: true }
+    )
 
-    return NextResponse.json(project)
-  } catch (error: any) {
-    console.error("Failed to update project:", error)
-
-    if (error.code === "P2031") {
-      // MongoDB replica set error
-      return NextResponse.json(
-        {
-          error: "MongoDB replica set configuration required",
-          message: "Please configure your MongoDB server as a replica set for Prisma transactions.",
-          solution: "Contact your database administrator to run: rs.initiate()"
-        },
-        { status: 503 }
-      )
-    }
-
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { error: "A project with this slug already exists" },
-        { status: 409 }
-      )
-    }
-
-    if (error.code === "P2025") {
+    if (!updated) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
+
+    return NextResponse.json(updated.toJSON())
+  } catch (error: any) {
+    console.error("Failed to update project:", error)
 
     return NextResponse.json(
       { error: "Failed to update project" },
@@ -115,12 +96,12 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    await connectToDatabase()
     const { id } = await params
-
-    await prisma.project.delete({
-      where: { id },
-    })
-
+    const deleted = await ProjectModel.findByIdAndDelete(id)
+    if (!deleted) {
+      return NextResponse.json({ error: "Project not found" }, { status: 404 })
+    }
     return NextResponse.json({ success: true })
   } catch (error: any) {
     console.error("Failed to delete project:", error)
@@ -135,10 +116,6 @@ export async function DELETE(
         },
         { status: 503 }
       )
-    }
-
-    if (error.code === "P2025") {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
 
     return NextResponse.json(

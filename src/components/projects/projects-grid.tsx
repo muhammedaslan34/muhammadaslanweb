@@ -218,7 +218,6 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
             isOpen={isPreviewOpen}
             onClose={handleClosePreview}
             project={{
-              id: selectedProject.id,
               title: selectedProject.title,
               liveUrl: selectedProject.liveUrl || 'https://example.com'
             }}

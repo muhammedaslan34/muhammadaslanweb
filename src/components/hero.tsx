@@ -63,11 +63,12 @@ export function Hero() {
 
               {/* Right Column - Photo */}
               <div className="relative flex items-end">
-                <div className="relative mx-auto max-w-lg">
+                <div className="relative mx-auto max-w-6xl w-full">
                   <img
-                    src="/images/muhammed-aslan.png"
+                    src="/images/hero.png"
                     alt="Muhammad Aslan - Web Developer"
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto min-h-[700px] object-cover"
+                    style={{ transform: 'scaleX(-1) rotate(180deg)' }}
                   />
                 </div>
               </div>
@@ -158,11 +159,12 @@ export function Hero() {
               }}
               className="relative flex items-center"
             >
-              <div className="relative mx-auto max-w-lg">
+              <div className="relative mx-auto max-w-6xl w-full">
                 <img
-                  src="/images/muhammed-aslan.png"
+                  src="/images/hero.png"
                   alt="Muhammad Aslan - Web Developer"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto min-h-[800px] object-cover"
+                  style={{ transform: 'scaleX(-1) rotate(360deg)' }}
                 />
               </div>
             </motion.div>

@@ -10,6 +10,7 @@ import NextAuthProvider from '@/components/providers/session-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
   title: 'Muhammad Aslan - Web Developer & WordPress Specialist',
   description: 'Professional web developer specializing in modern web applications, WordPress development, and digital solutions.',
   keywords: ['web developer', 'wordpress', 'nextjs', 'react', 'typescript'],

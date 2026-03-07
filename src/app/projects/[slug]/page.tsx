@@ -6,10 +6,14 @@ import { Button } from '@/components/ui/button'
 import { connectToDatabase } from '@/lib/mongoose'
 import { ProjectModel } from '@/models/Project'
 import { ProjectHero } from '@/components/project/ProjectHero'
+import { ProjectHeader } from '@/components/project/ProjectHeader'
 import { ProjectInfoBar } from '@/components/project/ProjectInfoBar'
 import { ProjectOverview } from '@/components/project/ProjectOverview'
 import { ImageGallery } from '@/components/project/ImageGallery'
 import { FeatureSection } from '@/components/project/FeatureSection'
+import { ProjectFeatures } from '@/components/project/ProjectFeatures'
+import { TechStack } from '@/components/project/TechStack'
+import { ProjectTimeline } from '@/components/project/ProjectTimeline'
 import { ResultsSection } from '@/components/project/ResultsSection'
 import { RelatedProjects } from '@/components/project/RelatedProjects'
 import { ProjectCTA } from '@/components/project/ProjectCTA'
@@ -134,25 +138,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Button>
       </div>
 
-      {/* Hero Section */}
-      <ProjectHero
+      {/* Project Header - New Component */}
+      <ProjectHeader
         title={project.title}
-        subtitle={project.excerpt}
-        categories={Array.isArray(project.category) ? project.category : [project.category]}
+        category={Array.isArray(project.category) ? project.category[0] : project.category}
+        status={projectStatus}
+        date={new Date(project.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+        description={project.excerpt || project.description}
+        githubUrl={project.githubUrl || '#'}
+        liveUrl={project.liveUrl || '#'}
         imageUrl={project.imageUrl}
-        heroImage={project.hero?.image}
-        heroAlt={project.hero?.alt}
-        liveUrl={project.liveUrl}
-        githubUrl={project.githubUrl}
       />
 
-      {/* Project Info Bar */}
-      <ProjectInfoBar
-        client={project.client}
-        date={project.createdAt}
-        status={projectStatus}
-        duration={project.duration}
+      {/* Tech Stack Info - New Component */}
+      <TechStack
         technologies={project.technologies}
+        clientName={project.client || 'Personal Project'}
+        projectDate={project.duration || 'Ongoing'}
       />
 
       {/* Project Overview */}
@@ -163,14 +165,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         objectives={project.services}
       />
 
+      {/* Key Features - New Component */}
+      {project.features && project.features.length > 0 && (
+        <ProjectFeatures features={project.features} />
+      )}
+
       {/* Image Gallery */}
       {project.gallery && project.gallery.length > 0 && (
         <ImageGallery images={project.gallery} />
       )}
 
-      {/* Features Section */}
-      {project.features && project.features.length > 0 && (
-        <FeatureSection features={project.features} />
+      {/* Project Timeline - New Component (if timeline data exists) */}
+      {project.timeline && project.timeline.length > 0 && (
+        <ProjectTimeline timeline={project.timeline} />
       )}
 
       {/* Results Section */}

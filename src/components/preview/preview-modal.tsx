@@ -12,7 +12,6 @@ interface PreviewModalProps {
   isOpen: boolean
   onClose: () => void
   project: {
-    id: string | number
     title: string
     liveUrl: string
   }

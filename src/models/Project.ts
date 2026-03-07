@@ -17,6 +17,11 @@ export interface ProjectDocument extends Document {
   achievements: string[]
   challenges: string[]
   solutions: string[]
+  features?: string[]
+  gallery?: string[]
+  metrics?: Array<{ label: string; value: string }>
+  testimonials?: Array<{ text: string; author: string; role: string }>
+  timeline?: Array<{ phase: string; description: string; date: string }>
   createdAt: Date
   updatedAt: Date
 }
@@ -39,6 +44,11 @@ const ProjectSchema = new Schema<ProjectDocument>(
     achievements: { type: [String], default: [] },
     challenges: { type: [String], default: [] },
     solutions: { type: [String], default: [] },
+    features: { type: [String], default: [] },
+    gallery: { type: [String], default: [] },
+    metrics: { type: [{ label: String, value: String }], default: [] },
+    testimonials: { type: [{ text: String, author: String, role: String }], default: [] },
+    timeline: { type: [{ phase: String, description: String, date: String }], default: [] },
   },
   {
     timestamps: true,

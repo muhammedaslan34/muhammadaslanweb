@@ -56,10 +56,11 @@ export interface ExtendedProject {
   solution?: string
   technologies: string[]
   links: ProjectLinks
-  features?: ProjectFeature[]
-  gallery?: ProjectImage[]
-  metrics?: ProjectMetric[]
-  testimonials?: ProjectTestimonial[]
+  features?: ProjectFeature[] | string[]
+  gallery?: ProjectImage[] | string[]
+  metrics?: ProjectMetric[] | Array<{ label: string; value: string }>
+  testimonials?: ProjectTestimonial[] | Array<{ text: string; author: string; role: string }>
+  timeline?: Array<{ phase: string; description: string; date: string }>
   relatedProjects?: string[]
   imageUrl?: string
   liveUrl?: string
@@ -93,6 +94,11 @@ export interface Project {
   achievements?: string[]
   challenges?: string[]
   solutions?: string[]
+  features?: string[]
+  gallery?: string[]
+  metrics?: Array<{ label: string; value: string }>
+  testimonials?: Array<{ text: string; author: string; role: string }>
+  timeline?: Array<{ phase: string; description: string; date: string }>
   createdAt: string
   updatedAt: string
 }

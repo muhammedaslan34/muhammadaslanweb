@@ -25,10 +25,10 @@ const UserSchema = new Schema<UserDocument>(
     versionKey: false,
     toJSON: {
       virtuals: true,
-      transform: (_doc, ret) => {
+      transform: (_doc, ret: Record<string, unknown>) => {
         ret.id = ret._id?.toString()
         delete ret._id
-        delete (ret as any).password
+        delete ret.password
         return ret
       },
     },
@@ -36,5 +36,6 @@ const UserSchema = new Schema<UserDocument>(
 )
 
 export const UserModel = (models.User as mongoose.Model<UserDocument>) || model<UserDocument>("User", UserSchema)
+
 
 

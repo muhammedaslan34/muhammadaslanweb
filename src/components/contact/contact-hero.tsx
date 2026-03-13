@@ -11,7 +11,7 @@ export function ContactHero() {
         <div className="mx-auto max-w-4xl text-center space-y-8">
           <div className="inline-flex items-center glass-card px-4 py-2 text-sm">
             <MessageSquare className="mr-2 h-4 w-4 text-accent" />
-            Let's Work Together
+            Let&apos;s Work Together
           </div>
 
           <h1 className="heading-xl">
@@ -21,7 +21,7 @@ export function ContactHero() {
 
           <p className="body-lg text-muted-foreground max-w-3xl mx-auto">
             Ready to bring your vision to life? Get in touch for a free consultation 
-            and let's discuss how we can create something amazing together.
+            and let&apos;s discuss how we can create something amazing together.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-muted-foreground">

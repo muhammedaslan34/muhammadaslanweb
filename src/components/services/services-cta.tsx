@@ -13,7 +13,7 @@ export function ServicesCTA() {
         <div className="mx-auto max-w-4xl text-center space-y-8">
           <h2 className="heading-lg">Ready to Start Your Project?</h2>
           <p className="body-lg text-muted-foreground max-w-2xl mx-auto">
-            Let's discuss your requirements and create something amazing together. 
+            Let&apos;s discuss your requirements and create something amazing together. 
             Get a free consultation and project estimate.
           </p>
           

@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
     const checkSession = async () => {
       const session = await getSession()
       if (session) {
-        router.push("/admin/dashboard" as any)
+        router.push("/admin/dashboard")
       }
     }
     checkSession()
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
         setError("Invalid email or password")
       } else {
         // Redirect to admin dashboard
-        router.push("/admin/dashboard" as any)
+        router.push("/admin/dashboard")
       }
     } catch (error) {
       setError("An error occurred. Please try again.")
@@ -55,16 +55,24 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-main p-4">
-      <Card className="w-full max-w-md glass-card">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">Admin Login</CardTitle>
-          <CardDescription className="text-center">
-            Enter your credentials to access the admin dashboard
-          </CardDescription>
+    <div className="min-h-screen flex items-center justify-center bg-main px-4 py-8">
+      <Card className="w-full max-w-md glass-card border border-border/60 shadow-lg">
+        <CardHeader className="space-y-4 text-center">
+          <div className="inline-flex items-center rounded-full border border-border/60 bg-background/60 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="mr-2 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            Admin Panel
+          </div>
+          <div className="space-y-1">
+            <CardTitle className="text-2xl font-semibold tracking-tight">
+              Sign in to dashboard
+            </CardTitle>
+            <CardDescription>
+              Use your admin credentials to manage your portfolio content.
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -92,8 +100,8 @@ export default function AdminLoginPage() {
                 <Button
                   type="button"
                   variant="ghost"
-                  size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  size="icon"
+                  className="absolute right-0 top-0 h-full px-3 py-2 text-muted-foreground hover:bg-transparent"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -103,6 +111,21 @@ export default function AdminLoginPage() {
                   )}
                 </Button>
               </div>
+            </div>
+            <div className="flex items-center justify-between text-xs text-muted-foreground">
+              <label className="inline-flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="h-3.5 w-3.5 rounded border-border bg-background/60"
+                />
+                <span>Remember me</span>
+              </label>
+              <button
+                type="button"
+                className="text-xs font-medium text-accent hover:underline"
+              >
+                Forgot password?
+              </button>
             </div>
             {error && (
               <div className="text-sm text-red-500 text-center">{error}</div>

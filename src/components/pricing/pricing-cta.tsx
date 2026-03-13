@@ -11,7 +11,7 @@ export function PricingCTA() {
         <div className="mx-auto max-w-3xl text-center space-y-8">
           <h2 className="heading-lg">Ready to Get Started?</h2>
           <p className="body-lg text-muted-foreground">
-            Let's discuss your project requirements and find the perfect solution for your needs.
+            Let&apos;s discuss your project requirements and find the perfect solution for your needs.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

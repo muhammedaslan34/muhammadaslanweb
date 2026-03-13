@@ -813,7 +813,7 @@ function App() {
 Use ARIA when needed:
 
 \`\`\`jsx
-function Accordion({ items }: { items: any[] }) {
+function Accordion({ items }: { items: unknown[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (

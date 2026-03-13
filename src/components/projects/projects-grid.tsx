@@ -194,7 +194,7 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
             <div className="space-y-4">
               <h3 className="heading-sm text-muted-foreground">No projects found</h3>
               <p className="body-sm text-muted-foreground">
-                Try adjusting your filters or search terms to find what you're looking for.
+                Try adjusting your filters or search terms to find what you&apos;re looking for.
               </p>
             </div>
           </div>

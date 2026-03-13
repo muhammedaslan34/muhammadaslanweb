@@ -53,7 +53,7 @@ export function BlogNewsletter() {
             <div className="glass-card p-6 max-w-md mx-auto">
               <div className="text-accent font-semibold mb-2">🎉 Thanks for subscribing!</div>
               <p className="text-sm text-muted-foreground">
-                You'll receive a confirmation email shortly.
+                You&apos;ll receive a confirmation email shortly.
               </p>
             </div>
           )}

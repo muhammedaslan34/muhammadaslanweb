@@ -74,7 +74,7 @@ export async function PUT(
     }
 
     return NextResponse.json(updated.toJSON())
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to update blog post:", error)
 
     return NextResponse.json(
@@ -102,7 +102,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Blog post not found" }, { status: 404 })
     }
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to delete blog post:", error)
 
     return NextResponse.json(

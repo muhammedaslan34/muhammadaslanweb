@@ -100,8 +100,10 @@ export default function NewProject() {
 
       toast.success("Project created successfully!")
       router.push("/admin/projects")
-    } catch (error: any) {
-      toast.error(error.message || "Failed to create project")
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Failed to create project"
+      toast.error(message)
     } finally {
       setLoading(false)
     }

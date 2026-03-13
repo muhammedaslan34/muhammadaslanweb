@@ -30,6 +30,18 @@ type GalleryItem = {
   image: string
 }
 
+type ProjectApiItem = {
+  id: string
+  title: string
+  description: string
+  slug: string
+  imageUrl?: string
+}
+
+type ProjectsApiResponse = {
+  projects: ProjectApiItem[]
+}
+
 export function FeaturedProjects() {
   const [featuredProjects, setFeaturedProjects] = useState<GalleryItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -44,10 +56,10 @@ export function FeaturedProjects() {
       const response = await fetch('/api/projects?featured=true&limit=6')
       if (!response.ok) throw new Error('Failed to fetch featured projects')
 
-      const data = await response.json()
+      const data = (await response.json()) as ProjectsApiResponse
 
       // Transform project data to match Gallery4 format
-      const transformedProjects: GalleryItem[] = data.projects.map((project: any) => ({
+      const transformedProjects: GalleryItem[] = data.projects.map((project) => ({
         id: project.id,
         title: project.title,
         description: project.description,

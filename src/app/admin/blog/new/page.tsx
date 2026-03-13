@@ -110,8 +110,10 @@ export default function NewBlogPost() {
 
       toast.success("Blog post created successfully!")
       router.push("/admin/blog")
-    } catch (error: any) {
-      toast.error(error.message || "Failed to create blog post")
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Failed to create blog post"
+      toast.error(message)
     } finally {
       setLoading(false)
     }
@@ -357,3 +359,4 @@ export default function NewBlogPost() {
     </div>
   )
 }
+

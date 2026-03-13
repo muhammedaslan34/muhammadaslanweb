@@ -133,7 +133,7 @@ export default function AdminProjects() {
             </CardDescription>
           </div>
           <Button asChild>
-            <Link href={"/admin/projects/new" as any}>
+            <Link href="/admin/projects/new">
               <Plus className="h-4 w-4 mr-2" />
               Add Project
             </Link>
@@ -234,7 +234,7 @@ export default function AdminProjects() {
                                 </Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href={`/admin/projects/${project.id}/edit` as any}>
+                                <Link href={`/admin/projects/${project.id}/edit`}>
                                   <Edit className="h-4 w-4 mr-2" />
                                   Edit
                                 </Link>

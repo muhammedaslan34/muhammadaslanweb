@@ -91,7 +91,7 @@ export function ContactForm() {
       <CardHeader>
         <CardTitle className="text-2xl">Get Your Free Quote</CardTitle>
         <CardDescription>
-          Tell me about your project and I'll provide a detailed estimate within 24 hours.
+          Tell me about your project and I&apos;ll provide a detailed estimate within 24 hours.
         </CardDescription>
       </CardHeader>
       <CardContent>

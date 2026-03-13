@@ -4,6 +4,16 @@ import { authOptions } from "@/lib/auth"
 import { connectToDatabase } from "@/lib/mongoose"
 import { ProjectModel } from "@/models/Project"
 
+type QueryFilter = Record<string, unknown>
+type LeanProjectDoc = Record<string, unknown> & { _id?: unknown }
+type ValidationErrorItem = { message?: string }
+type MongoError = {
+  code?: number
+  name?: string
+  errors?: Record<string, ValidationErrorItem>
+  message?: string
+}
+
 export async function GET(request: NextRequest) {
   try {
     await connectToDatabase()
@@ -17,7 +27,7 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: QueryFilter = {}
     if (search) {
       where.$or = [
         { title: { $regex: search, $options: "i" } },
@@ -37,7 +47,11 @@ export async function GET(request: NextRequest) {
       ProjectModel.countDocuments(where),
     ])
 
-    const projects = docs.map((d: any) => ({ ...d, id: String(d._id), _id: undefined }))
+    const projects = (docs as LeanProjectDoc[]).map((d) => ({
+      ...d,
+      id: String(d._id),
+      _id: undefined,
+    }))
 
     return NextResponse.json({
       projects,
@@ -97,15 +111,16 @@ export async function POST(request: NextRequest) {
       })
       const json = created.toJSON()
       return NextResponse.json(json, { status: 201 })
-    } catch (err: any) {
-      if (err?.code === 11000) {
+    } catch (err: unknown) {
+      const mongoError = err as MongoError
+      if (mongoError.code === 11000) {
         return NextResponse.json(
           { error: "A project with this slug already exists" },
           { status: 409 }
         )
       }
-      if (err?.name === 'ValidationError') {
-        const messages = Object.values(err.errors || {}).map((e: any) => e.message)
+      if (mongoError.name === 'ValidationError') {
+        const messages = Object.values(mongoError.errors || {}).map((e) => e.message)
         return NextResponse.json(
           { error: messages.join(', ') || 'Validation failed' },
           { status: 400 }
@@ -113,10 +128,11 @@ export async function POST(request: NextRequest) {
       }
       throw err
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to create project:", error)
 
-    const devMessage = typeof error?.message === 'string' ? error.message : 'Failed to create project'
+    const errObj = error as MongoError
+    const devMessage = typeof errObj.message === 'string' ? errObj.message : 'Failed to create project'
     const message = process.env.NODE_ENV !== 'production' ? devMessage : 'Failed to create project'
     return NextResponse.json({ error: message }, { status: 500 })
   }

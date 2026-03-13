@@ -13,6 +13,10 @@ interface ProjectsFilterProps {
   setSearchTerm: (term: string) => void
 }
 
+type ProjectCategoryItem = {
+  category: string
+}
+
 export function ProjectsFilter({
   activeCategory,
   setActiveCategory,
@@ -32,7 +36,7 @@ export function ProjectsFilter({
       if (!response.ok) throw new Error('Failed to fetch projects')
 
       const data = await response.json()
-      const projectCategories = data.projects.reduce((acc: string[], project: any) => {
+      const projectCategories = (data.projects as ProjectCategoryItem[]).reduce((acc: string[], project) => {
         if (!acc.includes(project.category)) {
           acc.push(project.category)
         }

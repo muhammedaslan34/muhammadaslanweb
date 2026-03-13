@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongoose"
 import { BlogPostModel } from "@/models/BlogPost"
 
+type QueryFilter = Record<string, unknown>
+type LeanBlogDoc = Record<string, unknown> & { _id?: unknown }
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -11,7 +14,7 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: QueryFilter = {}
     if (category) where.category = category
 
     await connectToDatabase()
@@ -38,7 +41,11 @@ export async function GET(request: NextRequest) {
       BlogPostModel.countDocuments(where),
     ])
 
-    const posts = docs.map((d: any) => ({ ...d, id: String(d._id), _id: undefined }))
+    const posts = (docs as LeanBlogDoc[]).map((d) => ({
+      ...d,
+      id: String(d._id),
+      _id: undefined,
+    }))
 
     return NextResponse.json({
       posts,

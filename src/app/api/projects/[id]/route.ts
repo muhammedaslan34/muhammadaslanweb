@@ -75,7 +75,7 @@ export async function PUT(
     }
 
     return NextResponse.json(updated.toJSON())
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to update project:", error)
 
     return NextResponse.json(
@@ -103,10 +103,15 @@ export async function DELETE(
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
     return NextResponse.json({ success: true })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to delete project:", error)
 
-    if (error.code === "P2031") {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      (error as { code?: string }).code === "P2031"
+    ) {
       // MongoDB replica set error
       return NextResponse.json(
         {

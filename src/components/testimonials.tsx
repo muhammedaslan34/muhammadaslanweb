@@ -23,13 +23,11 @@ export function Highlight({
   );
 }
 
-export interface TestimonialCardProps {
+export interface TestimonialCardProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   role: string;
   img?: string;
   description: React.ReactNode;
-  className?: string;
-  [key: string]: any;
 }
 
 export function TestimonialCard({
@@ -38,7 +36,7 @@ export function TestimonialCard({
   img,
   role,
   className,
-  ...props // Capture the rest of the props
+  ...props
 }: TestimonialCardProps) {
   return (
     <div
@@ -200,7 +198,7 @@ const testimonials = [
         <Highlight>
           Student engagement has increased by 60% since the new platform launched.
         </Highlight>{' '}
-        He's responsive, professional, and delivers exceptional work every time.
+        He&apos;s responsive, professional, and delivers exceptional work every time.
       </p>
     ),
   },

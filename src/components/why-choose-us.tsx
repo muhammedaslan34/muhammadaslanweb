@@ -52,7 +52,7 @@ const features: Feature[] = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative py-14">
+    <section className="relative py-16 md:py-20">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="relative mx-auto max-w-2xl sm:text-center">
           <motion.div 
@@ -62,6 +62,9 @@ export function WhyChooseUs() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            <p className="text-accent mb-2 text-xs font-semibold tracking-[0.2em] uppercase">
+              Core Capabilities
+            </p>
             <h3 className="font-geist mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl">
               Building Digital Solutions That Matter
             </h3>

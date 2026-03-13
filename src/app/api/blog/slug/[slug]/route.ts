@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongoose"
 import { BlogPostModel } from "@/models/BlogPost"
 
+type LeanBlogDoc = Record<string, unknown> & { _id?: unknown }
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -14,7 +16,8 @@ export async function GET(
     if (!doc) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 })
     }
-    const post = { ...doc, id: String((doc as any)._id), _id: undefined }
+    const blogDoc = doc as LeanBlogDoc
+    const post = { ...blogDoc, id: String(blogDoc._id), _id: undefined }
     return NextResponse.json(post)
   } catch (error) {
     console.error("Failed to fetch blog post:", error)

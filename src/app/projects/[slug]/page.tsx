@@ -17,7 +17,22 @@ import { ProjectTimeline } from '@/components/project/ProjectTimeline'
 import { ResultsSection } from '@/components/project/ResultsSection'
 import { RelatedProjects } from '@/components/project/RelatedProjects'
 import { ProjectCTA } from '@/components/project/ProjectCTA'
-import { ExtendedProject, Project } from '@/types/project'
+import { ExtendedProject, Project, ProjectImage } from '@/types/project'
+
+type LeanProjectDoc = Record<string, unknown> & {
+  _id?: unknown
+  slug?: string
+  title?: string
+  description?: string
+  excerpt?: string
+  technologies?: string[]
+  featured?: boolean
+  createdAt?: unknown
+  updatedAt?: unknown
+  category?: string | string[]
+  githubUrl?: string
+  liveUrl?: string
+}
 
 interface ProjectPageProps {
   params: Promise<{
@@ -30,22 +45,31 @@ async function getProjectBySlug(slug: string) {
     await connectToDatabase()
     const doc = await ProjectModel.findOne({ slug }).lean()
     if (!doc) return null
+    const leanDoc = doc as LeanProjectDoc
+    const normalizedCategory = Array.isArray(leanDoc.category)
+      ? leanDoc.category
+      : [String(leanDoc.category || 'general')]
 
     // Transform to ExtendedProject format
-    const project = {
-      ...doc,
-      id: String((doc as any)._id),
-      _id: undefined,
-      createdAt: String((doc as any).createdAt),
-      updatedAt: String((doc as any).updatedAt),
-      date: String((doc as any).createdAt),
-      category: Array.isArray((doc as any).category) ? (doc as any).category : [(doc as any).category],
-      status: 'completed' as const,
+    const project: ExtendedProject = {
+      ...leanDoc,
+      id: String(leanDoc._id),
+      slug: leanDoc.slug ?? '',
+      title: leanDoc.title ?? '',
+      description: leanDoc.description ?? '',
+      excerpt: leanDoc.excerpt ?? '',
+      technologies: Array.isArray(leanDoc.technologies) ? leanDoc.technologies : [],
+      featured: Boolean(leanDoc.featured),
+      createdAt: String(leanDoc.createdAt),
+      updatedAt: String(leanDoc.updatedAt),
+      date: String(leanDoc.createdAt),
+      category: normalizedCategory,
+      status: 'completed',
       links: {
-        github: (doc as any).githubUrl,
-        live: (doc as any).liveUrl,
-      }
-    } as ExtendedProject
+        github: leanDoc.githubUrl,
+        live: leanDoc.liveUrl,
+      },
+    }
 
     return project
   } catch (error) {
@@ -65,11 +89,11 @@ async function getRelatedProjects(currentSlug: string, category: string, limit =
       .lean()
 
     return docs.map(doc => ({
-      ...doc,
-      id: String((doc as any)._id),
+      ...(doc as LeanProjectDoc),
+      id: String((doc as LeanProjectDoc)._id),
       _id: undefined,
-      createdAt: String((doc as any).createdAt),
-      updatedAt: String((doc as any).updatedAt)
+      createdAt: String((doc as LeanProjectDoc).createdAt),
+      updatedAt: String((doc as LeanProjectDoc).updatedAt)
     })) as Project[]
   } catch (error) {
     console.error('Error fetching related projects:', error)
@@ -147,7 +171,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         description={project.excerpt || project.description}
         githubUrl={project.githubUrl || '#'}
         liveUrl={project.liveUrl || '#'}
-        imageUrl={project.imageUrl}
+        imageUrl={project.imageUrl ?? ''}
       />
 
       {/* Tech Stack Info - New Component */}
@@ -167,12 +191,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {/* Key Features - New Component */}
       {project.features && project.features.length > 0 && (
-        <ProjectFeatures features={project.features} />
+        <ProjectFeatures
+          features={
+            typeof project.features[0] === 'string'
+              ? (project.features as string[])
+              : (project.features as { title?: string; description?: string }[]).map(
+                  (f) => f.title ?? f.description ?? ''
+                )
+          }
+        />
       )}
 
       {/* Image Gallery */}
       {project.gallery && project.gallery.length > 0 && (
-        <ImageGallery images={project.gallery} />
+        <ImageGallery
+          images={
+            typeof project.gallery[0] === 'string'
+              ? (project.gallery as string[]).map((url) => ({ url, alt: '' }))
+              : (project.gallery as ProjectImage[])
+          }
+        />
       )}
 
       {/* Project Timeline - New Component (if timeline data exists) */}
@@ -183,7 +221,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {/* Results Section */}
       <ResultsSection
         metrics={project.metrics}
-        testimonials={project.testimonials}
+        testimonials={
+          project.testimonials?.map((t) =>
+            'quote' in t ? t : { quote: (t as { text: string }).text, author: t.author, role: t.role }
+          )
+        }
         achievements={project.achievements}
       />
 

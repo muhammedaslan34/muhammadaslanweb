@@ -3,7 +3,7 @@
 export const dynamic = "force-dynamic"
 
 import { useSession } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useEffect } from "react"
 import { AdminSidebar } from "@/components/admin-sidebar"
 import { AdminHeader } from "@/components/admin-header"
@@ -16,12 +16,19 @@ export default function AdminLayout({
 }) {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
+
+  const isLoginPage = pathname === "/admin/login"
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!isLoginPage && status === "unauthenticated") {
       router.push("/admin/login")
     }
-  }, [status, router])
+  }, [status, router, isLoginPage])
+
+  if (isLoginPage) {
+    return <>{children}</>
+  }
 
   if (status === "loading") {
     return (

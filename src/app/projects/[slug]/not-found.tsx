@@ -31,7 +31,7 @@ export default function ProjectNotFound() {
             Project Not Found
           </h2>
           <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Sorry, we couldn't find the project you're looking for. It may have been moved or deleted.
+            Sorry, we couldn&apos;t find the project you&apos;re looking for. It may have been moved or deleted.
           </p>
         </motion.div>
 

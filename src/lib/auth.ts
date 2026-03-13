@@ -4,6 +4,15 @@ import bcrypt from "bcryptjs"
 import { connectToDatabase } from "./mongoose"
 import { UserModel } from "@/models/User"
 
+type DbUser = {
+  _id?: unknown
+  id?: unknown
+  email?: string | null
+  name?: string | null
+  role?: string
+  password?: string
+}
+
 // Extend the built-in session and JWT types
 declare module "next-auth" {
   interface Session {
@@ -46,22 +55,30 @@ export const authOptions: NextAuthOptions = {
 
         await connectToDatabase()
         const user = await UserModel.findOne({ email: credentials.email }).lean()
+        const userData = user as DbUser | null
 
-        if (!user) {
+        if (!userData) {
           return null
         }
 
-        const isPasswordValid = await bcrypt.compare(credentials.password, (user as any).password)
+        if (!userData.password) {
+          return null
+        }
+
+        const isPasswordValid = await bcrypt.compare(
+          credentials.password,
+          userData.password
+        )
 
         if (!isPasswordValid) {
           return null
         }
 
         return {
-          id: String((user as any)._id || (user as any).id),
-          email: (user as any).email,
-          name: (user as any).name,
-          role: (user as any).role,
+          id: String(userData._id || userData.id),
+          email: userData.email,
+          name: userData.name,
+          role: userData.role || "USER",
         }
       }
     })

@@ -167,8 +167,10 @@ export default function EditProject({ params }: { params: Promise<{ id: string }
 
       toast.success("Project updated successfully!")
       router.push("/admin/projects")
-    } catch (error: any) {
-      toast.error(error.message || "Failed to update project")
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Failed to update project"
+      toast.error(message)
     } finally {
       setLoading(false)
     }

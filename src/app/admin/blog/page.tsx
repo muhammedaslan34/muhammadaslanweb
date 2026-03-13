@@ -131,7 +131,7 @@ export default function AdminBlog() {
             </CardDescription>
           </div>
           <Button asChild>
-            <Link href={"/admin/blog/new" as any}>
+            <Link href="/admin/blog/new">
               <Plus className="h-4 w-4 mr-2" />
               Add Blog Post
             </Link>
@@ -216,7 +216,7 @@ export default function AdminBlog() {
                                 </Link>
                               </DropdownMenuItem>
                               <DropdownMenuItem asChild>
-                                <Link href={`/admin/blog/${post.id}/edit` as any}>
+                                <Link href={`/admin/blog/${post.id}/edit`}>
                                   <Edit className="h-4 w-4 mr-2" />
                                   Edit
                                 </Link>
@@ -274,3 +274,4 @@ export default function AdminBlog() {
     </Card>
   )
 }
+

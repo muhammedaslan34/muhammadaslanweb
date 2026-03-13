@@ -4,10 +4,14 @@ import { authOptions } from "@/lib/auth"
 import { connectToDatabase } from "@/lib/mongoose"
 import { BlogPostModel } from "@/models/BlogPost"
 
+type QueryFilter = Record<string, unknown>
+type LeanBlogDoc = Record<string, unknown> & { _id?: unknown }
+type MongoError = {
+  code?: number
+}
+
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-
     // Temporarily bypass auth for demo purposes when database is not available
     // if (!session || session.user?.role !== "ADMIN") {
     //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -21,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: QueryFilter = {}
     if (search) {
       where.$or = [
         { title: { $regex: search, $options: "i" } },
@@ -41,7 +45,11 @@ export async function GET(request: NextRequest) {
       BlogPostModel.countDocuments(where),
     ])
 
-    const posts = docs.map((d: any) => ({ ...d, id: String(d._id), _id: undefined }))
+    const posts = (docs as LeanBlogDoc[]).map((d) => ({
+      ...d,
+      id: String(d._id),
+      _id: undefined,
+    }))
 
     return NextResponse.json({
       posts,
@@ -91,8 +99,9 @@ export async function POST(request: NextRequest) {
         publishedAt: body.publishedAt || new Date(),
       })
       return NextResponse.json(created.toJSON(), { status: 201 })
-    } catch (err: any) {
-      if (err?.code === 11000) {
+    } catch (err: unknown) {
+      const mongoError = err as MongoError
+      if (mongoError.code === 11000) {
         return NextResponse.json(
           { error: "A blog post with this slug already exists" },
           { status: 409 }
@@ -100,7 +109,7 @@ export async function POST(request: NextRequest) {
       }
       throw err
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to create blog post:", error)
     return NextResponse.json(
       { error: "Failed to create blog post" },
@@ -108,3 +117,4 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+

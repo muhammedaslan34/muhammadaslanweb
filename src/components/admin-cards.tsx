@@ -44,6 +44,38 @@ interface RecentItem {
   category?: string
 }
 
+type ProjectSummary = {
+  id: string
+  title: string
+  featured?: boolean
+  createdAt: string
+  category?: string
+}
+
+type BlogSummary = {
+  id: string
+  title: string
+  featured?: boolean
+  publishedAt?: string
+  createdAt: string
+  author?: string
+  category?: string
+}
+
+type ProjectsResponse = {
+  pagination?: {
+    total?: number
+  }
+  projects?: ProjectSummary[]
+}
+
+type BlogResponse = {
+  pagination?: {
+    total?: number
+  }
+  posts?: BlogSummary[]
+}
+
 export function AdminCards() {
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [recentItems, setRecentItems] = useState<RecentItem[]>([])
@@ -60,18 +92,18 @@ export function AdminCards() {
         fetch('/api/blog?limit=100'),
       ])
 
-      const projectsData = await projectsRes.json()
-      const blogData = await blogRes.json()
+      const projectsData = (await projectsRes.json()) as ProjectsResponse
+      const blogData = (await blogRes.json()) as BlogResponse
 
       const stats: DashboardStats = {
         projects: {
           total: projectsData.pagination?.total || 0,
-          featured: projectsData.projects?.filter((p: any) => p.featured).length || 0,
+          featured: projectsData.projects?.filter((p) => p.featured).length || 0,
           change: 12.5, // Mock change percentage
         },
         blog: {
           total: blogData.pagination?.total || 0,
-          featured: blogData.posts?.filter((p: any) => p.featured).length || 0,
+          featured: blogData.posts?.filter((p) => p.featured).length || 0,
           change: 8.2, // Mock change percentage
         },
         messages: {
@@ -84,7 +116,7 @@ export function AdminCards() {
       // Prepare recent items
       const recentProjects: RecentItem[] = (projectsData.projects || [])
         .slice(0, 3)
-        .map((project: any) => ({
+        .map((project) => ({
           id: project.id,
           title: project.title,
           url: `/admin/projects/${project.id}/edit`,
@@ -96,7 +128,7 @@ export function AdminCards() {
 
       const recentBlogs: RecentItem[] = (blogData.posts || [])
         .slice(0, 3)
-        .map((post: any) => ({
+        .map((post) => ({
           id: post.id,
           title: post.title,
           url: `/admin/blog/${post.id}/edit`,

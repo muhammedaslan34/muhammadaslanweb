@@ -53,7 +53,7 @@ export default function ContactFormEmail({
           
           <Section style={contentContainer}>
             <Heading style={heading}>New Project Inquiry</Heading>
-            <Text style={paragraph}>You've received a new project inquiry through your website.</Text>
+            <Text style={paragraph}>You&apos;ve received a new project inquiry through your website.</Text>
             
             <Section style={detailsContainer}>
               <Hr style={hr} />

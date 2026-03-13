@@ -10,8 +10,11 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   images: {
-    domains: ['localhost'],
     remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
       {
         protocol: 'https',
         hostname: '**',

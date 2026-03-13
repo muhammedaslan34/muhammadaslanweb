@@ -140,7 +140,7 @@ export default function AnimatedHeader() {
                   onMouseLeave={() => setHoveredItem(null)}
                 >
                   <Link
-                    href={item.href as any}
+                    href={item.href}
                     className="text-foreground/80 hover:text-foreground relative rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200"
                   >
                     {hoveredItem === item.name && (
@@ -232,7 +232,7 @@ export default function AnimatedHeader() {
                   {navItems.map((item) => (
                     <motion.div key={item.name} variants={mobileItemVariants}>
                       <Link
-                        href={item.href as any}
+                        href={item.href}
                         className="text-foreground hover:bg-muted block rounded-lg px-4 py-3 font-medium transition-colors duration-200"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >

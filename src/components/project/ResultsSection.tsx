@@ -116,7 +116,7 @@ export function ResultsSection({
                       <Quote className="w-8 h-8 text-accent flex-shrink-0" />
                       <div className="flex-1">
                         <blockquote className="text-lg italic text-muted-foreground leading-relaxed">
-                          "{testimonial.quote}"
+                          &quot;{testimonial.quote}&quot;
                         </blockquote>
                       </div>
                     </div>

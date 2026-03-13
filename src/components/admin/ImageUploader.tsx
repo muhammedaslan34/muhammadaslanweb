@@ -74,8 +74,10 @@ export default function ImageUploader({
       onChange(data.url)
       setPreview(data.url)
       toast.success("Image uploaded successfully!")
-    } catch (error: any) {
-      toast.error(error.message || "Failed to upload image")
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Failed to upload image"
+      toast.error(message)
       setPreview(value)
     } finally {
       setUploading(false)
@@ -173,3 +175,4 @@ export default function ImageUploader({
     </div>
   )
 }
+

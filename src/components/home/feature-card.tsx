@@ -21,36 +21,21 @@ export function FeatureCard({ icon, title, description, index = 0 }: FeatureCard
         ease: [0.21, 0.47, 0.32, 0.98]
       }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="space-y-3 rounded-xl border p-6 transition-all duration-300 shadow-sm hover:shadow-md border-border/40 hover:border-accent/30 relative overflow-hidden group"
-      style={{ backgroundColor: 'var(--card-bg)' }}
+      className="group relative space-y-3 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all duration-300 hover:border-accent/40"
     >
-      {/* Blue radial gradient overlay on hover */}
-      <motion.div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        initial={{ scale: 0.8 }}
-        whileHover={{ scale: 1 }}
-      >
-        <div
-          className="absolute inset-0 rounded-xl"
-          style={{
-            background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 40%, transparent 70%)'
-          }}
-        />
-      </motion.div>
-
       {/* Card content */}
       <div className="relative z-10">
-        <motion.div 
-          className="text-accent w-fit rounded-full border border-accent/20 bg-accent/10 p-4 group-hover:bg-accent/20 transition-colors duration-300"
+        <motion.div
+          className="text-accent w-fit rounded-xl bg-accent/20 p-2.5 transition-colors duration-300"
           whileHover={{ rotate: [0, -10, 10, -10, 0], scale: 1.1 }}
           transition={{ duration: 0.5 }}
         >
           {icon}
         </motion.div>
-        <h4 className="font-geist text-lg font-bold tracking-tighter group-hover:text-accent transition-colors duration-300">
+        <h4 className="font-geist text-lg font-bold tracking-tighter text-white transition-colors duration-300 group-hover:text-accent">
           {title}
         </h4>
-        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+        <p className="text-sm leading-relaxed text-white/50">{description}</p>
       </div>
     </motion.li>
   );

@@ -8,6 +8,11 @@ interface AboutHeaderProps {
 }
 
 export function AboutHeader({ title, subtitle }: AboutHeaderProps) {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+  const hasMultipleWords = words.length > 1;
+  const titlePrefix = hasMultipleWords ? words.slice(0, -1).join(' ') : '';
+  const highlightedWord = hasMultipleWords ? words[words.length - 1] : words[0] || title;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -15,8 +20,15 @@ export function AboutHeader({ title, subtitle }: AboutHeaderProps) {
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className="mx-auto mb-16 max-w-2xl text-center"
     >
-      <h1 className="from-foreground/80 via-foreground to-foreground/80 bg-gradient-to-r bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl">
-        {title}
+      <h1 className="heading-xl text-foreground">
+        {titlePrefix ? (
+          <>
+            {titlePrefix}{' '}
+            <span className="gradient-text">{highlightedWord}</span>
+          </>
+        ) : (
+          <span className="gradient-text">{highlightedWord}</span>
+        )}
       </h1>
       <p className="text-muted-foreground mt-6 text-xl">
         {subtitle}

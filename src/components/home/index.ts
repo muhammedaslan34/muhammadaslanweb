@@ -1,0 +1,7 @@
+export { Hero } from './hero'
+export { HomeHighlights } from './home-highlights'
+export { WhyChooseUs } from './why-choose-us'
+export { FeaturedProjects } from './featured-projects'
+export { Testimonials } from './testimonials'
+export { BlogHighlights } from './blog-highlights'
+export { FinalCTA } from './final-cta'

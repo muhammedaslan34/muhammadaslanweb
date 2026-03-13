@@ -1,10 +1,12 @@
-import { Hero } from '@/components/hero'
-import { HomeHighlights } from '@/components/home-highlights'
-import { WhyChooseUs } from '@/components/why-choose-us'
-import { FeaturedProjects } from '@/components/featured-projects'
-import { Testimonials } from '@/components/testimonials'
-import { BlogHighlights } from '@/components/blog-highlights'
-import { FinalCTA } from '@/components/final-cta'
+import {
+  BlogHighlights,
+  FeaturedProjects,
+  FinalCTA,
+  Hero,
+  HomeHighlights,
+  Testimonials,
+  WhyChooseUs,
+} from '@/components/home'
 
 export default function HomePage() {
   return (

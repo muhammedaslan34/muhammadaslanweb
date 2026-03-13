@@ -19,7 +19,7 @@ export function FinalCTA() {
           transition={{ duration: 0.6 }}
         >
           <div className="pointer-events-none absolute -top-16 -right-16 h-52 w-52 rounded-full bg-accent/15 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-12 -left-16 h-52 w-52 rounded-full bg-blue-500/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-12 -left-16 h-52 w-52 rounded-full bg-[#8b5cf6]/10 blur-3xl" />
 
           <motion.h2
             className="heading-lg relative z-10"

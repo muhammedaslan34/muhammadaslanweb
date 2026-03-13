@@ -14,7 +14,7 @@ export function Highlight({
   return (
     <span
       className={cn(
-        'bg-blue-500/10 p-1 py-0.5 font-bold text-blue-500',
+        'bg-accent/10 p-1 py-0.5 font-bold text-accent',
         className,
       )}
     >
@@ -53,11 +53,11 @@ export function TestimonialCard({
       <div className="text-muted-foreground text-sm font-normal select-none">
         {description}
         <div className="flex flex-row py-1">
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
+          <Star className="size-4 fill-accent text-accent" />
+          <Star className="size-4 fill-accent text-accent" />
+          <Star className="size-4 fill-accent text-accent" />
+          <Star className="size-4 fill-accent text-accent" />
+          <Star className="size-4 fill-accent text-accent" />
         </div>
       </div>
       <div className="flex w-full items-center justify-start gap-5 select-none">
@@ -66,7 +66,7 @@ export function TestimonialCard({
           height={40}
           src={img || ''}
           alt={name}
-          className="size-10 rounded-full ring-1 ring-blue-500/20 ring-offset-2"
+          className="size-10 rounded-full ring-1 ring-accent/20 ring-offset-2"
         />
         <div>
           <p className="text-foreground font-medium">{name}</p>
@@ -222,8 +222,8 @@ export function Testimonials() {
   return (
     <section className="relative container py-10">
       {/* Decorative elements */}
-      <div className="absolute top-20 -left-20 z-10 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl" />
-      <div className="absolute -right-20 bottom-20 z-10 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl" />
+      <div className="absolute top-20 -left-20 z-10 h-64 w-64 rounded-full bg-accent/5 blur-3xl" />
+      <div className="absolute -right-20 bottom-20 z-10 h-64 w-64 rounded-full bg-[#8b5cf6]/5 blur-3xl" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -234,11 +234,11 @@ export function Testimonials() {
         </h2>
         <h3 className="text-muted-foreground mx-auto mb-8 max-w-lg text-center text-lg font-medium tracking-tight text-balance">
           Don&apos;t just take our word for it. Here&apos;s what{' '}
-          <span className="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-accent to-[#8b5cf6] bg-clip-text text-transparent">
             real clients
           </span>{' '}
           are saying about our{' '}
-          <span className="font-semibold text-blue-500">development services</span>
+          <span className="font-semibold text-accent">development services</span>
         </h3>
       </motion.div>
       <div className="relative mt-6 max-h-screen overflow-hidden">

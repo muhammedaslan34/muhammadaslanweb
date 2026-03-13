@@ -1,0 +1,204 @@
+<h2>Three redesigns using your exact brand colors</h2>
+<p class="subtitle">Same palette (#0f172a · #3b82f6 · #8b5cf6 · #ffffff), three different feels. Click to pick your favourite.</p>
+
+<div class="cards">
+
+  <!-- Option A: Modern Gradient Hero -->
+  <div class="card" data-choice="gradient-hero" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#ffffff;padding:20px;min-height:300px;font-family:system-ui,sans-serif;position:relative;overflow:hidden;">
+      <!-- Subtle body gradient like the real site -->
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 25% 25%,rgba(59,130,246,0.08) 0%,transparent 55%),radial-gradient(circle at 75% 75%,rgba(139,92,246,0.08) 0%,transparent 55%);"></div>
+      <!-- Dot grid -->
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(15,23,42,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,0.04) 1px,transparent 1px);background-size:16px 16px;"></div>
+
+      <div style="position:relative;z-index:1;">
+        <!-- Nav bar -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(226,232,240,0.6);">
+          <span style="color:#0f172a;font-weight:800;font-size:13px;letter-spacing:-0.3px;">Muhammad Aslan</span>
+          <div style="display:flex;gap:14px;align-items:center;">
+            <span style="color:#64748b;font-size:10px;">Projects</span>
+            <span style="color:#64748b;font-size:10px;">Blog</span>
+            <span style="background:#0f172a;color:#f8fafc;font-size:10px;padding:4px 10px;border-radius:6px;">Contact</span>
+          </div>
+        </div>
+
+        <!-- Hero - two column -->
+        <div style="display:grid;grid-template-columns:1fr 90px;gap:16px;align-items:center;margin-bottom:20px;">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:4px;background:#eff6ff;color:#3b82f6;font-size:9px;font-weight:600;padding:3px 8px;border-radius:20px;margin-bottom:10px;letter-spacing:0.5px;">
+              <span style="width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;"></span> Available for work
+            </div>
+            <h1 style="font-size:22px;font-weight:800;color:#0f172a;line-height:1.1;margin-bottom:8px;letter-spacing:-0.5px;">
+              Web Developer,<br/>
+              <span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Designer &amp;</span><br/>
+              WP Specialist
+            </h1>
+            <p style="font-size:10px;color:#64748b;line-height:1.6;margin-bottom:14px;">Modern, responsive websites that blend elegant design with powerful functionality.</p>
+            <div style="display:flex;gap:8px;">
+              <div style="background:#0f172a;color:#f8fafc;padding:6px 14px;border-radius:8px;font-size:10px;font-weight:600;">View Projects</div>
+              <div style="border:1.5px solid #3b82f6;color:#3b82f6;padding:6px 14px;border-radius:8px;font-size:10px;font-weight:500;">About Me</div>
+            </div>
+          </div>
+          <!-- Portrait frame -->
+          <div style="width:90px;height:100px;background:linear-gradient(135deg,#dbeafe,#ede9fe);border-radius:16px;overflow:hidden;border:2px solid rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;">
+            <div style="width:52px;height:52px;background:linear-gradient(135deg,#bfdbfe,#c4b5fd);border-radius:50%;"></div>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid rgba(226,232,240,0.6);padding-top:14px;">
+          <div style="text-align:center;padding:8px;background:#f8fafc;border-radius:8px;">
+            <div style="font-size:16px;font-weight:800;color:#0f172a;">50+</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Projects</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:#f8fafc;border-radius:8px;">
+            <div style="font-size:16px;font-weight:800;color:#3b82f6;">100%</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Satisfaction</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:#f8fafc;border-radius:8px;">
+            <div style="font-size:16px;font-weight:800;color:#0f172a;">3yr</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Modern Gradient Hero</h3>
+      <p>Your current layout, elevated. Clean white base, blue-to-purple gradient on the headline, availability badge, stat counters below. Familiar but significantly more polished.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Bento Grid / Card-based -->
+  <div class="card" data-choice="bento-grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#f8fafc;padding:16px;min-height:300px;font-family:system-ui,sans-serif;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(59,130,246,0.06) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(139,92,246,0.06) 0%,transparent 50%);"></div>
+
+      <div style="position:relative;z-index:1;">
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <span style="color:#0f172a;font-weight:800;font-size:12px;">MA</span>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <span style="color:#64748b;font-size:9px;">Work</span>
+            <span style="color:#64748b;font-size:9px;">About</span>
+            <span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:9px;padding:3px 8px;border-radius:6px;">Hire Me</span>
+          </div>
+        </div>
+
+        <!-- Bento grid layout -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:8px;">
+          <!-- Main hero card -->
+          <div style="grid-column:1/-1;background:#fff;border:1px solid rgba(226,232,240,0.6);border-radius:16px;padding:16px;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(59,130,246,0.15),transparent);border-radius:50%;"></div>
+            <div style="font-size:9px;color:#3b82f6;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Full-Stack Developer</div>
+            <div style="font-size:18px;font-weight:800;color:#0f172a;line-height:1.15;letter-spacing:-0.3px;">Building Digital<br/><span style="background:linear-gradient(90deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Products That Convert</span></div>
+          </div>
+
+          <!-- CTA card -->
+          <div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:12px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div style="font-size:9px;color:#94a3b8;line-height:1.5;">Next.js · React · TypeScript · WordPress</div>
+            <div style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:9px;font-weight:600;padding:5px 10px;border-radius:6px;text-align:center;margin-top:8px;">View Projects →</div>
+          </div>
+
+          <!-- Tech stack card -->
+          <div style="background:#fff;border:1px solid rgba(226,232,240,0.6);border-radius:12px;padding:12px;">
+            <div style="font-size:8px;color:#64748b;margin-bottom:6px;font-weight:600;">Stack</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span style="background:#eff6ff;color:#3b82f6;font-size:8px;padding:2px 6px;border-radius:4px;font-weight:500;">Next.js</span>
+              <span style="background:#f5f3ff;color:#8b5cf6;font-size:8px;padding:2px 6px;border-radius:4px;font-weight:500;">React</span>
+              <span style="background:#eff6ff;color:#3b82f6;font-size:8px;padding:2px 6px;border-radius:4px;font-weight:500;">WP</span>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div style="grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+            <div style="background:#fff;border:1px solid rgba(226,232,240,0.6);border-radius:10px;padding:8px;text-align:center;">
+              <div style="font-size:14px;font-weight:800;color:#3b82f6;">50+</div>
+              <div style="font-size:7px;color:#64748b;">Projects</div>
+            </div>
+            <div style="background:#fff;border:1px solid rgba(226,232,240,0.6);border-radius:10px;padding:8px;text-align:center;">
+              <div style="font-size:14px;font-weight:800;color:#8b5cf6;">5.0★</div>
+              <div style="font-size:7px;color:#64748b;">Rating</div>
+            </div>
+            <div style="background:#fff;border:1px solid rgba(226,232,240,0.6);border-radius:10px;padding:8px;text-align:center;">
+              <div style="font-size:14px;font-weight:800;color:#0f172a;">3yr</div>
+              <div style="font-size:7px;color:#64748b;">XP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Bento Grid Hero</h3>
+      <p>Trendy card-based bento layout. Big headline card spanning full width, dark navy CTA card on the left, tech stack chips on the right, stat row at bottom. Very 2025.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Immersive Dark with Blue Glow -->
+  <div class="card" data-choice="dark-glow" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0F111E;padding:20px;min-height:300px;font-family:system-ui,sans-serif;position:relative;overflow:hidden;">
+      <!-- Multi-glow background -->
+      <div style="position:absolute;top:-60px;left:20%;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,0.25),transparent 70%);"></div>
+      <div style="position:absolute;bottom:-40px;right:10%;width:160px;height:160px;background:radial-gradient(circle,rgba(139,92,246,0.2),transparent 70%);"></div>
+      <!-- Dot grid dark -->
+      <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.06) 1px,transparent 1px);background-size:20px 20px;"></div>
+
+      <div style="position:relative;z-index:1;">
+        <!-- Nav -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+          <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:-0.3px;">Muhammad Aslan</span>
+          <div style="display:flex;gap:14px;align-items:center;">
+            <span style="color:#94a3b8;font-size:10px;">Projects</span>
+            <span style="color:#94a3b8;font-size:10px;">Blog</span>
+            <span style="background:rgba(59,130,246,0.2);border:1px solid rgba(59,130,246,0.4);color:#3b82f6;font-size:10px;padding:4px 10px;border-radius:6px;">Contact</span>
+          </div>
+        </div>
+
+        <!-- Hero content -->
+        <div style="display:grid;grid-template-columns:1fr 80px;gap:16px;align-items:center;margin-bottom:20px;">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.25);color:#3b82f6;font-size:9px;font-weight:600;padding:3px 8px;border-radius:20px;margin-bottom:10px;">
+              <span style="width:5px;height:5px;background:#22c55e;border-radius:50%;display:inline-block;"></span> Open to projects
+            </div>
+            <h1 style="font-size:21px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:8px;letter-spacing:-0.5px;">
+              Web Developer,<br/>
+              <span style="background:linear-gradient(90deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Designer &amp;</span><br/>
+              WP Specialist
+            </h1>
+            <p style="font-size:10px;color:#94a3b8;line-height:1.6;margin-bottom:14px;">Modern, responsive websites blending design with powerful functionality.</p>
+            <div style="display:flex;gap:8px;">
+              <div style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;padding:6px 14px;border-radius:8px;font-size:10px;font-weight:600;">View Projects</div>
+              <div style="border:1px solid rgba(255,255,255,0.15);color:#fff;padding:6px 14px;border-radius:8px;font-size:10px;">About Me</div>
+            </div>
+          </div>
+          <!-- Portrait -->
+          <div style="width:80px;height:90px;background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(139,92,246,0.3));border-radius:14px;border:1px solid rgba(59,130,246,0.3);display:flex;align-items:center;justify-content:center;">
+            <div style="width:46px;height:46px;background:linear-gradient(135deg,rgba(59,130,246,0.5),rgba(139,92,246,0.5));border-radius:50%;"></div>
+          </div>
+        </div>
+
+        <!-- Stats row dark -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+          <div style="text-align:center;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
+            <div style="font-size:15px;font-weight:800;color:#3b82f6;">50+</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Projects</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
+            <div style="font-size:15px;font-weight:800;color:#8b5cf6;">100%</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Satisfaction</div>
+          </div>
+          <div style="text-align:center;padding:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;">
+            <div style="font-size:15px;font-weight:800;color:#fff;">3yr</div>
+            <div style="font-size:8px;color:#64748b;margin-top:1px;">Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Immersive Dark</h3>
+      <p>Dark navy (#0F111E) background with blue + purple glow orbs, dot-grid texture, glassy borders. Same colors as light mode but inverted. Your dark mode looking its best.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Click to pick, or tell me which elements you like/dislike. All three use exactly your existing brand colors.</p>

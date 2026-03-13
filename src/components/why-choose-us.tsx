@@ -76,7 +76,7 @@ export function WhyChooseUs() {
             className="absolute inset-0 mx-auto h-44 max-w-xs blur-[118px]"
             style={{
               background:
-                'linear-gradient(152.92deg, rgba(59, 130, 246, 0.3) 4.54%, rgba(37, 99, 235, 0.4) 34.2%, rgba(29, 78, 216, 0.2) 77.55%)',
+                'linear-gradient(152.92deg, rgba(59, 130, 246, 0.25) 4.54%, rgba(139, 92, 246, 0.3) 50%, rgba(59, 130, 246, 0.15) 77.55%)',
             }}
           ></div>
         </div>

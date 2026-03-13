@@ -12,8 +12,8 @@ export function Hero() {
   return (
     <section className="bg-background relative w-full overflow-hidden pt-24 lg:pt-32">
       <div className="absolute inset-0 z-0">
-        <div className="from-primary/20 via-background to-background absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))]" />
-        <div className="bg-primary/5 absolute top-0 left-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 rounded-full blur-3xl" />
+        <div className="from-accent/15 via-background to-background absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))]" />
+        <div className="bg-accent/8 absolute top-0 left-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 rounded-full blur-3xl" />
       </div>
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:16px_16px] opacity-15" />
 
@@ -25,7 +25,7 @@ export function Hero() {
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
                 animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-left text-lg font-medium text-blue-400"
+                className="text-left text-lg font-medium text-accent"
               >
                 Hi, I&apos;m Muhammed Aslan
               </motion.p>
@@ -34,7 +34,7 @@ export function Hero() {
                 initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
                 animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="from-primary/10 via-foreground/85 to-foreground/50 max-w-4xl bg-gradient-to-tl bg-clip-text text-left text-4xl font-bold tracking-tighter text-balance text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
+                className="from-foreground via-foreground/90 to-accent/70 max-w-4xl bg-gradient-to-br bg-clip-text text-left text-4xl font-bold tracking-tighter text-balance text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
               >
                 Web Developer, Designer &amp; WordPress Specialist
               </motion.h1>
@@ -70,7 +70,7 @@ export function Hero() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-primary/50 text-primary hover:bg-primary/10 rounded-full px-6 py-3 font-medium"
+                  className="border-accent/50 text-accent hover:bg-accent/10 rounded-full px-6 py-3 font-medium"
                 >
                   <Link href="/projects">
                     View Projects
@@ -91,7 +91,7 @@ export function Hero() {
               }}
               className="relative flex items-center"
             >
-              <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-2 shadow-2xl">
+              <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-accent/20 ">
                 <Image
                   src="/images/hero.jpg"
                   alt="Muhammed Aslan portrait"

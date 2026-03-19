@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import AnimatedHeader from '@/components/animated-header'
+import { ChunkErrorRecovery } from '@/components/chunk-error-recovery'
 import { SiteFooter } from '@/components/site-footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
@@ -50,6 +51,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ChunkErrorRecovery />
             <div className="relative flex min-h-screen flex-col">
               <AnimatedHeader />
               <main className="flex-1">{children}</main>

@@ -149,7 +149,7 @@ export default function AboutPage() {
               {IMPACT_METRICS.map((metric) => (
                 <article
                   key={metric.label}
-                  className="rounded-2xl border border-border/60 bg-background/70 p-4 text-center backdrop-blur-xl"
+                  className="rounded-2xl border border-border/60 bg-background/70 p-4 text-center backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10"
                 >
                   <p className="text-accent text-2xl font-semibold tracking-tight">
                     {metric.value}
@@ -163,7 +163,7 @@ export default function AboutPage() {
           <div className="relative mx-auto w-full max-w-md lg:max-w-lg">
             <div className="absolute -left-10 top-8 h-36 w-36 rounded-full bg-accent/20 blur-3xl" />
             <div className="absolute -bottom-8 right-0 h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/70 p-2 backdrop-blur-xl">
+            <div className="group relative overflow-hidden rounded-3xl border border-border/60 bg-background/70 p-2 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/10">
               <div className="relative overflow-hidden rounded-[calc(var(--radius-xl)+2px)]">
                 <Image
                   src="/images/about-hero.jpg"
@@ -172,7 +172,7 @@ export default function AboutPage() {
                   height={1400}
                   priority
                   sizes="(min-width: 1024px) 38vw, 92vw"
-                  className="h-auto w-full object-cover"
+                  className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background/70 to-transparent" />
               </div>
@@ -197,9 +197,9 @@ export default function AboutPage() {
               {WORK_PRINCIPLES.map((principle) => (
                 <li
                   key={principle}
-                  className="flex items-start gap-3 rounded-xl border border-border/60 bg-background/70 p-3"
+                  className="group flex items-start gap-3 rounded-xl border border-border/60 bg-background/70 p-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10"
                 >
-                  <CheckCircle2 className="text-accent mt-0.5 h-5 w-5 shrink-0" />
+                  <CheckCircle2 className="text-accent mt-0.5 h-5 w-5 shrink-0 transition-transform duration-300 group-hover:scale-110" />
                   <span className="text-muted-foreground text-sm leading-6">
                     {principle}
                   </span>

@@ -65,10 +65,10 @@ export function WhyChooseUs() {
             <p className="text-accent mb-2 text-xs font-semibold tracking-[0.2em] uppercase">
               Core Capabilities
             </p>
-            <h3 className="font-geist mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl">
+            <h3 className="font-geist text-slate-900 mt-4 text-3xl font-normal tracking-tighter sm:text-4xl md:text-5xl dark:text-white">
               Building Digital Solutions That Matter
             </h3>
-            <p className="font-geist text-foreground/60 mt-3 leading-relaxed">
+            <p className="font-geist text-slate-600 mt-3 leading-relaxed dark:text-white/70">
               Transforming ideas into powerful web experiences with modern technologies, thoughtful design, and a commitment to excellence in every project.
             </p>
           </motion.div>

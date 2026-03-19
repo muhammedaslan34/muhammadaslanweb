@@ -1,3 +1,6 @@
+'use client'
+
+import { motion, useReducedMotion } from 'framer-motion'
 import { Globe, Lightbulb, Sparkles, Zap } from 'lucide-react'
 
 const VALUE_ICONS = {
@@ -26,25 +29,38 @@ export function CoreValuesSection({
   title = 'My Core Values',
   subtitle = 'The principles that guide everything I do and every decision I make.',
 }: CoreValuesSectionProps) {
+  const prefersReducedMotion = useReducedMotion()
+
   return (
     <section className="mb-24">
-      <div className="mb-10 text-center">
+      <motion.div
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+        whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.45 }}
+        className="mb-10 text-center"
+      >
         <h2 className="heading-lg">{title}</h2>
         <p className="text-muted-foreground mx-auto mt-4 max-w-2xl text-lg">
           {subtitle}
         </p>
-      </div>
+      </motion.div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {values.map((value) => {
+        {values.map((value, index) => {
           const Icon = VALUE_ICONS[value.icon]
 
           return (
-            <article
+            <motion.article
               key={value.title}
-              className="group rounded-2xl border border-border/60 bg-background/75 p-6 backdrop-blur-xl transition-colors duration-300 hover:border-accent/40"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              whileHover={prefersReducedMotion ? undefined : { y: -6, scale: 1.01 }}
+              className="group rounded-2xl border border-border/60 bg-background/75 p-6 backdrop-blur-xl transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10"
             >
-              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/15 text-accent transition-transform duration-300 group-hover:scale-105">
                 <Icon className="h-5 w-5" />
               </div>
               <h3 className="mb-2 text-lg font-semibold text-foreground">
@@ -53,7 +69,7 @@ export function CoreValuesSection({
               <p className="text-muted-foreground text-sm leading-7">
                 {value.description}
               </p>
-            </article>
+            </motion.article>
           )
         })}
       </div>

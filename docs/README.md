@@ -130,6 +130,33 @@ npm run build
 npm run start
 ```
 
+### Windows Child PC Agent Setup (LAN)
+
+Run these steps in **elevated PowerShell** on the child PC.
+
+1. Add inbound firewall rule for TCP `9999` limited to the local subnet:
+
+```powershell
+New-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 9999 -RemoteAddress LocalSubnet -Profile Private
+```
+
+2. Verify the rule:
+
+```powershell
+Get-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)"
+Get-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)" | Get-NetFirewallPortFilter
+```
+
+3. Copy installer to `C:\Program Files` and run as admin:
+
+```powershell
+New-Item -ItemType Directory -Path "C:\Program Files\MyAgent" -Force
+Copy-Item "C:\path\to\agent-installer.exe" "C:\Program Files\MyAgent\"
+Start-Process "C:\Program Files\MyAgent\agent-installer.exe" -Verb RunAs
+```
+
+Keep `RemoteAddress` scoped to `LocalSubnet` unless external networks are required.
+
 ## 📱 Pages Overview
 
 - **Home**: Hero section, featured projects, services overview

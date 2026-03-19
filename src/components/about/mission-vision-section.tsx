@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Rocket, Target } from 'lucide-react'
 
 interface MissionVisionSectionProps {
@@ -22,6 +22,8 @@ const SECTION_CARDS = [
 ] as const
 
 export function MissionVisionSection({ mission, vision }: MissionVisionSectionProps) {
+  const prefersReducedMotion = useReducedMotion()
+
   const contentMap = {
     mission,
     vision,
@@ -30,8 +32,8 @@ export function MissionVisionSection({ mission, vision }: MissionVisionSectionPr
   return (
     <section className="mx-auto mb-24 max-w-6xl">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+        whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className="mb-10 text-center"
@@ -48,11 +50,11 @@ export function MissionVisionSection({ mission, vision }: MissionVisionSectionPr
           return (
             <motion.article
               key={card.key}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.45, delay: index * 0.08, ease: 'easeOut' }}
-              whileHover={{ y: -5 }}
+              whileHover={prefersReducedMotion ? undefined : { y: -5 }}
               className="group relative overflow-hidden rounded-3xl border border-border/60 bg-background/75 p-7 backdrop-blur-xl transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10 md:p-8"
             >
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/15 text-accent transition-transform duration-300 group-hover:scale-105">

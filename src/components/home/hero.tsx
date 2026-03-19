@@ -91,9 +91,9 @@ export function Hero() {
               }}
               className="relative flex items-center"
             >
-              <div className="relative mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-accent/20 ">
+              <div className="relative mx-auto w-full max-w-xl overflow-hidden ">
                 <Image
-                  src="/images/hero.jpg"
+                  src="/images/hero.png"
                   alt="Muhammed Aslan portrait"
                   width={1024}
                   height={1024}

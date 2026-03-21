@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { Calendar, Clock, User, ArrowLeft, Share2 } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, Calendar, Clock, Share2, User } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { CtaPrimaryInner } from '@/components/ui/cta-button-inner'
 import type { Metadata } from 'next'
 
 interface BlogPost {
@@ -156,9 +157,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <h3 className="text-lg font-semibold mb-2">Written by {post.author}</h3>
                 <p className="text-muted-foreground">{post.authorBio || 'Web developer specializing in modern web technologies.'}</p>
               </div>
-              <Link href="/contact">
-                <Button className="hover-lift">Get in Touch</Button>
-              </Link>
+              <Button asChild variant="cta">
+                <Link href="/contact">
+                  <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                    Get in Touch
+                  </CtaPrimaryInner>
+                </Link>
+              </Button>
             </div>
           </div>
         </article>

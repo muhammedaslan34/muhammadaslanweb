@@ -80,6 +80,9 @@
   --main-bg: #ffffff;
   --section-bg: #f8fafc;
   --card-bg: #ffffff;
+  /* Hero / marketing backgrounds (tweak to match your theme) */
+  --theme-palette-color-8: var(--background);
+  --theme-palette-color-11: rgba(0, 98, 235, 0.5);
 }
 
 .dark {
@@ -119,6 +122,8 @@
   --main-bg: #0F111E;
   --section-bg: #0F111E;
   --card-bg: #1a1f2e;
+  --theme-palette-color-8: var(--background);
+  --theme-palette-color-11: rgba(0, 98, 235, 0.5);
 }
 
 @layer base {
@@ -138,6 +143,14 @@
       radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
       radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
   }
+}
+
+/* Home hero: dual radial glows (matches theme palette tokens) */
+.hero-bg {
+  background-color: var(--theme-palette-color-8);
+  background-image:
+    radial-gradient(at 18% 22%, var(--theme-palette-color-11) 0%, transparent 50%),
+    radial-gradient(at 94% 95%, var(--theme-palette-color-11) 0%, transparent 50%);
 }
 
 /* Container utility */

@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Calendar, Clock } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Calendar, Clock } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { CtaPrimaryInner } from '@/components/ui/cta-button-inner'
 import {
   Card,
   CardContent,
@@ -165,8 +166,12 @@ export function BlogHighlights() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <Button asChild>
-            <Link href="/blog">View All Posts</Link>
+          <Button asChild variant="cta">
+            <Link href="/blog">
+              <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                View All Posts
+              </CtaPrimaryInner>
+            </Link>
           </Button>
         </motion.div>
       </div>

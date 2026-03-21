@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { getCountryCallingCode } from 'libphonenumber-js'
 import ContactFormEmail from '@/emails/contact-form-email'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -7,7 +8,13 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, budget, timeline, message } = body
+    const { name, email, countryCode, phone, budget, timeline, message } = body
+    const normalizedDialCode = countryCode?.startsWith('+')
+      ? countryCode
+      : countryCode
+        ? `+${getCountryCallingCode(countryCode)}`
+        : ''
+    const fullPhone = phone ? `${normalizedDialCode} ${phone}`.trim() : ''
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -35,6 +42,7 @@ export async function POST(request: NextRequest) {
       react: ContactFormEmail({
         name,
         email,
+        phone: fullPhone,
         budget,
         timeline,
         message,

@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Search, Home } from 'lucide-react'
+import { CtaOutlineInner, CtaPrimaryInner } from '@/components/ui/cta-button-inner'
+import { ArrowLeft, Home, Search } from 'lucide-react'
 import { fadeInUp, scaleIn } from '@/lib/animations'
 
 export default function NotFound() {
@@ -40,22 +41,20 @@ export default function NotFound() {
           variants={fadeInUp}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4"
         >
-          <Button asChild size="lg" className="hover-lift w-full sm:w-auto">
-            <Link href="/" className="flex items-center gap-2">
-              <Home className="w-5 h-5" />
-              Go Home
+          <Button asChild variant="cta" className="w-full sm:w-auto">
+            <Link href="/">
+              <CtaPrimaryInner icon={<Home className="size-5" />}>
+                Go Home
+              </CtaPrimaryInner>
             </Link>
           </Button>
 
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="hover-lift w-full sm:w-auto"
-          >
-            <Link href="/projects" className="flex items-center gap-2">
-              <ArrowLeft className="w-5 h-5" />
-              View Projects
+          <Button asChild variant="ctaOutline" className="w-full sm:w-auto">
+            <Link href="/projects">
+              <CtaOutlineInner>
+                <ArrowLeft className="size-5" />
+                View Projects
+              </CtaOutlineInner>
             </Link>
           </Button>
         </motion.div>

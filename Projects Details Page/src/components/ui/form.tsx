@@ -15,8 +15,32 @@ import {
 
 import { cn } from "./utils";
 import { Label } from "./label";
+import { Input } from "./input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select";
 
 const Form = FormProvider;
+
+type CountryCodeOption = {
+  value: string;
+  flag: string;
+  dialCode: string;
+  label: string;
+};
+
+const countryCodeOptions: CountryCodeOption[] = [
+  { value: "US", flag: "🇺🇸", dialCode: "+1", label: "United States" },
+  { value: "GB", flag: "🇬🇧", dialCode: "+44", label: "United Kingdom" },
+  { value: "AE", flag: "🇦🇪", dialCode: "+971", label: "United Arab Emirates" },
+  { value: "SA", flag: "🇸🇦", dialCode: "+966", label: "Saudi Arabia" },
+  { value: "PK", flag: "🇵🇰", dialCode: "+92", label: "Pakistan" },
+  { value: "IN", flag: "🇮🇳", dialCode: "+91", label: "India" },
+];
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -156,6 +180,60 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+type PhoneFieldProps = {
+  label?: string;
+  countryCode: string;
+  onCountryCodeChange: (value: string) => void;
+  phoneNumber: string;
+  onPhoneNumberChange: (value: string) => void;
+  countries?: CountryCodeOption[];
+  placeholder?: string;
+  className?: string;
+};
+
+function PhoneField({
+  label = "Phone Number",
+  countryCode,
+  onCountryCodeChange,
+  phoneNumber,
+  onPhoneNumberChange,
+  countries = countryCodeOptions,
+  placeholder = "Enter phone number",
+  className,
+}: PhoneFieldProps) {
+  return (
+    <div data-slot="phone-field" className={cn("grid gap-2", className)}>
+      <Label>{label}</Label>
+      <div className="grid grid-cols-[140px_minmax(0,1fr)] gap-2">
+        <Select value={countryCode} onValueChange={onCountryCodeChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Code" />
+          </SelectTrigger>
+          <SelectContent>
+            {countries.map((country) => (
+              <SelectItem key={country.value} value={country.value}>
+                <span className="inline-flex items-center gap-2">
+                  <span>{country.flag}</span>
+                  <span>{country.dialCode}</span>
+                </span>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Input
+          type="tel"
+          value={phoneNumber}
+          onChange={(event) => onPhoneNumberChange(event.target.value)}
+          placeholder={placeholder}
+          inputMode="tel"
+          autoComplete="tel-national"
+        />
+      </div>
+    </div>
+  );
+}
+
 export {
   useFormField,
   Form,
@@ -165,4 +243,6 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  PhoneField,
+  countryCodeOptions,
 };

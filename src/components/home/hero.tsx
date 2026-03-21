@@ -3,18 +3,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { ArrowUpRight } from 'lucide-react'
+import { Button, ButtonCtaIcon } from '@/components/ui/button'
 
 export function Hero() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section className="bg-background relative w-full overflow-hidden pt-24 lg:pt-32">
-      <div className="absolute inset-0 z-0">
-        <div className="from-accent/15 via-background to-background absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))]" />
-        <div className="bg-accent/8 absolute top-0 left-1/2 -z-10 h-[800px] w-[800px] -translate-x-1/2 rounded-full blur-3xl" />
-      </div>
+    <section className="relative w-full overflow-hidden pt-24 lg:pt-32">
+      <div
+        className="hero-bg pointer-events-none absolute inset-0 z-0"
+        aria-hidden
+      />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:16px_16px] opacity-15" />
 
       <div className="container relative z-10 mx-auto">
@@ -56,25 +56,22 @@ export function Hero() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex flex-col items-start gap-4 sm:flex-row"
               >
-                <Button
-                  asChild
-                  size="lg"
-                  className="rounded-full px-6 py-3 font-medium text-white"
-                >
+                <Button asChild variant="cta">
                   <Link href="/about">
-                    Learn More About Me
-                    <ChevronRight className="h-4 w-4" />
+                    <span className="inline-flex items-center gap-3">
+                      <ButtonCtaIcon>
+                        <ArrowUpRight className="size-4" />
+                      </ButtonCtaIcon>
+                      Learn More About Me
+                    </span>
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="border-accent/50 text-accent hover:bg-accent/10 rounded-full px-6 py-3 font-medium"
-                >
+                <Button asChild variant="ctaOutline">
                   <Link href="/projects">
-                    View Projects
-                    <ArrowRight className="h-4 w-4" />
+                    <span className="inline-flex items-center gap-2.5">
+                      <ArrowUpRight className="size-4" />
+                      View Projects
+                    </span>
                   </Link>
                 </Button>
               </motion.div>

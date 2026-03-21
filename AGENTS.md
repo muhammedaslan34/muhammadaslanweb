@@ -17,3 +17,27 @@ Recent commits use short, direct subjects such as `Fix PreviewModal project prop
 
 ## Security & Configuration Tips
 Copy `.env.example` to `.env.local` and never commit real credentials. `MONGODB_URI` must target a MongoDB replica set, and `NEXTAUTH_SECRET` plus `NEXTAUTH_URL` must be set before testing auth or admin routes.
+
+## Windows Agent Deployment (LAN)
+Use an elevated PowerShell session on the child PC. Create an inbound rule for TCP `9999` limited to local subnet traffic:
+
+```powershell
+New-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)" -Direction Inbound -Action Allow -Protocol TCP -LocalPort 9999 -RemoteAddress LocalSubnet -Profile Private
+```
+
+Verify it:
+
+```powershell
+Get-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)"
+Get-NetFirewallRule -DisplayName "Agent TCP 9999 (LocalSubnet)" | Get-NetFirewallPortFilter
+```
+
+Install from `C:\Program Files` (admin required):
+
+```powershell
+New-Item -ItemType Directory -Path "C:\Program Files\MyAgent" -Force
+Copy-Item "C:\path\to\agent-installer.exe" "C:\Program Files\MyAgent\"
+Start-Process "C:\Program Files\MyAgent\agent-installer.exe" -Verb RunAs
+```
+
+This approach is valid for a child PC on the same LAN. Keep the firewall scope at `LocalSubnet` (not `Any`) unless remote networks are required.

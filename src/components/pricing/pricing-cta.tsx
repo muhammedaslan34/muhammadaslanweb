@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { MessageCircle, Calendar } from "lucide-react"
+import { Calendar, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaOutlineInner, CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 
 export function PricingCTA() {
   return (
@@ -15,16 +16,19 @@ export function PricingCTA() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" asChild className="hover-lift">
+            <Button asChild variant="cta">
               <Link href="/contact">
-                <MessageCircle className="mr-2 h-4 w-4" />
-                Start Your Project
+                <CtaPrimaryInner icon={<MessageCircle className="size-4" />}>
+                  Start Your Project
+                </CtaPrimaryInner>
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild className="glass-card hover-lift">
+            <Button asChild variant="ctaOutline">
               <Link href="/contact">
-                <Calendar className="mr-2 h-4 w-4" />
-                Schedule Consultation
+                <CtaOutlineInner>
+                  <Calendar className="size-4" />
+                  Schedule Consultation
+                </CtaOutlineInner>
               </Link>
             </Button>
           </div>

@@ -3,8 +3,9 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { CtaOutlineInner, CtaPrimaryInner } from '@/components/ui/cta-button-inner'
 import { fadeInUp, scaleIn } from '@/lib/animations'
-import { ArrowRight, Mail, MessageSquare } from 'lucide-react'
+import { Mail, MessageSquare } from 'lucide-react'
 
 interface ProjectCTAProps {
   variant?: 'default' | 'contact' | 'hire'
@@ -76,28 +77,20 @@ export function ProjectCTA({ variant = 'default' }: ProjectCTAProps) {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
-              <Button
-                asChild
-                size="lg"
-                variant="secondary"
-                className="hover-lift bg-white text-accent hover:bg-white/90 w-full sm:w-auto"
-              >
-                <Link href={currentContent.primaryHref} className="flex items-center gap-2">
-                  <Mail className="w-5 h-5" />
-                  {currentContent.primaryCTA}
-                  <ArrowRight className="w-4 h-4 ml-1" />
+              <Button asChild variant="cta" className="w-full sm:w-auto">
+                <Link href={currentContent.primaryHref}>
+                  <CtaPrimaryInner icon={<Mail className="size-4" />}>
+                    {currentContent.primaryCTA}
+                  </CtaPrimaryInner>
                 </Link>
               </Button>
 
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="hover-lift border-white/20 text-white hover:bg-white/10 w-full sm:w-auto"
-              >
-                <Link href={currentContent.secondaryHref} className="flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5" />
-                  {currentContent.secondaryCTA}
+              <Button asChild variant="ctaOutline" className="w-full sm:w-auto">
+                <Link href={currentContent.secondaryHref}>
+                  <CtaOutlineInner>
+                    <MessageSquare className="size-4" />
+                    {currentContent.secondaryCTA}
+                  </CtaOutlineInner>
                 </Link>
               </Button>
             </motion.div>

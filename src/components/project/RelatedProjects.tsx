@@ -6,7 +6,8 @@ import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowRight } from 'lucide-react'
+import { CtaPrimaryInner } from '@/components/ui/cta-button-inner'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { fadeInUp, staggerContainer, cardHover } from '@/lib/animations'
 import { Project } from '@/types/project'
 
@@ -157,10 +158,11 @@ export function RelatedProjects({ projects }: RelatedProjectsProps) {
 
         {/* View All Projects Button */}
         <motion.div variants={fadeInUp} className="text-center mt-12">
-          <Button asChild size="lg" className="hover-lift">
-            <Link href="/projects" className="flex items-center gap-2">
-              View All Projects
-              <ArrowRight className="w-4 h-4" />
+          <Button asChild variant="cta">
+            <Link href="/projects">
+              <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                View All Projects
+              </CtaPrimaryInner>
             </Link>
           </Button>
         </motion.div>

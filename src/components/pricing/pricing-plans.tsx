@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Check, Star, Zap } from "lucide-react"
+import { ArrowUpRight, Check, Star, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaOutlineInner, CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const plans = [
@@ -107,18 +108,22 @@ export function PricingPlans() {
                 </ul>
 
                 <div className="mt-auto">
-                  <Button 
-                    asChild 
-                    className={`w-full hover-lift ${
-                      plan.popular 
-                        ? 'bg-accent hover:bg-accent/90' 
-                        : ''
-                    }`}
-                    variant={plan.popular ? "default" : "outline"}
+                  <Button
+                    asChild
+                    className="w-full justify-center"
+                    variant={plan.popular ? "cta" : "ctaOutline"}
                   >
                     <Link href="/contact">
-                      {plan.popular && <Zap className="mr-2 h-4 w-4" />}
-                      {plan.cta}
+                      {plan.popular ? (
+                        <CtaPrimaryInner icon={<Zap className="size-4" />}>
+                          {plan.cta}
+                        </CtaPrimaryInner>
+                      ) : (
+                        <CtaOutlineInner>
+                          <ArrowUpRight className="size-4" />
+                          {plan.cta}
+                        </CtaOutlineInner>
+                      )}
                     </Link>
                   </Button>
                 </div>
@@ -131,8 +136,13 @@ export function PricingPlans() {
           <p className="body-sm text-muted-foreground">
             Need something custom? All projects are tailored to your specific requirements.
           </p>
-          <Button variant="outline" asChild className="glass-card hover-lift">
-            <Link href="/contact">Request Custom Quote</Link>
+          <Button asChild variant="ctaOutline">
+            <Link href="/contact">
+              <CtaOutlineInner>
+                <ArrowUpRight className="size-4" />
+                Request Custom Quote
+              </CtaOutlineInner>
+            </Link>
           </Button>
         </div>
       </div>

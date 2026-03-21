@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import dynamic from "next/dynamic"
+import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
 
@@ -99,8 +101,12 @@ export function FeaturedProjects() {
         items={featuredProjects}
       />
       <div className="container text-center pb-16">
-        <Button asChild className="hover-lift">
-          <Link href="/projects">View All Projects</Link>
+        <Button asChild variant="cta">
+          <Link href="/projects">
+            <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+              View All Projects
+            </CtaPrimaryInner>
+          </Link>
         </Button>
       </div>
     </>

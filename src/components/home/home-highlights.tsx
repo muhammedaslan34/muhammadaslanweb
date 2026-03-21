@@ -37,18 +37,21 @@ export function HomeHighlights() {
       </div>
 
       <div className="container relative z-10">
-        <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-background/70 backdrop-blur-xl p-6 md:p-8">
-          {/* Glow orbs matching hero dark style */}
-          <div className="pointer-events-none absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-accent/20 blur-3xl" />
-          {/* Dot grid */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:20px_20px]" />
+        <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/80 backdrop-blur-xl p-6 md:p-8 dark:bg-background/70">
+          {/* Glow orbs */}
+          <div className="pointer-events-none absolute -top-20 left-1/4 h-64 w-64 rounded-full bg-accent/15 blur-3xl dark:bg-accent/20" />
+          <div className="pointer-events-none absolute -bottom-20 right-1/4 h-64 w-64 rounded-full bg-accent/15 blur-3xl dark:bg-accent/20" />
+          {/* Dot grid: dark dots in light mode, light dots in dark mode */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[length:20px_20px] bg-[radial-gradient(circle,rgba(15,23,42,0.08)_1px,transparent_1px)] dark:bg-[radial-gradient(circle,rgba(255,255,255,0.06)_1px,transparent_1px)]"
+            aria-hidden
+          />
 
           <div className="relative z-10 mb-6 max-w-2xl">
             <p className="text-accent mb-2 text-xs font-semibold tracking-[0.2em] uppercase">
               Why Clients Choose Me
             </p>
-            <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+            <h2 className="text-foreground text-2xl font-bold tracking-tight md:text-3xl">
               Built for business outcomes, not just visuals
             </h2>
           </div>
@@ -60,13 +63,15 @@ export function HomeHighlights() {
               return (
                 <article
                   key={item.title}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-colors hover:border-accent/40"
+                  className="rounded-2xl border border-border/80 bg-muted/30 p-5 backdrop-blur-sm transition-colors hover:border-accent/40 dark:border-white/10 dark:bg-white/5"
                 >
-                  <div className="mb-4 inline-flex rounded-xl bg-accent/20 p-2.5 text-accent">
+                  <div className="mb-4 inline-flex rounded-xl bg-accent/15 p-2.5 text-accent dark:bg-accent/20">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mb-2 text-base font-semibold text-white">{item.title}</h3>
-                  <p className="text-white/50 text-sm leading-6">
+                  <h3 className="text-foreground mb-2 text-base font-semibold">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-6">
                     {item.description}
                   </p>
                 </article>

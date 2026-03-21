@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Mail, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 import { Input } from "@/components/ui/input"
 
 export function BlogNewsletter() {
@@ -44,9 +45,10 @@ export function BlogNewsletter() {
                 required
                 className="glass-card flex-1"
               />
-              <Button type="submit" className="hover-lift">
-                <Send className="mr-2 h-4 w-4" />
-                Subscribe
+              <Button type="submit" variant="cta" className="shrink-0">
+                <CtaPrimaryInner icon={<Send className="size-4" />}>
+                  Subscribe
+                </CtaPrimaryInner>
               </Button>
             </form>
           ) : (

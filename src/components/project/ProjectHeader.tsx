@@ -2,7 +2,8 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Github, ExternalLink, Calendar } from "lucide-react";
+import { CtaOutlineInner, CtaPrimaryInner } from "@/components/ui/cta-button-inner";
+import { Calendar, ExternalLink, Github } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { fadeInLeft, fadeInRight, badgeAnimation, staggerContainer } from '@/lib/animations';
@@ -85,35 +86,29 @@ export function ProjectHeader({
               className="flex flex-wrap gap-3 pt-2"
             >
               {liveUrl && (
-                <Button
-                  asChild
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground hover-lift"
-                >
+                <Button asChild variant="cta">
                   <a
                     href={liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
                   >
-                    <ExternalLink className="w-4 h-4" />
-                    View Live Demo
+                    <CtaPrimaryInner icon={<ExternalLink className="size-4" />}>
+                      View Live Demo
+                    </CtaPrimaryInner>
                   </a>
                 </Button>
               )}
               {githubUrl && (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="border-accent text-accent hover:bg-accent/10 hover-lift"
-                >
+                <Button asChild variant="ctaOutline">
                   <a
                     href={githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
                   >
-                    <Github className="w-4 h-4" />
-                    View on GitHub
+                    <CtaOutlineInner>
+                      <Github className="size-4" />
+                      View on GitHub
+                    </CtaOutlineInner>
                   </a>
                 </Button>
               )}

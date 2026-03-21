@@ -3,10 +3,12 @@ import { Briefcase, Star } from "lucide-react"
 export function ProjectsHero() {
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5" />
-      <div className="absolute top-20 right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl animate-float" />
-      
-      <div className="container relative">
+      <div
+        className="hero-bg pointer-events-none absolute inset-0 z-0"
+        aria-hidden
+      />
+      <div className="pointer-events-none absolute top-20 right-10 z-0 h-64 w-64 animate-float rounded-full bg-accent/10 blur-3xl" />
+      <div className="container relative z-10">
         <div className="mx-auto max-w-4xl text-center space-y-8">
           <div className="inline-flex items-center glass-card px-4 py-2 text-sm">
             <Briefcase className="mr-2 h-4 w-4 text-accent" />

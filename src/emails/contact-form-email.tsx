@@ -15,6 +15,7 @@ import {
 interface ContactFormEmailProps {
   name: string
   email: string
+  phone?: string
   budget: string
   timeline: string
   message: string
@@ -25,6 +26,7 @@ const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
 export default function ContactFormEmail({
   name,
   email,
+  phone,
   budget,
   timeline,
   message,
@@ -60,6 +62,7 @@ export default function ContactFormEmail({
               <Text style={detailTitle}>Contact Details:</Text>
               <Text style={detailText}><strong>Name:</strong> {name}</Text>
               <Text style={detailText}><strong>Email:</strong> {email}</Text>
+              <Text style={detailText}><strong>Phone:</strong> {phone || "Not specified"}</Text>
               <Text style={detailText}><strong>Budget Range:</strong> {budget || "Not specified"}</Text>
               <Text style={detailText}><strong>Timeline:</strong> {timeline || "Not specified"}</Text>
               <Hr style={hr} />

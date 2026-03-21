@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react'
+import { ArrowUpRight, CheckCircle2, Sparkles } from 'lucide-react'
 import { CoreValuesSection } from '@/components/about/core-values-section'
 import type { ValueIconKey } from '@/components/about/core-values-section'
 import { MissionVisionSection } from '@/components/about/mission-vision-section'
 import { SkillsSection } from '@/components/about/skills-section'
 import type { SkillIconKey } from '@/components/about/skills-section'
 import { Button } from '@/components/ui/button'
+import { CtaOutlineInner, CtaPrimaryInner } from '@/components/ui/cta-button-inner'
 
 type CoreValue = {
   title: string
@@ -134,14 +135,20 @@ export default function AboutPage() {
             </div>
 
             <div className="flex flex-col items-start gap-4 sm:flex-row">
-              <Button size="lg" asChild className="hover-lift min-w-44">
+              <Button asChild variant="cta" className="min-w-44">
                 <Link href="/contact">
-                  Start Your Project
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                    Start Your Project
+                  </CtaPrimaryInner>
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="glass-card hover-lift min-w-44">
-                <Link href="/projects">View Projects</Link>
+              <Button asChild variant="ctaOutline" className="min-w-44">
+                <Link href="/projects">
+                  <CtaOutlineInner>
+                    <ArrowUpRight className="size-4" />
+                    View Projects
+                  </CtaOutlineInner>
+                </Link>
               </Button>
             </div>
 

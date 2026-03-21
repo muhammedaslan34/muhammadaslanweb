@@ -204,8 +204,11 @@ export function BlogGrid() {
 
         {posts.length > 9 && (
           <div className="text-center mt-12">
-            <Button variant="outline" className="glass-card hover-lift">
-              Load More Articles
+            <Button variant="ctaOutline">
+              <span className="inline-flex items-center gap-2.5">
+                <ArrowRight className="size-4" />
+                Load More Articles
+              </span>
             </Button>
           </div>
         )}

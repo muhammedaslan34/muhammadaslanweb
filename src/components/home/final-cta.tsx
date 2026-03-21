@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Mail } from 'lucide-react'
+import { ArrowUpRight, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { CtaOutlineInner, CtaPrimaryInner } from '@/components/ui/cta-button-inner'
 
 export function FinalCTA() {
   return (
@@ -50,19 +51,22 @@ export function FinalCTA() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button size="lg" asChild className="min-w-44">
+              <Button asChild variant="cta" className="min-w-44">
                 <Link href="/contact">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Get in Touch
+                  <CtaPrimaryInner icon={<Mail className="size-4" />}>
+                    Get in Touch
+                  </CtaPrimaryInner>
                 </Link>
               </Button>
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button variant="outline" size="lg" asChild className="min-w-44">
+              <Button asChild variant="ctaOutline" className="min-w-44">
                 <Link href="/pricing">
-                  View Pricing
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <CtaOutlineInner>
+                    <ArrowUpRight className="size-4" />
+                    View Pricing
+                  </CtaOutlineInner>
                 </Link>
               </Button>
             </motion.div>

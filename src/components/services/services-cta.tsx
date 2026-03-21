@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { ArrowRight, Calendar } from "lucide-react"
+import { ArrowUpRight, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaOutlineInner, CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 
 export function ServicesCTA() {
   return (
@@ -18,16 +19,19 @@ export function ServicesCTA() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" asChild className="hover-lift">
+            <Button asChild variant="cta">
               <Link href="/contact">
-                Get Free Consultation
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                  Get Free Consultation
+                </CtaPrimaryInner>
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild className="glass-card hover-lift">
+            <Button asChild variant="ctaOutline">
               <Link href="/pricing">
-                <Calendar className="mr-2 h-4 w-4" />
-                View Pricing Plans
+                <CtaOutlineInner>
+                  <Calendar className="size-4" />
+                  View Pricing Plans
+                </CtaOutlineInner>
               </Link>
             </Button>
           </div>

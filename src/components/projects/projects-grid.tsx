@@ -3,8 +3,9 @@
 import { useState, useMemo, useEffect } from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
-import { ExternalLink, Calendar, Eye, ArrowRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight, Calendar, Eye, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CtaPrimaryInner } from "@/components/ui/cta-button-inner"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "sonner"
 
@@ -206,8 +207,12 @@ export function ProjectsGrid({ activeCategory, searchTerm }: ProjectsGridProps) 
             <p className="body-sm text-muted-foreground mb-4">
               Want to see more projects or discuss a custom solution?
             </p>
-            <Button asChild className="hover-lift">
-              <Link href="/contact">Get in Touch</Link>
+            <Button asChild variant="cta">
+              <Link href="/contact">
+                <CtaPrimaryInner icon={<ArrowUpRight className="size-4" />}>
+                  Get in Touch
+                </CtaPrimaryInner>
+              </Link>
             </Button>
           </div>
         )}
